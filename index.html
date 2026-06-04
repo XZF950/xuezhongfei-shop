@@ -7,668 +7,729 @@
 <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
-.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; }
-.header h1 { font-size: 22px; margin-bottom: 4px; }
-.header p { opacity: 0.9; font-size: 12px; }
-.stats-bar { display: flex; justify-content: center; gap: 15px; padding: 15px; background: white; border-bottom: 1px solid #e8e8e8; flex-wrap: wrap; }
-.stat-item { text-align: center; flex: 1; min-width: 80px; }
-.stat-num { font-size: 24px; font-weight: bold; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; line-height: 1.5; font-size: 14px; }
+
+.header { background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%); color: white; padding: 16px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.header h1 { font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+.header p { opacity: 0.85; font-size: 12px; margin-top: 4px; }
+
+.tab-nav { display: flex; background: white; border-bottom: 1px solid #e0e0e0; position: sticky; top: 60px; z-index: 99; }
+.tab-btn { flex: 1; padding: 14px; text-align: center; cursor: pointer; font-size: 14px; border-bottom: 3px solid transparent; transition: all 0.3s; font-weight: 500; color: #666; }
+.tab-btn.active { border-bottom-color: #1a237e; color: #1a237e; font-weight: 600; background: #f5f7ff; }
+.tab-btn:hover { background: #f8f9fa; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.card { background: white; margin: 12px 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden; }
+.card-header { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+.card-title { font-size: 15px; font-weight: 600; color: #1a237e; display: flex; align-items: center; gap: 8px; }
+.card-body { padding: 16px; }
+
+.upload-zone { border: 2px dashed #d9d9d9; border-radius: 8px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer; background: #fafafa; }
+.upload-zone:hover { border-color: #1a237e; background: #f0f5ff; }
+.upload-zone.dragover { border-color: #1a237e; background: #e8f0fe; }
+.upload-zone h4 { font-size: 15px; color: #555; margin-bottom: 6px; }
+.upload-zone p { font-size: 12px; color: #999; }
+.file-input { display: none; }
+.btn { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; transition: all 0.2s; }
+.btn-primary { background: #1a237e; color: white; }
+.btn-primary:hover { background: #283593; }
+.btn-danger { background: #ff4d4f; color: white; }
+.btn-danger:hover { background: #ff7875; }
+.btn-secondary { background: #f0f0f0; color: #666; }
+.btn-secondary:hover { background: #e0e0e0; }
+.btn-success { background: #52c41a; color: white; }
+
+.data-status { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f6ffed; border-radius: 6px; margin-top: 12px; font-size: 13px; }
+.data-status.empty { background: #fff2f0; }
+.data-status.info { background: #e6f7ff; }
+.data-status .status-icon { font-size: 18px; }
+.data-status .status-text { flex: 1; }
+.data-status .status-actions { display: flex; gap: 8px; }
+
+.table-wrap { overflow-x: auto; margin-top: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: #f5f7ff; padding: 10px 8px; text-align: left; font-weight: 600; color: #1a237e; border-bottom: 2px solid #e0e0e0; white-space: nowrap; }
+td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+tr:hover { background: #fafafa; }
+
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+.badge-red { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
+.badge-yellow { background: #fffbe6; color: #faad14; border: 1px solid #ffe58f; }
+.badge-green { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
+
+.abc-tag { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+.abc-a { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
+.abc-b { background: #fffbe6; color: #faad14; border: 1px solid #ffe58f; }
+.abc-c { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
+
+.diag-table th { background: #1a237e; color: white; font-size: 12px; padding: 8px 6px; }
+.diag-table td { font-size: 12px; padding: 8px 6px; }
+.diag-table .shop-name-cell { font-weight: 600; color: #1a237e; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.diag-table .num-cell { text-align: right; font-family: "SF Mono", Monaco, monospace; }
+.diag-table .status-cell { text-align: center; }
+
+.detail-row { display: none; }
+.detail-row.active { display: table-row; }
+.detail-row td { padding: 0; background: #fafafa; }
+.detail-content { padding: 16px; }
+
+.report-box { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+.report-title { font-size: 16px; font-weight: 700; color: #1a237e; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #1a237e; }
+.report-section { margin-bottom: 20px; }
+.report-section-title { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 10px; }
+.report-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+.report-table th { background: #f5f7ff; padding: 8px 6px; text-align: left; font-weight: 600; color: #1a237e; border: 1px solid #e0e0e0; }
+.report-table td { padding: 8px 6px; border: 1px solid #e0e0e0; }
+.report-table .num { text-align: right; font-family: monospace; }
+.report-summary { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 6px; padding: 12px; margin-top: 12px; }
+.report-summary-item { display: flex; gap: 8px; margin-bottom: 6px; font-size: 13px; }
+.report-summary-item:last-child { margin-bottom: 0; }
+.report-summary-label { font-weight: 600; color: #333; min-width: 80px; }
+.report-advice { background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 6px; padding: 12px; margin-top: 12px; }
+.report-advice-item { padding: 6px 0; font-size: 13px; border-bottom: 1px dashed #d9d9d9; }
+.report-advice-item:last-child { border-bottom: none; }
+
+.month-bar { display: flex; gap: 8px; overflow-x: auto; padding: 12px 15px; background: white; border-bottom: 1px solid #e0e0e0; scrollbar-width: none; }
+.month-bar::-webkit-scrollbar { display: none; }
+.month-chip { padding: 6px 14px; border-radius: 16px; background: #f0f0f0; color: #666; font-size: 12px; cursor: pointer; white-space: nowrap; transition: all 0.3s; border: none; }
+.month-chip.active { background: #1a237e; color: white; }
+.month-chip:hover { background: #e0e0e0; }
+
+.filter-bar { display: flex; gap: 10px; padding: 12px 15px; background: white; border-bottom: 1px solid #e0e0e0; flex-wrap: wrap; align-items: center; }
+.filter-bar select, .filter-bar input { padding: 6px 10px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 13px; background: white; }
+.filter-bar input { min-width: 140px; }
+
+.stats-bar { display: flex; justify-content: center; gap: 20px; padding: 12px 15px; background: white; border-bottom: 1px solid #e0e0e0; }
+.stat-item { text-align: center; }
+.stat-num { font-size: 28px; font-weight: 700; line-height: 1.2; }
 .stat-label { font-size: 11px; color: #999; margin-top: 2px; }
 .stat-red { color: #ff4d4f; }
 .stat-yellow { color: #faad14; }
 .stat-green { color: #52c41a; }
-.stat-blue { color: #1890ff; }
+.stat-blue { color: #1a237e; }
 
-/* Tab导航 */
-.tab-nav { display: flex; background: white; border-bottom: 1px solid #e8e8e8; position: sticky; top: 68px; z-index: 99; }
-.tab-btn { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-size: 14px; border-bottom: 2px solid transparent; transition: all 0.3s; }
-.tab-btn.active { border-bottom-color: #667eea; color: #667eea; font-weight: bold; }
-.tab-btn:hover { background: #f5f7fa; }
+.toggle-btn { cursor: pointer; color: #1a237e; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+.toggle-icon { transition: transform 0.3s; font-size: 10px; }
+.toggle-icon.rotated { transform: rotate(180deg); }
 
-/* 内容区域 */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+.toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-20px); background: #333; color: white; padding: 10px 24px; border-radius: 6px; font-size: 13px; z-index: 1000; opacity: 0; transition: all 0.3s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { background: #52c41a; }
+.toast.error { background: #ff4d4f; }
+.toast.info { background: #1a237e; }
 
-/* 上传区域 */
-.upload-area { background: white; margin: 15px; padding: 20px; border-radius: 10px; border: 2px dashed #d9d9d9; text-align: center; }
-.upload-area.dragover { border-color: #667eea; background: #f0f5ff; }
-.upload-area h3 { font-size: 16px; color: #666; margin-bottom: 10px; }
-.upload-area p { font-size: 12px; color: #999; margin-bottom: 15px; }
-.file-input { display: none; }
-.upload-btn { padding: 10px 24px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
-.upload-btn:hover { background: #5a6fd6; }
-.file-list { margin-top: 15px; text-align: left; }
-.file-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f8f9fa; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
-.file-item .remove { color: #ff4d4f; cursor: pointer; font-size: 16px; }
+.empty { text-align: center; padding: 60px; color: #999; font-size: 14px; }
 
-/* 筛选区域 */
-.filters { padding: 12px 15px; background: white; border-bottom: 1px solid #e8e8e8; }
-.filter-row { display: flex; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
-.filter-row:last-child { margin-bottom: 0; }
-.filter-row select, .filter-row input { flex: 1; padding: 8px 10px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 13px; background: white; min-width: 120px; }
-.filter-row button { padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; white-space: nowrap; }
-.filter-row button.secondary { background: #f0f0f0; color: #666; }
+.transfer-box { background: #fff7e6; border: 1px solid #ffd591; border-radius: 6px; padding: 12px; margin-bottom: 10px; }
+.transfer-title { font-weight: 600; color: #fa8c16; font-size: 13px; margin-bottom: 6px; }
+.transfer-detail { font-size: 12px; color: #666; line-height: 1.6; }
 
-/* 店铺卡片 */
-.shop-card { background: white; border-radius: 10px; margin: 10px 15px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-.shop-header { padding: 14px 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-left: 3px solid; }
-.shop-header.red { border-left-color: #ff4d4f; background: #fff2f0; }
-.shop-header.yellow { border-left-color: #faad14; background: #fffbe6; }
-.shop-header.green { border-left-color: #52c41a; background: #f6ffed; }
-.shop-name { font-size: 15px; font-weight: bold; color: #333; }
-.shop-meta { font-size: 11px; color: #999; margin-left: 6px; }
-.shop-meta span { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; margin-left: 4px; }
-.shop-status { font-size: 13px; font-weight: bold; }
-.shop-body { padding: 15px; display: none; }
-.shop-body.active { display: block; }
-
-/* 指标网格 */
-.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-.metric-box { background: #f8f9fa; padding: 12px 8px; border-radius: 8px; text-align: center; }
-.metric-value { font-size: 18px; font-weight: bold; color: #333; }
-.metric-value.good { color: #52c41a; }
-.metric-value.warn { color: #faad14; }
-.metric-value.bad { color: #ff4d4f; }
-.metric-label { font-size: 11px; color: #999; margin-top: 4px; }
-.metric-compare { font-size: 10px; margin-top: 3px; }
-.compare-better { color: #52c41a; }
-.compare-worse { color: #ff4d4f; }
-
-/* 建议框 */
-.advice-box { background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 8px; padding: 12px; margin-top: 12px; }
-.advice-title { font-weight: bold; color: #1890ff; margin-bottom: 10px; font-size: 13px; }
-.advice-list { list-style: none; }
-.advice-list li { padding: 5px 0; font-size: 12px; color: #555; border-bottom: 1px dashed #e8e8e8; }
-.advice-list li:last-child { border-bottom: none; }
-.advice-list li::before { content: "▸ "; color: #1890ff; font-weight: bold; }
-
-/* 数据表格 */
-.data-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 12px; }
-.data-table th { background: #fafafa; padding: 8px 6px; text-align: left; font-weight: 600; color: #666; border-bottom: 2px solid #e8e8e8; }
-.data-table td { padding: 8px 6px; border-bottom: 1px solid #f0f0f0; }
-
-/* 畅销滞销 */
-.rank-list { display: flex; flex-direction: column; gap: 8px; }
-.rank-item { display: flex; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 8px; }
-.rank-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; color: white; margin-right: 12px; flex-shrink: 0; }
+.rank-row { display: flex; align-items: center; padding: 8px 10px; background: #f8f9fa; border-radius: 6px; margin-bottom: 6px; }
+.rank-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; color: white; margin-right: 10px; flex-shrink: 0; }
 .rank-num.hot { background: #ff4d4f; }
 .rank-num.warm { background: #faad14; }
 .rank-num.cool { background: #52c41a; }
-.rank-info { flex: 1; }
-.rank-name { font-size: 13px; font-weight: bold; color: #333; }
+.rank-info { flex: 1; min-width: 0; }
+.rank-name { font-size: 13px; font-weight: 600; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rank-detail { font-size: 11px; color: #999; margin-top: 2px; }
-.rank-value { font-size: 14px; font-weight: bold; color: #667eea; }
+.rank-value { font-size: 14px; font-weight: 700; color: #1a237e; white-space: nowrap; }
 
-/* 调拨建议 */
-.transfer-card { background: #fff7e6; border: 1px solid #ffd591; border-radius: 8px; padding: 12px; margin: 8px 0; }
-.transfer-title { font-weight: bold; color: #fa8c16; font-size: 13px; margin-bottom: 8px; }
-.transfer-detail { font-size: 12px; color: #666; line-height: 1.8; }
-.transfer-detail strong { color: #333; }
-
-/* 加载和错误 */
-.loading { text-align: center; padding: 60px; color: #999; }
-.error { text-align: center; padding: 40px; color: #ff4d4f; background: #fff2f0; border-radius: 8px; margin: 15px; }
-.empty { text-align: center; padding: 60px; color: #999; }
-
-/* 切换图标 */
-.toggle-icon { font-size: 11px; transition: transform 0.3s; }
-.toggle-icon.rotated { transform: rotate(180deg); }
-
-/* 响应式 */
-@media (min-width: 768px) {
-    .metrics-grid { grid-template-columns: repeat(6, 1fr); }
-    .header h1 { font-size: 26px; }
-    .shop-name { font-size: 16px; }
-    .stats-bar { gap: 30px; }
-    .stat-num { font-size: 32px; }
+@media (max-width: 768px) {
+    .diag-table { font-size: 11px; }
+    .diag-table th, .diag-table td { padding: 6px 4px; }
+    .stats-bar { gap: 12px; }
+    .stat-num { font-size: 22px; }
 }
-
-/* 月份选择器 */
-.month-selector { display: flex; gap: 8px; overflow-x: auto; padding: 10px 15px; background: white; border-bottom: 1px solid #e8e8e8; scrollbar-width: none; }
-.month-selector::-webkit-scrollbar { display: none; }
-.month-chip { padding: 6px 14px; border-radius: 16px; background: #f0f0f0; color: #666; font-size: 12px; cursor: pointer; white-space: nowrap; transition: all 0.3s; }
-.month-chip.active { background: #667eea; color: white; }
-.month-chip:hover { background: #e0e0e0; }
-.month-chip.active:hover { background: #5a6fd6; }
-
-/* 日期范围选择 */
-.date-range { display: flex; align-items: center; gap: 8px; padding: 10px 15px; background: white; }
-.date-range input { padding: 8px 10px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 13px; }
-.date-range span { color: #999; font-size: 13px; }
-
-/* ABC标签 */
-.abc-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-left: 6px; }
-.abc-a { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
-.abc-b { background: #fffbe6; color: #faad14; border: 1px solid #ffe58f; }
-.abc-c { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
 </style>
+<base target="_blank">
 </head>
 <body>
+
 <div class="header">
     <h1>🏪 雪中飞门店健康诊断系统</h1>
-    <p id="updateTime">请先上传数据文件</p>
+    <p id="headerInfo">请先进入「数据管理」导入数据</p>
 </div>
 
-<!-- Tab导航 -->
 <div class="tab-nav">
-    <div class="tab-btn active" onclick="switchTab('summary')">📊 月度汇总诊断</div>
-    <div class="tab-btn" onclick="switchTab('retail')">📈 零售明细分析</div>
+    <div class="tab-btn active" onclick="switchTab('data')">📁 数据管理</div>
+    <div class="tab-btn" onclick="switchTab('monthly')">📊 月度诊断</div>
+    <div class="tab-btn" onclick="switchTab('retail')">📈 零售分析</div>
 </div>
 
-<!-- Tab 1: 月度汇总诊断 -->
-<div id="tab-summary" class="tab-content active">
-    <!-- 上传区域 -->
-    <div class="upload-area" id="uploadArea1">
-        <h3>📁 上传月度汇总数据</h3>
-        <p>支持 .xlsx / .xls 格式，表头需包含：年份月份、店铺名称、净销量、净销售额、调入、调出、期末库存、期初、售罄率、库销比</p>
-        <input type="file" id="fileInput1" class="file-input" accept=".xlsx,.xls" multiple onchange="handleFile1(this)">
-        <button class="upload-btn" onclick="document.getElementById('fileInput1').click()">选择文件</button>
-        <div class="file-list" id="fileList1"></div>
-    </div>
-
-    <!-- ABC分类上传 -->
-    <div class="upload-area" id="uploadAreaABC" style="margin-top: 10px;">
-        <h3>🏷️ 上传店铺ABC分类（可选）</h3>
-        <p>表头：店铺名称、ABC级分类。不上传则按销售额自动分级</p>
-        <input type="file" id="fileInputABC" class="file-input" accept=".xlsx,.xls,.csv" onchange="handleABCFile(this)">
-        <button class="upload-btn secondary" onclick="document.getElementById('fileInputABC').click()">选择文件</button>
-        <div class="file-list" id="fileListABC"></div>
-    </div>
-
-    <!-- 月份选择 -->
-    <div class="month-selector" id="monthSelector" style="display:none;"></div>
-
-    <!-- 筛选 -->
-    <div class="filters" id="filters1" style="display:none;">
-        <div class="filter-row">
-            <select id="abcFilter" onchange="filterSummary()">
-                <option value="all">全部ABC级</option>
-                <option value="A">A级店铺</option>
-                <option value="B">B级店铺</option>
-                <option value="C">C级店铺</option>
-            </select>
-            <select id="statusFilter1" onchange="filterSummary()">
-                <option value="all">全部状态</option>
-                <option value="red">🔴 红灯</option>
-                <option value="yellow">🟡 黄灯</option>
-                <option value="green">🟢 绿灯</option>
-            </select>
-            <input type="text" id="searchBox1" placeholder="🔍 搜索店铺..." onkeyup="filterSummary()">
-        </div>
-        <div class="filter-row">
-            <button onclick="expandAllSummary()">展开全部</button>
-            <button onclick="collapseAllSummary()">收起全部</button>
-            <button class="secondary" onclick="exportSummary()">📥 导出</button>
+<div id="tab-data" class="tab-content active">
+    <div class="card">
+        <div class="card-header"><div class="card-title">📚 基准数据（历史对照组）</div></div>
+        <div class="card-body">
+            <div class="upload-zone" id="uploadZoneBase" onclick="document.getElementById('fileBase').click()">
+                <h4>📁 导入历史汇总数据（2024+2025）</h4>
+                <p>支持 .xlsx / .xls，可一次选多个文件合并导入<br>表头需包含：年份月份、店铺名称、净销量、净销售额、调入、调出、期末库存、期初、售罄率、库销比</p>
+                <br><button class="btn btn-primary">选择文件</button>
+            </div>
+            <input type="file" id="fileBase" class="file-input" accept=".xlsx,.xls" multiple onchange="handleBaseFiles(this)">
+            <div id="baseStatus" class="data-status empty" style="display:none;">
+                <span class="status-icon">📭</span><span class="status-text">暂无基准数据</span>
+                <div class="status-actions"><button class="btn btn-danger" onclick="clearBaseData()">清空</button></div>
+            </div>
         </div>
     </div>
 
-    <!-- 统计栏 -->
-    <div class="stats-bar" id="statsBar1" style="display:none;">
-        <div class="stat-item"><div class="stat-num stat-red" id="redCount1">0</div><div class="stat-label">🔴 红灯</div></div>
-        <div class="stat-item"><div class="stat-num stat-yellow" id="yellowCount1">0</div><div class="stat-label">🟡 黄灯</div></div>
-        <div class="stat-item"><div class="stat-num stat-green" id="greenCount1">0</div><div class="stat-label">🟢 绿灯</div></div>
-        <div class="stat-item"><div class="stat-num stat-blue" id="totalCount1">0</div><div class="stat-label">总店铺</div></div>
+    <div class="card">
+        <div class="card-header"><div class="card-title">🏷️ 店铺ABC分类（可选）</div></div>
+        <div class="card-body">
+            <div class="upload-zone" id="uploadZoneABC" onclick="document.getElementById('fileABC').click()">
+                <h4>📁 导入ABC分类表</h4>
+                <p>表头：店铺名称、ABC级分类。不上传则按销售额自动分级</p>
+                <br><button class="btn btn-secondary">选择文件</button>
+            </div>
+            <input type="file" id="fileABC" class="file-input" accept=".xlsx,.xls,.csv" onchange="handleABCFile(this)">
+            <div id="abcStatus" class="data-status empty" style="display:none;">
+                <span class="status-icon">📭</span><span class="status-text">未导入ABC分类，将自动按销售额分级</span>
+            </div>
+        </div>
     </div>
 
-    <!-- 店铺列表 -->
-    <div id="summaryContainer"></div>
+    <div class="card">
+        <div class="card-header"><div class="card-title">📅 当月诊断数据</div></div>
+        <div class="card-body">
+            <div class="upload-zone" id="uploadZoneMonth" onclick="document.getElementById('fileMonth').click()">
+                <h4>📁 导入当月汇总数据</h4>
+                <p>导入最新月份数据，用于生成诊断报告<br>格式要求与基准数据相同</p>
+                <br><button class="btn btn-primary">选择文件</button>
+            </div>
+            <input type="file" id="fileMonth" class="file-input" accept=".xlsx,.xls" onchange="handleMonthFile(this)">
+            <div id="monthStatus" class="data-status empty" style="display:none;">
+                <span class="status-icon">📭</span><span class="status-text">暂无当月数据</span>
+                <div class="status-actions"><button class="btn btn-danger" onclick="clearMonthData()">清空</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><div class="card-title">🛒 零售明细数据</div></div>
+        <div class="card-body">
+            <div class="upload-zone" id="uploadZoneRetail" onclick="document.getElementById('fileRetail').click()">
+                <h4>📁 导入零售明细（可多次导入累计）</h4>
+                <p>支持 .xlsx / .xls，可分批导入不同时间段<br>表头需包含：单据日期、店铺名称、商品款号、颜色、尺码、数量、金额</p>
+                <br><button class="btn btn-primary">选择文件</button>
+            </div>
+            <input type="file" id="fileRetail" class="file-input" accept=".xlsx,.xls" multiple onchange="handleRetailFiles(this)">
+            <div id="retailStatus" class="data-status empty" style="display:none;">
+                <span class="status-icon">📭</span><span class="status-text">暂无零售数据</span>
+                <div class="status-actions"><button class="btn btn-danger" onclick="clearRetailData()">清空</button></div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Tab 2: 零售明细分析 -->
+<div id="tab-monthly" class="tab-content">
+    <div class="month-bar" id="monthBar" style="display:none;"></div>
+    <div class="stats-bar" id="statsBar" style="display:none;">
+        <div class="stat-item"><div class="stat-num stat-red" id="redCount">0</div><div class="stat-label">🔴 红灯</div></div>
+        <div class="stat-item"><div class="stat-num stat-yellow" id="yellowCount">0</div><div class="stat-label">🟡 黄灯</div></div>
+        <div class="stat-item"><div class="stat-num stat-green" id="greenCount">0</div><div class="stat-label">🟢 绿灯</div></div>
+        <div class="stat-item"><div class="stat-num stat-blue" id="totalCount">0</div><div class="stat-label">总店铺</div></div>
+    </div>
+    <div class="filter-bar" id="filterBar" style="display:none;">
+        <select id="abcFilter" onchange="renderDiagnosis()"><option value="all">全部ABC级</option><option value="A">A级</option><option value="B">B级</option><option value="C">C级</option></select>
+        <select id="statusFilter" onchange="renderDiagnosis()"><option value="all">全部状态</option><option value="red">🔴 红灯</option><option value="yellow">🟡 黄灯</option><option value="green">🟢 绿灯</option></select>
+        <input type="text" id="searchBox" placeholder="🔍 搜索店铺..." onkeyup="renderDiagnosis()">
+        <button class="btn btn-primary" onclick="expandAllDetails()">展开全部</button>
+        <button class="btn btn-secondary" onclick="collapseAllDetails()">收起全部</button>
+        <button class="btn btn-success" onclick="exportAllReports()">📥 导出全部报告</button>
+    </div>
+    <div id="diagnosisContainer"><div class="empty">请先导入基准数据和当月数据</div></div>
+</div>
+
 <div id="tab-retail" class="tab-content">
-    <div class="upload-area" id="uploadArea2">
-        <h3>📁 上传零售明细数据</h3>
-        <p>支持 .xlsx / .xls 格式，表头需包含：单据日期、店铺名称、商品款号、商品名称、颜色、尺码、数量、金额</p>
-        <input type="file" id="fileInput2" class="file-input" accept=".xlsx,.xls" multiple onchange="handleFile2(this)">
-        <button class="upload-btn" onclick="document.getElementById('fileInput2').click()">选择文件</button>
-        <div class="file-list" id="fileList2"></div>
-    </div>
-
-    <!-- 日期范围 -->
-    <div class="date-range" id="dateRange" style="display:none;">
-        <input type="date" id="startDate" onchange="filterRetail()">
+    <div class="filter-bar" id="retailFilterBar" style="display:none;">
+        <input type="date" id="startDate" onchange="renderRetail()">
         <span>至</span>
-        <input type="date" id="endDate" onchange="filterRetail()">
-        <button onclick="setQuickRange('today')">今日</button>
-        <button onclick="setQuickRange('week')">本周</button>
-        <button onclick="setQuickRange('month')">本月</button>
-        <button onclick="setQuickRange('year')">本年</button>
+        <input type="date" id="endDate" onchange="renderRetail()">
+        <button class="btn btn-secondary" onclick="setQuickRange('today')">今日</button>
+        <button class="btn btn-secondary" onclick="setQuickRange('week')">本周</button>
+        <button class="btn btn-secondary" onclick="setQuickRange('month')">本月</button>
+        <button class="btn btn-secondary" onclick="setQuickRange('year')">本年</button>
+        <button class="btn btn-primary" onclick="renderRetail()">🔍 查询分析</button>
     </div>
-
-    <div id="retailContainer"></div>
+    <div id="retailContainer"><div class="empty">请先导入零售明细数据</div></div>
 </div>
+
+<div id="toast" class="toast"></div>
 
 <script>
-// ==================== 全局数据存储 ====================
-let summaryData = null;      // 汇总数据
-let abcData = null;          // ABC分类
-let retailData = null;       // 零售明细
-let currentMonth = null;     // 当前选中月份
+let baseData = [], abcData = {}, monthData = [], retailData = [], currentDiagnosis = [], currentMonth = null;
 
-// ==================== Tab切换 ====================
 function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-    if (tab === 'summary') {
-        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-        document.getElementById('tab-summary').classList.add('active');
-    } else {
-        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-        document.getElementById('tab-retail').classList.add('active');
-    }
+    const map = { data: 0, monthly: 1, retail: 2 };
+    document.querySelectorAll('.tab-btn')[map[tab]].classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+    if (tab === 'monthly' && monthData.length > 0) renderDiagnosis();
+    if (tab === 'retail' && retailData.length > 0) renderRetail();
 }
 
-// ==================== 文件处理 ====================
-function handleFile1(input) {
-    const files = Array.from(input.files);
-    const list = document.getElementById('fileList1');
-    list.innerHTML = '';
-
-    files.forEach(file => {
-        const item = document.createElement('div');
-        item.className = 'file-item';
-        item.innerHTML = '<span>' + file.name + ' (' + (file.size/1024).toFixed(1) + 'KB)</span><span class="remove" onclick="this.parentElement.remove()">×</span>';
-        list.appendChild(item);
-    });
-
-    if (files.length > 0) {
-        processSummaryFiles(files);
-    }
+function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + (type || 'info');
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-function handleABCFile(input) {
-    const file = input.files[0];
-    if (!file) return;
+function updateDataStatus(type, count, detail) {
+    const el = document.getElementById(type + 'Status');
+    const icons = { base: '📚', abc: '🏷️', month: '📅', retail: '🛒' };
+    if (count > 0 || (type === 'abc' && Object.keys(abcData).length > 0)) {
+        el.style.display = 'flex'; el.className = 'data-status info';
+        el.innerHTML = '<span class="status-icon">' + icons[type] + '</span><span class="status-text">' + detail + '</span><div class="status-actions"><button class="btn btn-danger" onclick="clear' + type.charAt(0).toUpperCase() + type.slice(1) + 'Data()">清空</button></div>';
+    } else { el.style.display = 'none'; }
+    updateHeaderInfo();
+}
 
-    const list = document.getElementById('fileListABC');
-    list.innerHTML = '<div class="file-item"><span>' + file.name + '</span><span class="remove" onclick="this.parentElement.remove(); abcData=null;">×</span></div>';
+function updateHeaderInfo() {
+    const p = [];
+    if (baseData.length > 0) p.push('基准 ' + baseData.length + '条');
+    if (monthData.length > 0) p.push('当月 ' + monthData.length + '条');
+    if (retailData.length > 0) p.push('零售 ' + retailData.length + '条');
+    document.getElementById('headerInfo').textContent = p.length > 0 ? p.join(' | ') : '请先进入「数据管理」导入数据';
+}
 
+function clearBaseData() { baseData = []; updateDataStatus('base', 0, ''); showToast('基准数据已清空', 'success'); }
+function clearAbcData() { abcData = {}; updateDataStatus('abc', 0, ''); showToast('ABC分类已清空', 'success'); }
+function clearMonthData() { monthData = []; currentMonth = null; updateDataStatus('month', 0, ''); document.getElementById('monthBar').style.display = 'none'; document.getElementById('statsBar').style.display = 'none'; document.getElementById('filterBar').style.display = 'none'; document.getElementById('diagnosisContainer').innerHTML = '<div class="empty">请先导入基准数据和当月数据</div>'; showToast('当月数据已清空', 'success'); }
+function clearRetailData() { retailData = []; updateDataStatus('retail', 0, ''); document.getElementById('retailFilterBar').style.display = 'none'; document.getElementById('retailContainer').innerHTML = '<div class="empty">请先导入零售明细数据</div>'; showToast('零售数据已清空', 'success'); }
+
+function readExcel(file, callback) {
     const reader = new FileReader();
     reader.onload = function(e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, {type: 'array'});
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-        const json = XLSX.utils.sheet_to_json(sheet);
-
-        abcData = {};
-        json.forEach(row => {
-            const shop = row['店铺名称'] || row['店铺'] || row['门店名称'];
-            const level = row['ABC级分类'] || row['ABC'] || row['分类'];
-            if (shop && level) {
-                abcData[shop] = level.toUpperCase();
-            }
-        });
-
-        alert('ABC分类已上传：' + Object.keys(abcData).length + '家店铺');
-
-        // 如果已有汇总数据，重新处理
-        if (summaryData) {
-            processSummaryData();
-        }
+        try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, {type: 'array'});
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const json = XLSX.utils.sheet_to_json(sheet);
+            callback(null, json);
+        } catch(err) { callback(err); }
     };
     reader.readAsArrayBuffer(file);
 }
 
-function handleFile2(input) {
-    const files = Array.from(input.files);
-    const list = document.getElementById('fileList2');
-    list.innerHTML = '';
-
-    files.forEach(file => {
-        const item = document.createElement('div');
-        item.className = 'file-item';
-        item.innerHTML = '<span>' + file.name + ' (' + (file.size/1024).toFixed(1) + 'KB)</span><span class="remove" onclick="this.parentElement.remove()">×</span>';
-        list.appendChild(item);
+function normalizeSummaryRow(row) {
+    const newRow = {};
+    Object.keys(row).forEach(key => {
+        const k = key.trim();
+        if (k.indexOf('年份') >= 0 || k.indexOf('月份') >= 0 || k.indexOf('日期') >= 0) newRow['年份月份'] = String(row[key]).trim();
+        else if (k.indexOf('店铺') >= 0 || k.indexOf('门店') >= 0) newRow['店铺名称'] = String(row[key] || '').trim();
+        else if (k.indexOf('净销量') >= 0 || (k.indexOf('销量') >= 0 && k.indexOf('额') < 0)) newRow['净销量'] = parseFloat(row[key]) || 0;
+        else if (k.indexOf('净销售额') >= 0 || k.indexOf('销售额') >= 0) newRow['净销售额'] = parseFloat(row[key]) || 0;
+        else if (k.indexOf('调入') >= 0) newRow['调入'] = parseFloat(row[key]) || 0;
+        else if (k.indexOf('调出') >= 0) newRow['调出'] = parseFloat(row[key]) || 0;
+        else if (k.indexOf('期末库存') >= 0 || k.indexOf('期末') >= 0) newRow['期末库存'] = parseFloat(row[key]) || 0;
+        else if (k.indexOf('期初') >= 0) newRow['期初'] = parseFloat(row[key]) || 0;
+        else if (k.indexOf('售罄率') >= 0) newRow['售罄率'] = parseFloat(row[key]) || 0;
+        else if (k.indexOf('库销比') >= 0) newRow['库销比'] = parseFloat(row[key]) || 0;
     });
-
-    if (files.length > 0) {
-        processRetailFiles(files);
-    }
+    return newRow;
 }
 
-// ==================== 汇总数据处理 ====================
-function processSummaryFiles(files) {
-    let allData = [];
-    let processed = 0;
-
-    files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, {type: 'array'});
-            const sheet = workbook.Sheets[workbook.SheetNames[0]];
-            const json = XLSX.utils.sheet_to_json(sheet);
-
-            // 标准化列名
-            json.forEach(row => {
-                const newRow = {};
-                Object.keys(row).forEach(key => {
-                    const k = key.trim();
-                    if (k.includes('年份') || k.includes('月份') || k.includes('日期')) newRow['年份月份'] = row[key];
-                    else if (k.includes('店铺') || k.includes('门店')) newRow['店铺名称'] = row[key];
-                    else if (k.includes('净销量') || k.includes('销量')) newRow['净销量'] = parseFloat(row[key]) || 0;
-                    else if (k.includes('净销售额') || k.includes('销售额')) newRow['净销售额'] = parseFloat(row[key]) || 0;
-                    else if (k.includes('调入')) newRow['调入'] = parseFloat(row[key]) || 0;
-                    else if (k.includes('调出')) newRow['调出'] = parseFloat(row[key]) || 0;
-                    else if (k.includes('期末库存') || k.includes('期末')) newRow['期末库存'] = parseFloat(row[key]) || 0;
-                    else if (k.includes('期初')) newRow['期初'] = parseFloat(row[key]) || 0;
-                    else if (k.includes('售罄率')) newRow['售罄率'] = parseFloat(row[key]) || 0;
-                    else if (k.includes('库销比')) newRow['库销比'] = parseFloat(row[key]) || 0;
-                });
-                allData.push(newRow);
-            });
-
-            processed++;
-            if (processed === files.length) {
-                summaryData = allData;
-                processSummaryData();
-            }
-        };
-        reader.readAsArrayBuffer(file);
+function normalizeRetailRow(row) {
+    const newRow = {};
+    Object.keys(row).forEach(key => {
+        const k = key.trim();
+        if (k.indexOf('日期') >= 0) newRow['日期'] = formatDate(row[key]);
+        else if (k.indexOf('店铺') >= 0 || k.indexOf('门店') >= 0) newRow['店铺'] = String(row[key] || '').trim();
+        else if (k.indexOf('款号') >= 0 || k.indexOf('货号') >= 0 || k.indexOf('商品编号') >= 0) newRow['货号'] = String(row[key] || '').trim();
+        else if (k.indexOf('名称') >= 0 || k.indexOf('品名') >= 0) newRow['品名'] = String(row[key] || '').trim();
+        else if (k.indexOf('颜色') >= 0 || k.indexOf('色号') >= 0) newRow['颜色'] = String(row[key] || '').trim();
+        else if (k.indexOf('尺码') >= 0) newRow['尺码'] = String(row[key] || '').trim();
+        else if (k.indexOf('数量') >= 0) newRow['数量'] = parseInt(row[key]) || 0;
+        else if (k.indexOf('金额') >= 0 || k.indexOf('实收') >= 0) newRow['金额'] = parseFloat(row[key]) || 0;
     });
-}
-
-function processSummaryData() {
-    if (!summaryData || summaryData.length === 0) return;
-
-    // 提取月份列表
-    const months = [...new Set(summaryData.map(d => d['年份月份']))].filter(m => m).sort();
-
-    // 如果没有ABC分类，按销售额自动分级
-    if (!abcData) {
-        const shopRevenue = {};
-        summaryData.forEach(d => {
-            const shop = d['店铺名称'];
-            if (!shopRevenue[shop]) shopRevenue[shop] = 0;
-            shopRevenue[shop] += d['净销售额'] || 0;
-        });
-
-        const sorted = Object.entries(shopRevenue).sort((a, b) => b[1] - a[1]);
-        const n = sorted.length;
-        abcData = {};
-        sorted.forEach(([shop, rev], i) => {
-            if (i < n * 0.2) abcData[shop] = 'A';
-            else if (i < n * 0.6) abcData[shop] = 'B';
-            else abcData[shop] = 'C';
-        });
-    }
-
-    // 添加ABC分类到数据
-    summaryData.forEach(d => {
-        d['ABC级分类'] = abcData[d['店铺名称']] || 'C';
-    });
-
-    // 生成月份选择器
-    const monthSelector = document.getElementById('monthSelector');
-    monthSelector.innerHTML = '';
-    monthSelector.style.display = 'flex';
-
-    months.forEach(m => {
-        const chip = document.createElement('div');
-        chip.className = 'month-chip' + (m === months[months.length-1] ? ' active' : '');
-        chip.textContent = m;
-        chip.onclick = () => selectMonth(m, chip);
-        monthSelector.appendChild(chip);
-    });
-
-    // 默认选最新月份
-    selectMonth(months[months.length-1], monthSelector.lastChild);
-
-    // 显示筛选和统计
-    document.getElementById('filters1').style.display = 'block';
-    document.getElementById('statsBar1').style.display = 'flex';
-    document.getElementById('uploadArea1').style.display = 'none';
-    document.getElementById('uploadAreaABC').style.display = 'none';
-
-    document.getElementById('updateTime').textContent = '数据已加载 | 共' + months.length + '个月份 | ' + Object.keys(abcData).length + '家店铺';
-}
-
-function selectMonth(month, chipElement) {
-    currentMonth = month;
-
-    // 更新选中样式
-    document.querySelectorAll('.month-chip').forEach(c => c.classList.remove('active'));
-    if (chipElement) chipElement.classList.add('active');
-
-    // 过滤该月份数据
-    const monthData = summaryData.filter(d => d['年份月份'] === month);
-
-    // 按ABC级分组计算诊断
-    const diagnosis = [];
-    const abcLevels = ['A', 'B', 'C'];
-
-    abcLevels.forEach(level => {
-        const levelData = monthData.filter(d => d['ABC级分类'] === level);
-        if (levelData.length === 0) return;
-
-        // 计算该级别平均
-        const avgSellout = levelData.reduce((sum, d) => sum + (d['正确售罄率'] || d['售罄率'] || 0), 0) / levelData.length * 100;
-        const avgKxb = levelData.reduce((sum, d) => sum + (d['库销比'] || 0), 0) / levelData.length;
-
-        levelData.forEach(d => {
-            const sellout = (d['正确售罄率'] || d['售罄率'] || 0) * 100;
-            const kxb = d['库销比'] || 0;
-            const sales = d['净销量'] || 0;
-
-            let status, statusDesc, advice;
-
-            if (sellout < avgSellout * 0.5 && sales > 0) {
-                status = 'red'; statusDesc = '售罄率远低于同级平均，需立即干预';
-                advice = ['立即排查陈列位置，是否被边缘化', '组织店员培训，强化主推话术', '申请促销资源，做限时折扣引流', '检查竞品动态，是否被截流'];
-            } else if (kxb > 10 && d['期末库存'] > 100) {
-                status = 'red'; statusDesc = '库存积压严重，需立即清货';
-                advice = ['立即发起调拨，向热销店转移库存', '申请特卖/快闪活动，加速出清', '调整陈列，把积压款放到黄金位置', '搭配畅销款做捆绑销售'];
-            } else if (sellout < avgSellout * 0.8) {
-                status = 'yellow'; statusDesc = '售罄率低于同级平均，需关注';
-                advice = ['关注陈列位置，确保主推款在黄金位', '加强店员销售培训，提升转化率', '适当申请促销资源刺激销售'];
-            } else if (kxb > 5 && d['期末库存'] > 100) {
-                status = 'yellow'; statusDesc = '库存偏高，建议加快周转';
-                advice = ['加快库存周转，避免过季积压', '申请调拨到其他门店', '做搭配销售提升连带率'];
-            } else {
-                status = 'green'; statusDesc = '经营健康，保持当前节奏';
-                advice = ['保持当前运营节奏', '关注竞品动态，及时调整策略', '培养店员连带销售能力'];
-            }
-
-            diagnosis.push({
-                ...d,
-                sellout: sellout,
-                abc_avg_sellout: avgSellout,
-                abc_avg_kxb: avgKxb,
-                status: status,
-                status_desc: statusDesc,
-                advice: advice
-            });
-        });
-    });
-
-    // 排序：红灯在前
-    const statusOrder = {red: 0, yellow: 1, green: 2};
-    diagnosis.sort((a, b) => statusOrder[a.status] - statusOrder[b.status]);
-
-    // 保存当前月份诊断数据
-    window.currentDiagnosis = diagnosis;
-
-    renderSummary(diagnosis);
-}
-
-function renderSummary(diagnosis) {
-    const container = document.getElementById('summaryContainer');
-
-    // 统计
-    const red = diagnosis.filter(d => d.status === 'red').length;
-    const yellow = diagnosis.filter(d => d.status === 'yellow').length;
-    const green = diagnosis.filter(d => d.status === 'green').length;
-
-    document.getElementById('redCount1').textContent = red;
-    document.getElementById('yellowCount1').textContent = yellow;
-    document.getElementById('greenCount1').textContent = green;
-    document.getElementById('totalCount1').textContent = diagnosis.length;
-
-    // 按状态分组渲染
-    const groups = {red: [], yellow: [], green: []};
-    diagnosis.forEach(d => groups[d.status].push(d));
-
-    const statusNames = {red: '🔴 红灯', yellow: '🟡 黄灯', green: '🟢 绿灯'};
-    const badgeClasses = {red: 'badge-red', yellow: 'badge-yellow', green: 'badge-green'};
-    const headerClasses = {red: 'red', yellow: 'yellow', green: 'green'};
-
-    let html = '';
-    ['red', 'yellow', 'green'].forEach(status => {
-        const shops = groups[status];
-        if (shops.length === 0) return;
-
-        html += '<div class="section-title">' + statusNames[status] + ' <span class="badge ' + badgeClasses[status] + '">' + shops.length + '家</span></div>';
-
-        shops.forEach(shop => {
-            const selloutClass = shop.sellout >= shop.abc_avg_sellout * 0.8 ? 'good' : (shop.sellout >= shop.abc_avg_sellout * 0.5 ? 'warn' : 'bad');
-            const kxbClass = (shop['库销比'] || 0) <= 3 ? 'good' : ((shop['库销比'] || 0) <= 8 ? 'warn' : 'bad');
-
-            html += '<div class="shop-card" data-abc="' + shop['ABC级分类'] + '" data-status="' + shop.status + '" data-name="' + shop['店铺名称'] + '">';
-            html += '<div class="shop-header ' + headerClasses[status] + '" onclick="toggleShop(this)">';
-            html += '<div><span class="shop-name">' + (shop['店铺名称'] || '').replace(/2024|2025|2026/g, '').replace(/陕西省|甘肃省|宁夏|山西省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/, '') + '</span>';
-            html += '<span class="shop-meta"><span class="abc-tag abc-' + shop['ABC级分类'].toLowerCase() + '">' + shop['ABC级分类'] + '级</span></span></div>';
-            html += '<div><span class="shop-status">' + (status === 'red' ? '🔴' : (status === 'yellow' ? '🟡' : '🟢')) + '</span><span class="toggle-icon">▼</span></div></div>';
-            html += '<div class="shop-body">';
-            html += '<div class="metrics-grid">';
-            html += '<div class="metric-box"><div class="metric-value ' + selloutClass + '">' + shop.sellout.toFixed(1) + '%</div><div class="metric-label">本月售罄率</div><div class="metric-compare ' + (shop.sellout >= shop.abc_avg_sellout ? 'compare-better' : 'compare-worse') + '">同级' + shop.abc_avg_sellout.toFixed(1) + '% ' + (shop.sellout >= shop.abc_avg_sellout ? '▲' : '▼') + '</div></div>';
-            html += '<div class="metric-box"><div class="metric-value">' + (shop['净销量'] || 0) + '</div><div class="metric-label">本月销量</div></div>';
-            html += '<div class="metric-box"><div class="metric-value">¥' + ((shop['净销售额'] || 0)).toLocaleString() + '</div><div class="metric-label">本月销售额</div></div>';
-            html += '<div class="metric-box"><div class="metric-value ' + kxbClass + '">' + (shop['库销比'] || 0).toFixed(2) + '</div><div class="metric-label">库销比</div><div class="metric-compare">库存 ' + (shop['期末库存'] || 0) + '件</div></div>';
-            html += '<div class="metric-box"><div class="metric-value">' + (shop['调入'] || 0) + '</div><div class="metric-label">本月调入</div></div>';
-            html += '<div class="metric-box"><div class="metric-value">' + (shop['调出'] || 0) + '</div><div class="metric-label">本月调出</div></div>';
-            html += '</div>';
-            html += '<div class="advice-box"><div class="advice-title">📋 ' + shop.status_desc + '</div><ul class="advice-list">' + shop.advice.map(a => '<li>' + a + '</li>').join('') + '</ul></div>';
-            html += '</div></div>';
-        });
-    });
-
-    container.innerHTML = html || '<div class="empty">该月份暂无数据</div>';
-}
-
-function toggleShop(header) {
-    const body = header.nextElementSibling;
-    const icon = header.querySelector('.toggle-icon');
-    body.classList.toggle('active');
-    icon.classList.toggle('rotated');
-}
-
-function filterSummary() {
-    const abc = document.getElementById('abcFilter').value;
-    const status = document.getElementById('statusFilter1').value;
-    const search = document.getElementById('searchBox1').value.toLowerCase();
-
-    if (!window.currentDiagnosis) return;
-
-    let filtered = window.currentDiagnosis;
-    if (abc !== 'all') filtered = filtered.filter(d => d['ABC级分类'] === abc);
-    if (status !== 'all') filtered = filtered.filter(d => d.status === status);
-    if (search) filtered = filtered.filter(d => (d['店铺名称'] || '').toLowerCase().includes(search));
-
-    renderSummary(filtered);
-}
-
-function expandAllSummary() {
-    document.querySelectorAll('#summaryContainer .shop-body').forEach(b => b.classList.add('active'));
-    document.querySelectorAll('#summaryContainer .toggle-icon').forEach(i => i.classList.add('rotated'));
-}
-
-function collapseAllSummary() {
-    document.querySelectorAll('#summaryContainer .shop-body').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('#summaryContainer .toggle-icon').forEach(i => i.classList.remove('rotated'));
-}
-
-function exportSummary() {
-    if (!window.currentDiagnosis) return;
-
-    let csv = '店铺名称,ABC级,月份,状态,诊断,售罄率,同级平均售罄率,库销比,销量,销售额,库存,调入,调出,建议\n';
-    window.currentDiagnosis.forEach(d => {
-        csv += '"' + (d['店铺名称'] || '') + '",' + (d['ABC级分类'] || '') + ',' + (d['年份月份'] || '') + ',' + d.status + ',' + d.status_desc + ',' + d.sellout.toFixed(2) + ',' + d.abc_avg_sellout.toFixed(2) + ',' + (d['库销比'] || 0).toFixed(2) + ',' + (d['净销量'] || 0) + ',' + (d['净销售额'] || 0).toFixed(2) + ',' + (d['期末库存'] || 0) + ',' + (d['调入'] || 0) + ',' + (d['调出'] || 0) + ',"' + d.advice.join(';') + '"\n';
-    });
-
-    const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = '门店诊断报告_' + currentMonth + '.csv';
-    link.click();
-}
-
-// ==================== 零售明细处理 ====================
-function processRetailFiles(files) {
-    let allData = [];
-    let processed = 0;
-
-    files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, {type: 'array'});
-            const sheet = workbook.Sheets[workbook.SheetNames[0]];
-            const json = XLSX.utils.sheet_to_json(sheet);
-
-            json.forEach(row => {
-                const newRow = {};
-                Object.keys(row).forEach(key => {
-                    const k = key.trim();
-                    if (k.includes('日期')) newRow['日期'] = formatDate(row[key]);
-                    else if (k.includes('店铺') || k.includes('门店')) newRow['店铺'] = row[key];
-                    else if (k.includes('款号') || k.includes('商品编号')) newRow['款号'] = row[key];
-                    else if (k.includes('名称') || k.includes('品名')) newRow['品名'] = row[key];
-                    else if (k.includes('颜色') || k.includes('色号')) newRow['颜色'] = row[key];
-                    else if (k.includes('尺码')) newRow['尺码'] = row[key];
-                    else if (k.includes('数量')) newRow['数量'] = parseInt(row[key]) || 0;
-                    else if (k.includes('金额') || k.includes('实收')) newRow['金额'] = parseFloat(row[key]) || 0;
-                });
-                if (newRow['日期'] && newRow['店铺']) {
-                    allData.push(newRow);
-                }
-            });
-
-            processed++;
-            if (processed === files.length) {
-                retailData = allData;
-                document.getElementById('dateRange').style.display = 'flex';
-                document.getElementById('uploadArea2').style.display = 'none';
-
-                // 设置默认日期范围
-                const dates = allData.map(d => d['日期']).filter(d => d).sort();
-                if (dates.length > 0) {
-                    document.getElementById('startDate').value = dates[0];
-                    document.getElementById('endDate').value = dates[dates.length - 1];
-                }
-
-                filterRetail();
-            }
-        };
-        reader.readAsArrayBuffer(file);
-    });
+    return newRow;
 }
 
 function formatDate(val) {
     if (!val) return '';
     if (typeof val === 'number') {
-        // Excel日期序列号
         const epoch = new Date(1899, 11, 30);
         const date = new Date(epoch.getTime() + val * 86400000);
         return date.toISOString().split('T')[0];
     }
     if (typeof val === 'string') {
-        // 尝试解析各种格式
         const d = new Date(val);
         if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
     }
     return '';
 }
 
+function handleBaseFiles(input) {
+    const files = Array.from(input.files);
+    if (files.length === 0) return;
+    let processed = 0, newData = [];
+    files.forEach(file => {
+        readExcel(file, (err, json) => {
+            if (err) { showToast(file.name + ' 读取失败', 'error'); }
+            else {
+                json.forEach(row => {
+                    const normalized = normalizeSummaryRow(row);
+                    if (normalized['店铺名称'] && normalized['年份月份']) newData.push(normalized);
+                });
+            }
+            processed++;
+            if (processed === files.length) {
+                baseData = newData;
+                const months = [...new Set(baseData.map(d => d['年份月份']))].sort();
+                const shops = [...new Set(baseData.map(d => d['店铺名称']))];
+                updateDataStatus('base', baseData.length, '已导入 ' + baseData.length + '条 | ' + months.length + '个月份 | ' + shops.length + '家店铺');
+                showToast('基准数据导入成功：' + baseData.length + '条记录', 'success');
+                if (Object.keys(abcData).length === 0) autoABC();
+            }
+        });
+    });
+}
+
+function handleABCFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    readExcel(file, (err, json) => {
+        if (err) { showToast('ABC分类读取失败', 'error'); return; }
+        abcData = {};
+        json.forEach(row => {
+            const shop = row['店铺名称'] || row['店铺'] || row['门店名称'];
+            const level = row['ABC级分类'] || row['ABC'] || row['分类'];
+            if (shop && level) abcData[String(shop).trim()] = String(level).toUpperCase().replace(/[^ABC]/g, '');
+        });
+        updateDataStatus('abc', Object.keys(abcData).length, '已导入 ' + Object.keys(abcData).length + '家店铺ABC分类');
+        showToast('ABC分类导入成功：' + Object.keys(abcData).length + '家店铺', 'success');
+    });
+}
+
+function autoABC() {
+    const shopRevenue = {};
+    baseData.forEach(d => {
+        const shop = d['店铺名称'];
+        if (!shopRevenue[shop]) shopRevenue[shop] = 0;
+        shopRevenue[shop] += d['净销售额'] || 0;
+    });
+    const sorted = Object.entries(shopRevenue).sort((a, b) => b[1] - a[1]);
+    const n = sorted.length;
+    abcData = {};
+    sorted.forEach(([shop, rev], i) => {
+        if (i < n * 0.2) abcData[shop] = 'A';
+        else if (i < n * 0.6) abcData[shop] = 'B';
+        else abcData[shop] = 'C';
+    });
+    updateDataStatus('abc', Object.keys(abcData).length, '自动分级：A级' + Math.ceil(n*0.2) + '家 | B级' + Math.floor(n*0.4) + '家 | C级' + Math.floor(n*0.4) + '家');
+}
+
+function handleMonthFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    readExcel(file, (err, json) => {
+        if (err) { showToast('当月数据读取失败', 'error'); return; }
+        monthData = [];
+        json.forEach(row => {
+            const normalized = normalizeSummaryRow(row);
+            if (normalized['店铺名称'] && normalized['年份月份']) monthData.push(normalized);
+        });
+        const months = [...new Set(monthData.map(d => d['年份月份']))].sort();
+        const shops = [...new Set(monthData.map(d => d['店铺名称']))];
+        updateDataStatus('month', monthData.length, '已导入 ' + monthData.length + '条 | ' + (months[0] || '') + ' | ' + shops.length + '家店铺');
+        showToast('当月数据导入成功：' + monthData.length + '条记录', 'success');
+        generateMonthSelector(months);
+        setTimeout(() => switchTab('monthly'), 500);
+    });
+}
+
+function generateMonthSelector(months) {
+    const bar = document.getElementById('monthBar');
+    bar.innerHTML = '';
+    bar.style.display = 'flex';
+    months.forEach((m, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'month-chip' + (i === months.length - 1 ? ' active' : '');
+        chip.textContent = m;
+        chip.onclick = () => {
+            document.querySelectorAll('.month-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            currentMonth = m;
+            runDiagnosis(m);
+        };
+        bar.appendChild(chip);
+    });
+    currentMonth = months[months.length - 1];
+    runDiagnosis(currentMonth);
+}
+
+function runDiagnosis(month) {
+    if (!month || baseData.length === 0 || monthData.length === 0) return;
+    const currentData = monthData.filter(d => d['年份月份'] === month);
+    const historyByABC = { A: [], B: [], C: [] };
+    baseData.forEach(d => {
+        const abc = abcData[d['店铺名称']] || 'C';
+        if (historyByABC[abc]) historyByABC[abc].push(d);
+    });
+    const avgHistory = {};
+    ['A', 'B', 'C'].forEach(level => {
+        const data = historyByABC[level];
+        if (data.length > 0) {
+            avgHistory[level] = {
+                sellout: data.reduce((s, d) => s + (d['售罄率'] || 0), 0) / data.length * 100,
+                kxb: data.reduce((s, d) => s + (d['库销比'] || 0), 0) / data.length,
+                sales: data.reduce((s, d) => s + (d['净销量'] || 0), 0) / data.length,
+                revenue: data.reduce((s, d) => s + (d['净销售额'] || 0), 0) / data.length
+            };
+        }
+    });
+    const allMonths = [...new Set(baseData.map(d => d['年份月份']))].sort();
+    const monthIdx = allMonths.indexOf(month);
+    const prevMonth = monthIdx > 0 ? allMonths[monthIdx - 1] : null;
+    const yearMatch = month.match(/(\d{4}).*(\d{1,2})/);
+    const lastYearMonth = yearMatch ? (parseInt(yearMatch[1]) - 1) + '年' + yearMatch[2] + '月' : null;
+
+    currentDiagnosis = currentData.map(d => {
+        const shop = d['店铺名称'];
+        const abc = abcData[shop] || 'C';
+        const hist = avgHistory[abc] || avgHistory['C'] || { sellout: 0, kxb: 0, sales: 0, revenue: 0 };
+        const sellout = (d['售罄率'] || 0) * 100;
+        const kxb = d['库销比'] || 0;
+        const sales = d['净销量'] || 0;
+        const revenue = d['净销售额'] || 0;
+        const inventory = d['期末库存'] || 0;
+
+        let momSellout = 0, yoySellout = 0;
+        if (prevMonth) {
+            const prev = baseData.find(x => x['店铺名称'] === shop && x['年份月份'] === prevMonth);
+            if (prev) momSellout = sellout - (prev['售罄率'] || 0) * 100;
+        }
+        if (lastYearMonth) {
+            const yoy = baseData.find(x => x['店铺名称'] === shop && x['年份月份'].indexOf(lastYearMonth) >= 0);
+            if (yoy) yoySellout = sellout - (yoy['售罄率'] || 0) * 100;
+        }
+
+        let status, statusDesc, advice, coreProblem, opportunity;
+        if (sellout < hist.sellout * 0.5 && sales > 0) {
+            status = 'red'; statusDesc = '售罄率远低于同级平均，需立即干预';
+            coreProblem = '售罄率仅' + sellout.toFixed(1) + '%，远低于' + abc + '级平均' + hist.sellout.toFixed(1) + '%';
+            opportunity = '通过陈列调整和促销可快速提升';
+            advice = ['陈列调整：将主推款移至黄金位置，增加曝光', '主推话术：培训店员，每人每天主推3次该品类', '促销动作：申请限时折扣或买赠活动，3天内落地'];
+        } else if (kxb > 10 && inventory > 100) {
+            status = 'red'; statusDesc = '库存积压严重，需立即清货';
+            coreProblem = '库销比' + kxb.toFixed(1) + '，库存' + inventory + '件，周转过慢';
+            opportunity = '调拨至热销店或做特卖快闪';
+            advice = ['陈列调整：积压款放门口堆头，配合爆炸贴', '主推话术："最后几件"话术制造紧迫感', '促销动作：申请特卖/快闪，目标7天清50%'];
+        } else if (sellout < hist.sellout * 0.8) {
+            status = 'yellow'; statusDesc = '售罄率低于同级平均，需关注';
+            coreProblem = '售罄率' + sellout.toFixed(1) + '%，低于' + abc + '级平均' + hist.sellout.toFixed(1) + '%';
+            opportunity = '优化陈列和培训可提升至平均水平';
+            advice = ['陈列调整：检查主推款是否在黄金位', '主推话术：复盘话术，找出转化率低的环节', '促销动作：小范围试做满减，测试效果'];
+        } else if (kxb > 5 && inventory > 100) {
+            status = 'yellow'; statusDesc = '库存偏高，建议加快周转';
+            coreProblem = '库销比' + kxb.toFixed(1) + '，库存周转偏慢';
+            opportunity = '搭配销售提升连带率';
+            advice = ['陈列调整：做搭配陈列，提升连带率', '主推话术：培训"一衣多穿"搭配话术', '促销动作：做组合优惠，提升客单价'];
+        } else {
+            status = 'green'; statusDesc = '经营健康，保持当前节奏';
+            coreProblem = '各项指标正常，运营状态良好';
+            opportunity = '可尝试新品类或提升客单价';
+            advice = ['陈列调整：保持当前陈列，关注竞品动态', '主推话术：培养连带销售，提升客单价', '促销动作：维护VIP，做会员专属活动'];
+        }
+        return { shop: shop, abc: abc, month: month, sellout: sellout, histSellout: hist.sellout, kxb: kxb, histKxb: hist.kxb, sales: sales, histSales: hist.sales, revenue: revenue, histRevenue: hist.revenue, inventory: inventory, momSellout: momSellout, yoySellout: yoySellout, status: status, statusDesc: statusDesc, coreProblem: coreProblem, opportunity: opportunity, advice: advice, raw: d };
+    });
+    const order = { red: 0, yellow: 1, green: 2 };
+    currentDiagnosis.sort((a, b) => order[a.status] - order[b.status]);
+    document.getElementById('statsBar').style.display = 'flex';
+    document.getElementById('filterBar').style.display = 'flex';
+    renderDiagnosis();
+}
+
+function renderDiagnosis() {
+    const abcFilter = document.getElementById('abcFilter').value;
+    const statusFilter = document.getElementById('statusFilter').value;
+    const search = document.getElementById('searchBox').value.toLowerCase();
+    let filtered = currentDiagnosis;
+    if (abcFilter !== 'all') filtered = filtered.filter(d => d.abc === abcFilter);
+    if (statusFilter !== 'all') filtered = filtered.filter(d => d.status === statusFilter);
+    if (search) filtered = filtered.filter(d => d.shop.toLowerCase().indexOf(search) >= 0);
+
+    const red = filtered.filter(d => d.status === 'red').length;
+    const yellow = filtered.filter(d => d.status === 'yellow').length;
+    const green = filtered.filter(d => d.status === 'green').length;
+    document.getElementById('redCount').textContent = red;
+    document.getElementById('yellowCount').textContent = yellow;
+    document.getElementById('greenCount').textContent = green;
+    document.getElementById('totalCount').textContent = filtered.length;
+
+    let html = '<div class="table-wrap"><table class="diag-table"><thead><tr>';
+    html += '<th>店铺</th><th>ABC</th><th>售罄率</th><th>同级均</th><th>库销比</th><th>同级均</th><th>销量</th><th>库存</th><th>状态</th><th>操作</th>';
+    html += '</tr></thead><tbody>';
+
+    filtered.forEach((d, idx) => {
+        const statusIcon = d.status === 'red' ? '🔴' : (d.status === 'yellow' ? '🟡' : '🟢');
+        const selloutClass = d.sellout >= d.histSellout * 0.8 ? 'badge-green' : (d.sellout >= d.histSellout * 0.5 ? 'badge-yellow' : 'badge-red');
+        const kxbClass = d.kxb <= 5 ? 'badge-green' : (d.kxb <= 10 ? 'badge-yellow' : 'badge-red');
+        html += '<tr>';
+        html += '<td class="shop-name-cell" title="' + d.shop + '">' + cleanShopName(d.shop) + '</td>';
+        html += '<td><span class="abc-tag abc-' + d.abc.toLowerCase() + '">' + d.abc + '级</span></td>';
+        html += '<td class="num-cell"><span class="badge ' + selloutClass + '">' + d.sellout.toFixed(1) + '%</span></td>';
+        html += '<td class="num-cell">' + d.histSellout.toFixed(1) + '%</td>';
+        html += '<td class="num-cell"><span class="badge ' + kxbClass + '">' + d.kxb.toFixed(1) + '</span></td>';
+        html += '<td class="num-cell">' + d.histKxb.toFixed(1) + '</td>';
+        html += '<td class="num-cell">' + d.sales + '</td>';
+        html += '<td class="num-cell">' + d.inventory + '</td>';
+        html += '<td class="status-cell">' + statusIcon + '</td>';
+        html += '<td><span class="toggle-btn" onclick="toggleDetail(' + idx + ')">详情<span class="toggle-icon" id="icon-' + idx + '">▼</span></span></td>';
+        html += '</tr>';
+        html += '<tr class="detail-row" id="detail-' + idx + '"><td colspan="10"><div class="detail-content">' + generateReport(d) + '</div></td></tr>';
+    });
+    html += '</tbody></table></div>';
+    document.getElementById('diagnosisContainer').innerHTML = html;
+}
+
+function cleanShopName(name) {
+    return String(name || '').replace(/202[4-9]/g, '').replace(/陕西省|甘肃省|宁夏|山西省|省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/g, '').trim() || name;
+}
+
+function toggleDetail(idx) {
+    const row = document.getElementById('detail-' + idx);
+    const icon = document.getElementById('icon-' + idx);
+    row.classList.toggle('active');
+    icon.classList.toggle('rotated');
+}
+
+function expandAllDetails() {
+    document.querySelectorAll('.detail-row').forEach(r => r.classList.add('active'));
+    document.querySelectorAll('.toggle-icon').forEach(i => i.classList.add('rotated'));
+}
+
+function collapseAllDetails() {
+    document.querySelectorAll('.detail-row').forEach(r => r.classList.remove('active'));
+    document.querySelectorAll('.toggle-icon').forEach(i => i.classList.remove('rotated'));
+}
+
+function generateReport(d) {
+    const momSelloutStr = d.momSellout > 0 ? '+' + d.momSellout.toFixed(1) + '%' : d.momSellout.toFixed(1) + '%';
+    const yoySelloutStr = d.yoySellout > 0 ? '+' + d.yoySellout.toFixed(1) + '%' : d.yoySellout.toFixed(1) + '%';
+    const selloutStatus = d.sellout >= d.histSellout * 0.8 ? '🟢' : (d.sellout >= d.histSellout * 0.5 ? '🟡' : '🔴');
+    const kxbStatus = d.kxb <= 5 ? '🟢' : (d.kxb <= 10 ? '🟡' : '🔴');
+
+    let html = '<div class="report-box">';
+    html += '<div class="report-title">📋 门店健康诊断报告（' + d.month + '）</div>';
+    html += '<div class="report-section"><div class="report-section-title">📊 一、核心指标看板</div>';
+    html += '<table class="report-table"><tr><th>指标</th><th>本月值</th><th>同级平均</th><th>环比</th><th>同比</th><th>状态</th></tr>';
+    html += '<tr><td>售罄率</td><td class="num">' + d.sellout.toFixed(1) + '%</td><td class="num">' + d.histSellout.toFixed(1) + '%</td><td class="num">' + momSelloutStr + '</td><td class="num">' + yoySelloutStr + '</td><td>' + selloutStatus + '</td></tr>';
+    html += '<tr><td>库销比</td><td class="num">' + d.kxb.toFixed(1) + '</td><td class="num">' + d.histKxb.toFixed(1) + '</td><td class="num">-</td><td class="num">-</td><td>' + kxbStatus + '</td></tr>';
+    html += '</table>';
+    html += '<div style="font-size:11px;color:#999;margin-top:6px;">🟢 绿灯（优于同级平均或健康） 🟡 黄灯（略低于同级平均，需关注） 🔴 红灯（明显落后，需立即干预）</div></div>';
+    html += '<div class="report-section"><div class="report-section-title">💡 三、一句话诊断</div>';
+    html += '<div class="report-summary">';
+    html += '<div class="report-summary-item"><span class="report-summary-label">核心问题：</span><span>' + d.coreProblem + '</span></div>';
+    html += '<div class="report-summary-item"><span class="report-summary-label">改进机会：</span><span>' + d.opportunity + '</span></div>';
+    html += '</div></div>';
+    html += '<div class="report-section"><div class="report-section-title">🎯 四、3条行动建议</div>';
+    html += '<div class="report-advice">';
+    d.advice.forEach((a, i) => { html += '<div class="report-advice-item">' + (i+1) + '. ' + a + '</div>'; });
+    html += '</div>';
+    html += '<div style="font-size:11px;color:#999;margin-top:8px;">备注：下月初复查执行效果。</div></div>';
+    html += '</div>';
+    return html;
+}
+
+function exportAllReports() {
+    if (!currentDiagnosis || currentDiagnosis.length === 0) {
+        showToast('没有可导出的诊断数据', 'error');
+        return;
+    }
+    let content = '';
+    currentDiagnosis.forEach(d => {
+        const momSelloutStr = d.momSellout > 0 ? '+' + d.momSellout.toFixed(1) + '%' : d.momSellout.toFixed(1) + '%';
+        const yoySelloutStr = d.yoySellout > 0 ? '+' + d.yoySellout.toFixed(1) + '%' : d.yoySellout.toFixed(1) + '%';
+        const selloutStatus = d.sellout >= d.histSellout * 0.8 ? '绿灯' : (d.sellout >= d.histSellout * 0.5 ? '黄灯' : '红灯');
+        const kxbStatus = d.kxb <= 5 ? '绿灯' : (d.kxb <= 10 ? '黄灯' : '红灯');
+
+        content += '========== ' + d.shop + ' ==========
+';
+        content += '门店健康诊断报告
+';
+        content += '店铺名称：' + d.shop + '
+';
+        content += '诊断月份：' + d.month + '
+';
+        content += 'ABC级分类：' + d.abc + '级
+
+';
+        content += '一、核心指标看板
+';
+        content += '指标	本月值	同级平均	环比	同比	状态
+';
+        content += '售罄率	' + d.sellout.toFixed(1) + '%	' + d.histSellout.toFixed(1) + '%	' + momSelloutStr + '	' + yoySelloutStr + '	' + selloutStatus + '
+';
+        content += '库销比	' + d.kxb.toFixed(1) + '	' + d.histKxb.toFixed(1) + '	-	-	' + kxbStatus + '
+
+';
+        content += '三、一句话诊断
+';
+        content += '核心问题：' + d.coreProblem + '
+';
+        content += '改进机会：' + d.opportunity + '
+
+';
+        content += '四、3条行动建议
+';
+        d.advice.forEach((a, i) => { content += (i+1) + '. ' + a + '
+'; });
+        content += '
+备注：下月初复查执行效果。
+
+
+';
+    });
+
+    const blob = new Blob(['﻿' + content], {type: 'text/plain;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = '门店诊断报告汇总_' + currentMonth + '.txt';
+    link.click();
+    showToast('已导出 ' + currentDiagnosis.length + ' 家店铺的诊断报告', 'success');
+}
+
+function handleRetailFiles(input) {
+    const files = Array.from(input.files);
+    if (files.length === 0) return;
+    let processed = 0, newData = [];
+    files.forEach(file => {
+        readExcel(file, (err, json) => {
+            if (err) { showToast(file.name + ' 读取失败', 'error'); }
+            else {
+                json.forEach(row => {
+                    const normalized = normalizeRetailRow(row);
+                    if (normalized['日期'] && normalized['店铺'] && normalized['货号']) newData.push(normalized);
+                });
+            }
+            processed++;
+            if (processed === files.length) {
+                retailData = retailData.concat(newData);
+                const dates = [...new Set(retailData.map(d => d['日期']))].sort();
+                const shops = [...new Set(retailData.map(d => d['店铺']))];
+                const items = [...new Set(retailData.map(d => d['货号']))];
+                updateDataStatus('retail', retailData.length, '累计 ' + retailData.length + '条 | ' + dates.length + '天 | ' + shops.length + '店 | ' + items.length + '款');
+                showToast('零售数据导入成功：+' + newData.length + '条，累计' + retailData.length + '条', 'success');
+                if (dates.length > 0) {
+                    document.getElementById('startDate').value = dates[0];
+                    document.getElementById('endDate').value = dates[dates.length - 1];
+                }
+            }
+        });
+    });
+}
+
 function setQuickRange(type) {
     const today = new Date();
     let start, end;
-
     switch(type) {
-        case 'today':
-            start = end = today.toISOString().split('T')[0];
-            break;
+        case 'today': start = end = today.toISOString().split('T')[0]; break;
         case 'week':
             const day = today.getDay();
             start = new Date(today - (day === 0 ? 6 : day - 1) * 86400000).toISOString().split('T')[0];
@@ -683,165 +744,131 @@ function setQuickRange(type) {
             end = today.toISOString().split('T')[0];
             break;
     }
-
     document.getElementById('startDate').value = start;
     document.getElementById('endDate').value = end;
-    filterRetail();
+    renderRetail();
 }
 
-function filterRetail() {
-    if (!retailData) return;
-
+function renderRetail() {
+    if (retailData.length === 0) return;
+    document.getElementById('retailFilterBar').style.display = 'flex';
     const start = document.getElementById('startDate').value;
     const end = document.getElementById('endDate').value;
-
     let filtered = retailData;
     if (start) filtered = filtered.filter(d => d['日期'] >= start);
     if (end) filtered = filtered.filter(d => d['日期'] <= end);
-
-    renderRetail(filtered);
-}
-
-function renderRetail(data) {
-    const container = document.getElementById('retailContainer');
-
-    if (data.length === 0) {
-        container.innerHTML = '<div class="empty">该时间段暂无数据</div>';
+    if (filtered.length === 0) {
+        document.getElementById('retailContainer').innerHTML = '<div class="empty">该时间段暂无数据</div>';
         return;
     }
 
-    // 按店铺分组统计
     const shopStats = {};
-    data.forEach(d => {
+    filtered.forEach(d => {
         const shop = d['店铺'];
-        if (!shopStats[shop]) {
-            shopStats[shop] = { total: 0, amount: 0, items: {} };
-        }
+        if (!shopStats[shop]) shopStats[shop] = { total: 0, amount: 0, items: {} };
         shopStats[shop].total += d['数量'] || 0;
         shopStats[shop].amount += d['金额'] || 0;
-
-        const key = (d['款号'] || '') + '|' + (d['品名'] || '');
-        if (!shopStats[shop].items[key]) {
-            shopStats[shop].items[key] = { name: d['品名'] || d['款号'], code: d['款号'], total: 0, colors: {}, sizes: {} };
+        const code = d['货号'] || '未知';
+        if (!shopStats[shop].items[code]) {
+            shopStats[shop].items[code] = { code: code, name: d['品名'] || code, total: 0, colors: {}, sizes: {} };
         }
-        shopStats[shop].items[key].total += d['数量'] || 0;
-
+        shopStats[shop].items[code].total += d['数量'] || 0;
         const color = d['颜色'] || '未知';
-        if (!shopStats[shop].items[key].colors[color]) shopStats[shop].items[key].colors[color] = 0;
-        shopStats[shop].items[key].colors[color] += d['数量'] || 0;
-
+        if (!shopStats[shop].items[code].colors[color]) shopStats[shop].items[code].colors[color] = 0;
+        shopStats[shop].items[code].colors[color] += d['数量'] || 0;
         const size = d['尺码'] || '未知';
-        if (!shopStats[shop].items[key].sizes[size]) shopStats[shop].items[key].sizes[size] = 0;
-        shopStats[shop].items[key].sizes[size] += d['数量'] || 0;
+        if (!shopStats[shop].items[code].sizes[size]) shopStats[shop].items[code].sizes[size] = 0;
+        shopStats[shop].items[code].sizes[size] += d['数量'] || 0;
     });
 
-    // 生成调拨建议
-    const transferSuggestions = generateTransferSuggestions(shopStats);
-
+    const transfers = generateTransfers(shopStats);
     let html = '';
 
-    // 调拨建议区域
-    if (transferSuggestions.length > 0) {
-        html += '<div class="section-title">🚚 智能调拨建议 <span class="badge badge-yellow">' + transferSuggestions.length + '条</span></div>';
-        transferSuggestions.forEach(s => {
-            html += '<div class="transfer-card">';
-            html += '<div class="transfer-title">' + s.from + ' → ' + s.to + '</div>';
-            html += '<div class="transfer-detail">' + s.detail + '</div>';
-            html += '</div>';
+    if (transfers.length > 0) {
+        html += '<div class="card"><div class="card-header"><div class="card-title">🚚 智能调拨建议</div></div><div class="card-body">';
+        transfers.forEach(t => {
+            html += '<div class="transfer-box"><div class="transfer-title">' + cleanShopName(t.from) + ' → ' + cleanShopName(t.to) + '</div><div class="transfer-detail">' + t.detail + '</div></div>';
         });
+        html += '</div></div>';
     }
 
-    // 各店铺详情
     Object.entries(shopStats).forEach(([shop, stats]) => {
-        // 排序获取畅销滞销
         const items = Object.values(stats.items).sort((a, b) => b.total - a.total);
         const hot5 = items.slice(0, 5);
         const cold5 = items.slice(-5).reverse();
 
-        html += '<div class="shop-card">';
-        html += '<div class="shop-header green" onclick="toggleShop(this)">';
-        html += '<div><span class="shop-name">' + shop.replace(/2024|2025|2026/g, '').replace(/陕西省|甘肃省|宁夏|山西省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/, '') + '</span>';
-        html += '<span class="shop-meta">销量 ' + stats.total + ' | 金额 ¥' + stats.amount.toLocaleString() + '</span></div>';
-        html += '<div><span class="toggle-icon">▼</span></div></div>';
-        html += '<div class="shop-body">';
+        html += '<div class="card">';
+        html += '<div class="card-header"><div class="card-title">' + cleanShopName(shop) + ' <span style="font-size:12px;color:#999;font-weight:normal;">销量 ' + stats.total + ' | ¥' + stats.amount.toLocaleString() + '</span></div></div>';
+        html += '<div class="card-body">';
 
-        // 畅销TOP5
-        html += '<div class="advice-box" style="margin-bottom: 12px;"><div class="advice-title">🔥 畅销TOP5</div><div class="rank-list">';
+        html += '<div style="margin-bottom:16px;"><div style="font-weight:600;color:#ff4d4f;margin-bottom:8px;font-size:14px;">🔥 畅销TOP5（按货号）</div>';
         hot5.forEach((item, i) => {
             const topColor = Object.entries(item.colors).sort((a, b) => b[1] - a[1])[0];
             const topSize = Object.entries(item.sizes).sort((a, b) => b[1] - a[1])[0];
-            html += '<div class="rank-item"><div class="rank-num hot">' + (i + 1) + '</div><div class="rank-info"><div class="rank-name">' + item.name + '</div><div class="rank-detail">销量 ' + item.total + ' | 畅销色: ' + (topColor ? topColor[0] : '-') + ' | 畅销尺码: ' + (topSize ? topSize[0] : '-') + '</div></div><div class="rank-value">' + item.total + '</div></div>';
+            html += '<div class="rank-row"><div class="rank-num hot">' + (i+1) + '</div><div class="rank-info"><div class="rank-name" title="' + item.code + '">' + item.code + '</div><div class="rank-detail">' + item.name + ' | 畅销色:' + (topColor ? topColor[0] : '-') + ' | 畅销码:' + (topSize ? topSize[0] : '-') + '</div></div><div class="rank-value">' + item.total + '件</div></div>';
         });
-        html += '</div></div>';
+        html += '</div>';
 
-        // 滞销TOP5
-        html += '<div class="advice-box" style="background: #fff2f0; border-color: #ffccc7;"><div class="advice-title" style="color: #ff4d4f;">❄️ 滞销TOP5</div><div class="rank-list">';
+        html += '<div><div style="font-weight:600;color:#52c41a;margin-bottom:8px;font-size:14px;">❄️ 滞销TOP5（按货号）</div>';
         cold5.forEach((item, i) => {
-            html += '<div class="rank-item"><div class="rank-num cool">' + (i + 1) + '</div><div class="rank-info"><div class="rank-name">' + item.name + '</div><div class="rank-detail">销量 ' + item.total + '</div></div><div class="rank-value">' + item.total + '</div></div>';
+            html += '<div class="rank-row"><div class="rank-num cool">' + (i+1) + '</div><div class="rank-info"><div class="rank-name" title="' + item.code + '">' + item.code + '</div><div class="rank-detail">' + item.name + '</div></div><div class="rank-value">' + item.total + '件</div></div>';
         });
-        html += '</div></div>';
+        html += '</div>';
 
         html += '</div></div>';
     });
 
-    container.innerHTML = html || '<div class="empty">暂无数据</div>';
+    document.getElementById('retailContainer').innerHTML = html;
 }
 
-function generateTransferSuggestions(shopStats) {
+function generateTransfers(shopStats) {
     const suggestions = [];
     const shops = Object.entries(shopStats);
-
-    // 找出每个店铺的滞销款和畅销款
     shops.forEach(([fromShop, fromStats]) => {
         const fromItems = Object.values(fromStats.items);
         const coldItems = fromItems.filter(i => i.total <= 2).sort((a, b) => a.total - b.total);
-
         coldItems.forEach(coldItem => {
-            // 找其他店铺是否有畅销
             shops.forEach(([toShop, toStats]) => {
                 if (fromShop === toShop) return;
-
                 const toItems = Object.values(toStats.items);
                 const hotItem = toItems.find(i => i.code === coldItem.code && i.total >= 10);
-
                 if (hotItem) {
+                    const topColor = Object.keys(coldItem.colors)[0] || '';
+                    const topSize = Object.keys(coldItem.sizes)[0] || '';
                     suggestions.push({
-                        from: fromShop.replace(/2024|2025|2026/g, '').replace(/陕西省|甘肃省|宁夏|山西省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/, ''),
-                        to: toShop.replace(/2024|2025|2026/g, '').replace(/陕西省|甘肃省|宁夏|山西省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/, ''),
-                        detail: '<strong>' + coldItem.name + '</strong> 在' + fromShop.replace(/2024|2025|2026/g, '').replace(/陕西省|甘肃省|宁夏|山西省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/, '') + '仅售' + coldItem.total + '件，而在' + toShop.replace(/2024|2025|2026/g, '').replace(/陕西省|甘肃省|宁夏|山西省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/, '') + '热销' + hotItem.total + '件。建议将该款' + (Object.keys(coldItem.colors)[0] || '') + '色' + (Object.keys(coldItem.sizes)[0] || '') + '码调拨至' + toShop.replace(/2024|2025|2026/g, '').replace(/陕西省|甘肃省|宁夏|山西省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/, '') + '。'
+                        from: fromShop,
+                        to: toShop,
+                        detail: '货号 <strong>' + coldItem.code + '</strong> 在' + cleanShopName(fromShop) + '仅售' + coldItem.total + '件，而在' + cleanShopName(toShop) + '热销' + hotItem.total + '件。建议将' + topColor + '色' + topSize + '码调拨至' + cleanShopName(toShop) + '。'
                     });
                 }
             });
         });
     });
-
-    return suggestions.slice(0, 20); // 最多显示20条
+    return suggestions.slice(0, 20);
 }
 
-// 拖拽上传支持
 document.addEventListener('DOMContentLoaded', function() {
-    ['uploadArea1', 'uploadArea2', 'uploadAreaABC'].forEach(id => {
+    ['uploadZoneBase', 'uploadZoneABC', 'uploadZoneMonth', 'uploadZoneRetail'].forEach(id => {
         const area = document.getElementById(id);
         if (!area) return;
-
-        area.addEventListener('dragover', e => {
-            e.preventDefault();
-            area.classList.add('dragover');
-        });
+        area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('dragover'); });
         area.addEventListener('dragleave', () => area.classList.remove('dragover'));
         area.addEventListener('drop', e => {
             e.preventDefault();
             area.classList.remove('dragover');
             const files = e.dataTransfer.files;
-            if (id === 'uploadArea1') {
-                document.getElementById('fileInput1').files = files;
-                handleFile1(document.getElementById('fileInput1'));
-            } else if (id === 'uploadArea2') {
-                document.getElementById('fileInput2').files = files;
-                handleFile2(document.getElementById('fileInput2'));
-            } else if (id === 'uploadAreaABC') {
-                document.getElementById('fileInputABC').files = files;
-                handleABCFile(document.getElementById('fileInputABC'));
+            if (id === 'uploadZoneBase') {
+                document.getElementById('fileBase').files = files;
+                handleBaseFiles(document.getElementById('fileBase'));
+            } else if (id === 'uploadZoneABC') {
+                document.getElementById('fileABC').files = files;
+                handleABCFile(document.getElementById('fileABC'));
+            } else if (id === 'uploadZoneMonth') {
+                document.getElementById('fileMonth').files = files;
+                handleMonthFile(document.getElementById('fileMonth'));
+            } else if (id === 'uploadZoneRetail') {
+                document.getElementById('fileRetail').files = files;
+                handleRetailFiles(document.getElementById('fileRetail'));
             }
         });
     });
