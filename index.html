@@ -587,7 +587,7 @@ function exportSummary() {
         csv += '"' + (d['店铺名称'] || '') + '",' + (d['ABC级分类'] || '') + ',' + (d['年份月份'] || '') + ',' + d.status + ',' + d.status_desc + ',' + d.sellout.toFixed(2) + ',' + d.abc_avg_sellout.toFixed(2) + ',' + (d['库销比'] || 0).toFixed(2) + ',' + (d['净销量'] || 0) + ',' + (d['净销售额'] || 0).toFixed(2) + ',' + (d['期末库存'] || 0) + ',' + (d['调入'] || 0) + ',' + (d['调出'] || 0) + ',"' + d.advice.join(';') + '"\n';
     });
 
-    const blob = new Blob([\uFEFF + csv], {type: 'text/csv;charset=utf-8;'});
+    const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = '门店诊断报告_' + currentMonth + '.csv';
