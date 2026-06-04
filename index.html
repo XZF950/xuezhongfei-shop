@@ -8,24 +8,19 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; line-height: 1.5; font-size: 14px; }
-
 .header { background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%); color: white; padding: 16px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
 .header h1 { font-size: 20px; font-weight: 600; letter-spacing: 1px; }
 .header p { opacity: 0.85; font-size: 12px; margin-top: 4px; }
-
 .tab-nav { display: flex; background: white; border-bottom: 1px solid #e0e0e0; position: sticky; top: 60px; z-index: 99; }
 .tab-btn { flex: 1; padding: 14px; text-align: center; cursor: pointer; font-size: 14px; border-bottom: 3px solid transparent; transition: all 0.3s; font-weight: 500; color: #666; }
 .tab-btn.active { border-bottom-color: #1a237e; color: #1a237e; font-weight: 600; background: #f5f7ff; }
 .tab-btn:hover { background: #f8f9fa; }
-
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-
 .card { background: white; margin: 12px 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); overflow: hidden; }
 .card-header { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
 .card-title { font-size: 15px; font-weight: 600; color: #1a237e; display: flex; align-items: center; gap: 8px; }
 .card-body { padding: 16px; }
-
 .upload-zone { border: 2px dashed #d9d9d9; border-radius: 8px; padding: 24px; text-align: center; transition: all 0.3s; cursor: pointer; background: #fafafa; }
 .upload-zone:hover { border-color: #1a237e; background: #f0f5ff; }
 .upload-zone.dragover { border-color: #1a237e; background: #e8f0fe; }
@@ -40,41 +35,34 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
 .btn-secondary { background: #f0f0f0; color: #666; }
 .btn-secondary:hover { background: #e0e0e0; }
 .btn-success { background: #52c41a; color: white; }
-
 .data-status { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f6ffed; border-radius: 6px; margin-top: 12px; font-size: 13px; }
 .data-status.empty { background: #fff2f0; }
 .data-status.info { background: #e6f7ff; }
 .data-status .status-icon { font-size: 18px; }
 .data-status .status-text { flex: 1; }
 .data-status .status-actions { display: flex; gap: 8px; }
-
 .table-wrap { overflow-x: auto; margin-top: 12px; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { background: #f5f7ff; padding: 10px 8px; text-align: left; font-weight: 600; color: #1a237e; border-bottom: 2px solid #e0e0e0; white-space: nowrap; }
 td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
 tr:hover { background: #fafafa; }
-
 .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
 .badge-red { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
 .badge-yellow { background: #fffbe6; color: #faad14; border: 1px solid #ffe58f; }
 .badge-green { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
-
 .abc-tag { display: inline-block; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; }
 .abc-a { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
 .abc-b { background: #fffbe6; color: #faad14; border: 1px solid #ffe58f; }
 .abc-c { background: #fff2f0; color: #ff4d4f; border: 1px solid #ffccc7; }
-
 .diag-table th { background: #1a237e; color: white; font-size: 12px; padding: 8px 6px; }
 .diag-table td { font-size: 12px; padding: 8px 6px; }
 .diag-table .shop-name-cell { font-weight: 600; color: #1a237e; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .diag-table .num-cell { text-align: right; font-family: "SF Mono", Monaco, monospace; }
 .diag-table .status-cell { text-align: center; }
-
 .detail-row { display: none; }
 .detail-row.active { display: table-row; }
 .detail-row td { padding: 0; background: #fafafa; }
 .detail-content { padding: 16px; }
-
 .report-box { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
 .report-title { font-size: 16px; font-weight: 700; color: #1a237e; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #1a237e; }
 .report-section { margin-bottom: 20px; }
@@ -90,17 +78,14 @@ tr:hover { background: #fafafa; }
 .report-advice { background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 6px; padding: 12px; margin-top: 12px; }
 .report-advice-item { padding: 6px 0; font-size: 13px; border-bottom: 1px dashed #d9d9d9; }
 .report-advice-item:last-child { border-bottom: none; }
-
 .month-bar { display: flex; gap: 8px; overflow-x: auto; padding: 12px 15px; background: white; border-bottom: 1px solid #e0e0e0; scrollbar-width: none; }
 .month-bar::-webkit-scrollbar { display: none; }
 .month-chip { padding: 6px 14px; border-radius: 16px; background: #f0f0f0; color: #666; font-size: 12px; cursor: pointer; white-space: nowrap; transition: all 0.3s; border: none; }
 .month-chip.active { background: #1a237e; color: white; }
 .month-chip:hover { background: #e0e0e0; }
-
 .filter-bar { display: flex; gap: 10px; padding: 12px 15px; background: white; border-bottom: 1px solid #e0e0e0; flex-wrap: wrap; align-items: center; }
 .filter-bar select, .filter-bar input { padding: 6px 10px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 13px; background: white; }
 .filter-bar input { min-width: 140px; }
-
 .stats-bar { display: flex; justify-content: center; gap: 20px; padding: 12px 15px; background: white; border-bottom: 1px solid #e0e0e0; }
 .stat-item { text-align: center; }
 .stat-num { font-size: 28px; font-weight: 700; line-height: 1.2; }
@@ -109,23 +94,18 @@ tr:hover { background: #fafafa; }
 .stat-yellow { color: #faad14; }
 .stat-green { color: #52c41a; }
 .stat-blue { color: #1a237e; }
-
 .toggle-btn { cursor: pointer; color: #1a237e; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
 .toggle-icon { transition: transform 0.3s; font-size: 10px; }
 .toggle-icon.rotated { transform: rotate(180deg); }
-
 .toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%) translateY(-20px); background: #333; color: white; padding: 10px 24px; border-radius: 6px; font-size: 13px; z-index: 1000; opacity: 0; transition: all 0.3s; pointer-events: none; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .toast.success { background: #52c41a; }
 .toast.error { background: #ff4d4f; }
 .toast.info { background: #1a237e; }
-
 .empty { text-align: center; padding: 60px; color: #999; font-size: 14px; }
-
 .transfer-box { background: #fff7e6; border: 1px solid #ffd591; border-radius: 6px; padding: 12px; margin-bottom: 10px; }
 .transfer-title { font-weight: 600; color: #fa8c16; font-size: 13px; margin-bottom: 6px; }
 .transfer-detail { font-size: 12px; color: #666; line-height: 1.6; }
-
 .rank-row { display: flex; align-items: center; padding: 8px 10px; background: #f8f9fa; border-radius: 6px; margin-bottom: 6px; }
 .rank-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; color: white; margin-right: 10px; flex-shrink: 0; }
 .rank-num.hot { background: #ff4d4f; }
@@ -135,7 +115,6 @@ tr:hover { background: #fafafa; }
 .rank-name { font-size: 13px; font-weight: 600; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rank-detail { font-size: 11px; color: #999; margin-top: 2px; }
 .rank-value { font-size: 14px; font-weight: 700; color: #1a237e; white-space: nowrap; }
-
 @media (max-width: 768px) {
     .diag-table { font-size: 11px; }
     .diag-table th, .diag-table td { padding: 6px 4px; }
@@ -146,18 +125,15 @@ tr:hover { background: #fafafa; }
 <base target="_blank">
 </head>
 <body>
-
 <div class="header">
     <h1>🏪 雪中飞门店健康诊断系统</h1>
     <p id="headerInfo">请先进入「数据管理」导入数据</p>
 </div>
-
 <div class="tab-nav">
     <div class="tab-btn active" onclick="switchTab('data')">📁 数据管理</div>
     <div class="tab-btn" onclick="switchTab('monthly')">📊 月度诊断</div>
     <div class="tab-btn" onclick="switchTab('retail')">📈 零售分析</div>
 </div>
-
 <div id="tab-data" class="tab-content active">
     <div class="card">
         <div class="card-header"><div class="card-title">📚 基准数据（历史对照组）</div></div>
@@ -174,7 +150,6 @@ tr:hover { background: #fafafa; }
             </div>
         </div>
     </div>
-
     <div class="card">
         <div class="card-header"><div class="card-title">🏷️ 店铺ABC分类（可选）</div></div>
         <div class="card-body">
@@ -189,7 +164,6 @@ tr:hover { background: #fafafa; }
             </div>
         </div>
     </div>
-
     <div class="card">
         <div class="card-header"><div class="card-title">📅 当月诊断数据</div></div>
         <div class="card-body">
@@ -205,7 +179,6 @@ tr:hover { background: #fafafa; }
             </div>
         </div>
     </div>
-
     <div class="card">
         <div class="card-header"><div class="card-title">🛒 零售明细数据</div></div>
         <div class="card-body">
@@ -222,7 +195,6 @@ tr:hover { background: #fafafa; }
         </div>
     </div>
 </div>
-
 <div id="tab-monthly" class="tab-content">
     <div class="month-bar" id="monthBar" style="display:none;"></div>
     <div class="stats-bar" id="statsBar" style="display:none;">
@@ -241,7 +213,6 @@ tr:hover { background: #fafafa; }
     </div>
     <div id="diagnosisContainer"><div class="empty">请先导入基准数据和当月数据</div></div>
 </div>
-
 <div id="tab-retail" class="tab-content">
     <div class="filter-bar" id="retailFilterBar" style="display:none;">
         <input type="date" id="startDate" onchange="renderRetail()">
@@ -255,12 +226,9 @@ tr:hover { background: #fafafa; }
     </div>
     <div id="retailContainer"><div class="empty">请先导入零售明细数据</div></div>
 </div>
-
 <div id="toast" class="toast"></div>
-
 <script>
 let baseData = [], abcData = {}, monthData = [], retailData = [], currentDiagnosis = [], currentMonth = null;
-
 function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -270,7 +238,6 @@ function switchTab(tab) {
     if (tab === 'monthly' && monthData.length > 0) renderDiagnosis();
     if (tab === 'retail' && retailData.length > 0) renderRetail();
 }
-
 function showToast(msg, type) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -278,7 +245,6 @@ function showToast(msg, type) {
     setTimeout(() => t.classList.add('show'), 10);
     setTimeout(() => t.classList.remove('show'), 3000);
 }
-
 function updateDataStatus(type, count, detail) {
     const el = document.getElementById(type + 'Status');
     const icons = { base: '📚', abc: '🏷️', month: '📅', retail: '🛒' };
@@ -288,7 +254,6 @@ function updateDataStatus(type, count, detail) {
     } else { el.style.display = 'none'; }
     updateHeaderInfo();
 }
-
 function updateHeaderInfo() {
     const p = [];
     if (baseData.length > 0) p.push('基准 ' + baseData.length + '条');
@@ -296,12 +261,10 @@ function updateHeaderInfo() {
     if (retailData.length > 0) p.push('零售 ' + retailData.length + '条');
     document.getElementById('headerInfo').textContent = p.length > 0 ? p.join(' | ') : '请先进入「数据管理」导入数据';
 }
-
 function clearBaseData() { baseData = []; updateDataStatus('base', 0, ''); showToast('基准数据已清空', 'success'); }
 function clearAbcData() { abcData = {}; updateDataStatus('abc', 0, ''); showToast('ABC分类已清空', 'success'); }
 function clearMonthData() { monthData = []; currentMonth = null; updateDataStatus('month', 0, ''); document.getElementById('monthBar').style.display = 'none'; document.getElementById('statsBar').style.display = 'none'; document.getElementById('filterBar').style.display = 'none'; document.getElementById('diagnosisContainer').innerHTML = '<div class="empty">请先导入基准数据和当月数据</div>'; showToast('当月数据已清空', 'success'); }
 function clearRetailData() { retailData = []; updateDataStatus('retail', 0, ''); document.getElementById('retailFilterBar').style.display = 'none'; document.getElementById('retailContainer').innerHTML = '<div class="empty">请先导入零售明细数据</div>'; showToast('零售数据已清空', 'success'); }
-
 function readExcel(file, callback) {
     const reader = new FileReader();
     reader.onload = function(e) {
@@ -315,7 +278,6 @@ function readExcel(file, callback) {
     };
     reader.readAsArrayBuffer(file);
 }
-
 function normalizeSummaryRow(row) {
     const newRow = {};
     Object.keys(row).forEach(key => {
@@ -333,7 +295,6 @@ function normalizeSummaryRow(row) {
     });
     return newRow;
 }
-
 function normalizeRetailRow(row) {
     const newRow = {};
     Object.keys(row).forEach(key => {
@@ -349,7 +310,6 @@ function normalizeRetailRow(row) {
     });
     return newRow;
 }
-
 function formatDate(val) {
     if (!val) return '';
     if (typeof val === 'number') {
@@ -363,7 +323,6 @@ function formatDate(val) {
     }
     return '';
 }
-
 function handleBaseFiles(input) {
     const files = Array.from(input.files);
     if (files.length === 0) return;
@@ -389,7 +348,6 @@ function handleBaseFiles(input) {
         });
     });
 }
-
 function handleABCFile(input) {
     const file = input.files[0];
     if (!file) return;
@@ -405,7 +363,6 @@ function handleABCFile(input) {
         showToast('ABC分类导入成功：' + Object.keys(abcData).length + '家店铺', 'success');
     });
 }
-
 function autoABC() {
     const shopRevenue = {};
     baseData.forEach(d => {
@@ -423,7 +380,6 @@ function autoABC() {
     });
     updateDataStatus('abc', Object.keys(abcData).length, '自动分级：A级' + Math.ceil(n*0.2) + '家 | B级' + Math.floor(n*0.4) + '家 | C级' + Math.floor(n*0.4) + '家');
 }
-
 function handleMonthFile(input) {
     const file = input.files[0];
     if (!file) return;
@@ -442,7 +398,6 @@ function handleMonthFile(input) {
         setTimeout(() => switchTab('monthly'), 500);
     });
 }
-
 function generateMonthSelector(months) {
     const bar = document.getElementById('monthBar');
     bar.innerHTML = '';
@@ -462,7 +417,6 @@ function generateMonthSelector(months) {
     currentMonth = months[months.length - 1];
     runDiagnosis(currentMonth);
 }
-
 function runDiagnosis(month) {
     if (!month || baseData.length === 0 || monthData.length === 0) return;
     const currentData = monthData.filter(d => d['年份月份'] === month);
@@ -488,7 +442,6 @@ function runDiagnosis(month) {
     const prevMonth = monthIdx > 0 ? allMonths[monthIdx - 1] : null;
     const yearMatch = month.match(/(\d{4}).*(\d{1,2})/);
     const lastYearMonth = yearMatch ? (parseInt(yearMatch[1]) - 1) + '年' + yearMatch[2] + '月' : null;
-
     currentDiagnosis = currentData.map(d => {
         const shop = d['店铺名称'];
         const abc = abcData[shop] || 'C';
@@ -498,7 +451,6 @@ function runDiagnosis(month) {
         const sales = d['净销量'] || 0;
         const revenue = d['净销售额'] || 0;
         const inventory = d['期末库存'] || 0;
-
         let momSellout = 0, yoySellout = 0;
         if (prevMonth) {
             const prev = baseData.find(x => x['店铺名称'] === shop && x['年份月份'] === prevMonth);
@@ -508,7 +460,6 @@ function runDiagnosis(month) {
             const yoy = baseData.find(x => x['店铺名称'] === shop && x['年份月份'].indexOf(lastYearMonth) >= 0);
             if (yoy) yoySellout = sellout - (yoy['售罄率'] || 0) * 100;
         }
-
         let status, statusDesc, advice, coreProblem, opportunity;
         if (sellout < hist.sellout * 0.5 && sales > 0) {
             status = 'red'; statusDesc = '售罄率远低于同级平均，需立即干预';
@@ -544,7 +495,6 @@ function runDiagnosis(month) {
     document.getElementById('filterBar').style.display = 'flex';
     renderDiagnosis();
 }
-
 function renderDiagnosis() {
     const abcFilter = document.getElementById('abcFilter').value;
     const statusFilter = document.getElementById('statusFilter').value;
@@ -553,7 +503,6 @@ function renderDiagnosis() {
     if (abcFilter !== 'all') filtered = filtered.filter(d => d.abc === abcFilter);
     if (statusFilter !== 'all') filtered = filtered.filter(d => d.status === statusFilter);
     if (search) filtered = filtered.filter(d => d.shop.toLowerCase().indexOf(search) >= 0);
-
     const red = filtered.filter(d => d.status === 'red').length;
     const yellow = filtered.filter(d => d.status === 'yellow').length;
     const green = filtered.filter(d => d.status === 'green').length;
@@ -561,11 +510,9 @@ function renderDiagnosis() {
     document.getElementById('yellowCount').textContent = yellow;
     document.getElementById('greenCount').textContent = green;
     document.getElementById('totalCount').textContent = filtered.length;
-
     let html = '<div class="table-wrap"><table class="diag-table"><thead><tr>';
     html += '<th>店铺</th><th>ABC</th><th>售罄率</th><th>同级均</th><th>库销比</th><th>同级均</th><th>销量</th><th>库存</th><th>状态</th><th>操作</th>';
     html += '</tr></thead><tbody>';
-
     filtered.forEach((d, idx) => {
         const statusIcon = d.status === 'red' ? '🔴' : (d.status === 'yellow' ? '🟡' : '🟢');
         const selloutClass = d.sellout >= d.histSellout * 0.8 ? 'badge-green' : (d.sellout >= d.histSellout * 0.5 ? 'badge-yellow' : 'badge-red');
@@ -587,34 +534,28 @@ function renderDiagnosis() {
     html += '</tbody></table></div>';
     document.getElementById('diagnosisContainer').innerHTML = html;
 }
-
 function cleanShopName(name) {
     return String(name || '').replace(/202[4-9]/g, '').replace(/陕西省|甘肃省|宁夏|山西省|省/g, '').replace(/雪中飞店|雪中飞专卖店|雪中飞专厅/g, '').replace(/店$/g, '').trim() || name;
 }
-
 function toggleDetail(idx) {
     const row = document.getElementById('detail-' + idx);
     const icon = document.getElementById('icon-' + idx);
     row.classList.toggle('active');
     icon.classList.toggle('rotated');
 }
-
 function expandAllDetails() {
     document.querySelectorAll('.detail-row').forEach(r => r.classList.add('active'));
     document.querySelectorAll('.toggle-icon').forEach(i => i.classList.add('rotated'));
 }
-
 function collapseAllDetails() {
     document.querySelectorAll('.detail-row').forEach(r => r.classList.remove('active'));
     document.querySelectorAll('.toggle-icon').forEach(i => i.classList.remove('rotated'));
 }
-
 function generateReport(d) {
     const momSelloutStr = d.momSellout > 0 ? '+' + d.momSellout.toFixed(1) + '%' : d.momSellout.toFixed(1) + '%';
     const yoySelloutStr = d.yoySellout > 0 ? '+' + d.yoySellout.toFixed(1) + '%' : d.yoySellout.toFixed(1) + '%';
     const selloutStatus = d.sellout >= d.histSellout * 0.8 ? '🟢' : (d.sellout >= d.histSellout * 0.5 ? '🟡' : '🔴');
     const kxbStatus = d.kxb <= 5 ? '🟢' : (d.kxb <= 10 ? '🟡' : '🔴');
-
     let html = '<div class="report-box">';
     html += '<div class="report-title">📋 门店健康诊断报告（' + d.month + '）</div>';
     html += '<div class="report-section"><div class="report-section-title">📊 一、核心指标看板</div>';
@@ -636,7 +577,6 @@ function generateReport(d) {
     html += '</div>';
     return html;
 }
-
 function exportAllReports() {
     if (!currentDiagnosis || currentDiagnosis.length === 0) {
         showToast('没有可导出的诊断数据', 'error');
@@ -648,53 +588,29 @@ function exportAllReports() {
         const yoySelloutStr = d.yoySellout > 0 ? '+' + d.yoySellout.toFixed(1) + '%' : d.yoySellout.toFixed(1) + '%';
         const selloutStatus = d.sellout >= d.histSellout * 0.8 ? '绿灯' : (d.sellout >= d.histSellout * 0.5 ? '黄灯' : '红灯');
         const kxbStatus = d.kxb <= 5 ? '绿灯' : (d.kxb <= 10 ? '黄灯' : '红灯');
-
-        content += '========== ' + d.shop + ' ==========
-';
-        content += '门店健康诊断报告
-';
-        content += '店铺名称：' + d.shop + '
-';
-        content += '诊断月份：' + d.month + '
-';
-        content += 'ABC级分类：' + d.abc + '级
-
-';
-        content += '一、核心指标看板
-';
-        content += '指标	本月值	同级平均	环比	同比	状态
-';
-        content += '售罄率	' + d.sellout.toFixed(1) + '%	' + d.histSellout.toFixed(1) + '%	' + momSelloutStr + '	' + yoySelloutStr + '	' + selloutStatus + '
-';
-        content += '库销比	' + d.kxb.toFixed(1) + '	' + d.histKxb.toFixed(1) + '	-	-	' + kxbStatus + '
-
-';
-        content += '三、一句话诊断
-';
-        content += '核心问题：' + d.coreProblem + '
-';
-        content += '改进机会：' + d.opportunity + '
-
-';
-        content += '四、3条行动建议
-';
-        d.advice.forEach((a, i) => { content += (i+1) + '. ' + a + '
-'; });
-        content += '
-备注：下月初复查执行效果。
-
-
-';
+        content += '========== ' + d.shop + ' ==========\n';
+        content += '门店健康诊断报告\n';
+        content += '店铺名称：' + d.shop + '\n';
+        content += '诊断月份：' + d.month + '\n';
+        content += 'ABC级分类：' + d.abc + '级\n\n';
+        content += '一、核心指标看板\n';
+        content += '指标\t本月值\t同级平均\t环比\t同比\t状态\n';
+        content += '售罄率\t' + d.sellout.toFixed(1) + '%\t' + d.histSellout.toFixed(1) + '%\t' + momSelloutStr + '\t' + yoySelloutStr + '\t' + selloutStatus + '\n';
+        content += '库销比\t' + d.kxb.toFixed(1) + '\t' + d.histKxb.toFixed(1) + '\t-\t-\t' + kxbStatus + '\n\n';
+        content += '三、一句话诊断\n';
+        content += '核心问题：' + d.coreProblem + '\n';
+        content += '改进机会：' + d.opportunity + '\n\n';
+        content += '四、3条行动建议\n';
+        d.advice.forEach((a, i) => { content += (i+1) + '. ' + a + '\n'; });
+        content += '\n备注：下月初复查执行效果。\n\n\n';
     });
-
-    const blob = new Blob(['﻿' + content], {type: 'text/plain;charset=utf-8;'});
+    const blob = new Blob(['\uFEFF' + content], {type: 'text/plain;charset=utf-8;'});
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = '门店诊断报告汇总_' + currentMonth + '.txt';
     link.click();
     showToast('已导出 ' + currentDiagnosis.length + ' 家店铺的诊断报告', 'success');
 }
-
 function handleRetailFiles(input) {
     const files = Array.from(input.files);
     if (files.length === 0) return;
@@ -724,7 +640,6 @@ function handleRetailFiles(input) {
         });
     });
 }
-
 function setQuickRange(type) {
     const today = new Date();
     let start, end;
@@ -748,7 +663,6 @@ function setQuickRange(type) {
     document.getElementById('endDate').value = end;
     renderRetail();
 }
-
 function renderRetail() {
     if (retailData.length === 0) return;
     document.getElementById('retailFilterBar').style.display = 'flex';
@@ -761,7 +675,6 @@ function renderRetail() {
         document.getElementById('retailContainer').innerHTML = '<div class="empty">该时间段暂无数据</div>';
         return;
     }
-
     const shopStats = {};
     filtered.forEach(d => {
         const shop = d['店铺'];
@@ -780,10 +693,8 @@ function renderRetail() {
         if (!shopStats[shop].items[code].sizes[size]) shopStats[shop].items[code].sizes[size] = 0;
         shopStats[shop].items[code].sizes[size] += d['数量'] || 0;
     });
-
     const transfers = generateTransfers(shopStats);
     let html = '';
-
     if (transfers.length > 0) {
         html += '<div class="card"><div class="card-header"><div class="card-title">🚚 智能调拨建议</div></div><div class="card-body">';
         transfers.forEach(t => {
@@ -791,16 +702,13 @@ function renderRetail() {
         });
         html += '</div></div>';
     }
-
     Object.entries(shopStats).forEach(([shop, stats]) => {
         const items = Object.values(stats.items).sort((a, b) => b.total - a.total);
         const hot5 = items.slice(0, 5);
         const cold5 = items.slice(-5).reverse();
-
         html += '<div class="card">';
         html += '<div class="card-header"><div class="card-title">' + cleanShopName(shop) + ' <span style="font-size:12px;color:#999;font-weight:normal;">销量 ' + stats.total + ' | ¥' + stats.amount.toLocaleString() + '</span></div></div>';
         html += '<div class="card-body">';
-
         html += '<div style="margin-bottom:16px;"><div style="font-weight:600;color:#ff4d4f;margin-bottom:8px;font-size:14px;">🔥 畅销TOP5（按货号）</div>';
         hot5.forEach((item, i) => {
             const topColor = Object.entries(item.colors).sort((a, b) => b[1] - a[1])[0];
@@ -808,19 +716,15 @@ function renderRetail() {
             html += '<div class="rank-row"><div class="rank-num hot">' + (i+1) + '</div><div class="rank-info"><div class="rank-name" title="' + item.code + '">' + item.code + '</div><div class="rank-detail">' + item.name + ' | 畅销色:' + (topColor ? topColor[0] : '-') + ' | 畅销码:' + (topSize ? topSize[0] : '-') + '</div></div><div class="rank-value">' + item.total + '件</div></div>';
         });
         html += '</div>';
-
         html += '<div><div style="font-weight:600;color:#52c41a;margin-bottom:8px;font-size:14px;">❄️ 滞销TOP5（按货号）</div>';
         cold5.forEach((item, i) => {
             html += '<div class="rank-row"><div class="rank-num cool">' + (i+1) + '</div><div class="rank-info"><div class="rank-name" title="' + item.code + '">' + item.code + '</div><div class="rank-detail">' + item.name + '</div></div><div class="rank-value">' + item.total + '件</div></div>';
         });
         html += '</div>';
-
         html += '</div></div>';
     });
-
     document.getElementById('retailContainer').innerHTML = html;
 }
-
 function generateTransfers(shopStats) {
     const suggestions = [];
     const shops = Object.entries(shopStats);
@@ -846,7 +750,6 @@ function generateTransfers(shopStats) {
     });
     return suggestions.slice(0, 20);
 }
-
 document.addEventListener('DOMContentLoaded', function() {
     ['uploadZoneBase', 'uploadZoneABC', 'uploadZoneMonth', 'uploadZoneRetail'].forEach(id => {
         const area = document.getElementById(id);
