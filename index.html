@@ -321,7 +321,7 @@ ABC级店铺同维度对比
 <div class="import-area" id="importArea">
 <div class="import-icon">📁</div>
 <p>拖拽 JSON 文件到此处，或点击选择文件</p>
-<button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">选择文件</button>
+<button class="btn btn-primary" onclick="triggerFileInput()">选择文件</button>
 <input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleFileSelect(event)">
 </div>
 <div style="margin-top:16px">
@@ -490,17 +490,17 @@ var priceLight=item.avgPrice>=avgPrice?'green':item.avgPrice>=avgPrice*0.9?'yell
 var turnoverLight=parseFloat(item.turnover)>=avgTurnover?'green':parseFloat(item.turnover)>=avgTurnover*0.8?'yellow':'red';
 var score=[salesLight,trafficLight,priceLight,turnoverLight].filter(function(l){return l==='green';}).length;
 var tr=document.createElement('tr');
-tr.innerHTML='<td><strong>'+item.shop.name+'</strong><br><small style="color:#999">'+item.shop.city+' · '+item.shop.region+'</small></td>'+
-'<td><span class="tag tag-'+level.toLowerCase()+'">'+level+'级</span></td>'+
-'<td>¥'+item.monthSales.toLocaleString()+' <span class="traffic-light"><span class="light light-'+salesLight+'"></span></span></td>'+
-'<td>¥'+item.lastMonthSales.toLocaleString()+'</td>'+
-'<td style="color:'+(salesGrowth>=0?'#52c41a':'#ff4d4f')+'">'+(salesGrowth>0?'+':'')+salesGrowth+'%</td>'+
-'<td>'+item.monthTraffic.toLocaleString()+' <span class="traffic-light"><span class="light light-'+trafficLight+'"></span></span></td>'+
-'<td>'+item.lastMonthTraffic.toLocaleString()+'</td>'+
-'<td style="color:'+(trafficGrowth>=0?'#52c41a':'#ff4d4f')+'">'+(trafficGrowth>0?'+':'')+trafficGrowth+'%</td>'+
-'<td>¥'+item.avgPrice+' <span class="traffic-light"><span class="light light-'+priceLight+'"></span></span></td>'+
-'<td>'+item.turnover+'天 <span class="traffic-light"><span class="light light-'+turnoverLight+'"></span></span></td>'+
-'<td><span class="rank rank-'+(score>=3?'1':score>=2?'2':'3')+'">'+score+'/4</span></td>';
+tr.innerHTML=`<td><strong>${item.shop.name}</strong><br><small style="color:#999">${item.shop.city} · ${item.shop.region}</small></td>
+<td><span class="tag tag-${level.toLowerCase()}">${level}级</span></td>
+<td>¥${item.monthSales.toLocaleString()} <span class="traffic-light"><span class="light light-${salesLight}"></span></span></td>
+<td>¥${item.lastMonthSales.toLocaleString()}</td>
+<td style="color:${salesGrowth>=0?'#52c41a':'#ff4d4f'}">${salesGrowth>0?'+':''}${salesGrowth}%</td>
+<td>${item.monthTraffic.toLocaleString()} <span class="traffic-light"><span class="light light-${trafficLight}"></span></span></td>
+<td>${item.lastMonthTraffic.toLocaleString()}</td>
+<td style="color:${trafficGrowth>=0?'#52c41a':'#ff4d4f'}">${trafficGrowth>0?'+':''}${trafficGrowth}%</td>
+<td>¥${item.avgPrice} <span class="traffic-light"><span class="light light-${priceLight}"></span></span></td>
+<td>${item.turnover}天 <span class="traffic-light"><span class="light light-${turnoverLight}"></span></span></td>
+<td><span class="rank rank-${score>=3?'1':score>=2?'2':'3'}">${score}/4</span></td>`;
 tbody.appendChild(tr);
 });
 });
@@ -532,16 +532,16 @@ var groupLabel=document.createElement('div');
 groupLabel.className='multi-select-option';
 groupLabel.style.pointerEvents='none';
 groupLabel.style.background='#f8f9fa';
-groupLabel.innerHTML='<span class="opt-group-label">📍 '+city+'</span>';
+groupLabel.innerHTML=`<span class="opt-group-label">📍 ${city}</span>`;
 options.appendChild(groupLabel);
 cities[city].forEach(function(shop){
 var option=document.createElement('div');
 option.className='multi-select-option'+(selectedShops.has(shop.id)?' selected':'');
 option.dataset.shopId=shop.id;
 option.onclick=function(e){e.stopPropagation();toggleShop(shop.id);};
-option.innerHTML='<span class="check">'+(selectedShops.has(shop.id)?'✓':'')+'</span>'+
-'<span style="flex:1">'+shop.name+'</span>'+
-'<span class="tag tag-'+shop.level.toLowerCase()+'" style="margin-left:8px">'+shop.level+'</span>';
+option.innerHTML=`<span class="check">${selectedShops.has(shop.id)?'✓':''}</span>
+<span style="flex:1">${shop.name}</span>
+<span class="tag tag-${shop.level.toLowerCase()}" style="margin-left:8px">${shop.level}</span>`;
 options.appendChild(option);
 });
 });
@@ -667,7 +667,7 @@ var selectedShopList=appData.shops.filter(function(s){return selectedShops.has(s
 selectedShopList.forEach(function(shop){
 var badge=document.createElement('span');
 badge.className='selection-badge';
-badge.innerHTML=shop.name+' <span class="remove" onclick="removeShop(''+shop.id+'')">&times;</span>';
+badge.innerHTML=`${shop.name} <span class="remove" onclick="removeShop('${shop.id}')">&times;</span>`;
 container.appendChild(badge);
 });
 document.getElementById('shopPlaceholder').style.display='none';
@@ -731,17 +731,17 @@ return;
 container.innerHTML=sorted.map(function(item,index){
 var rankClass=index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':'rank-other';
 var isActive=selectedStyle===item[0];
-return'<li class="ranking-item '+(isActive?'active':'')+'" onclick="selectStyle(''+item[0]+'')">'+
-'<span class="rank-num '+rankClass+'">'+(index+1)+'</span>'+
-'<div class="rank-info">'+
-'<div class="rank-name">'+item[0]+'</div>'+
-'<div class="rank-meta">'+getStyleShopCount(item[0])+'家店铺有售</div>'+
-'</div>'+
-'<div class="rank-value">'+item[1]+'件</div>'+
-'<div class="rank-bar">'+
-'<div class="rank-bar-fill" style="width:'+(item[1]/maxQty*100).toFixed(0)+'%"></div>'+
-'</div>'+
-'</li>';
+return `<li class="ranking-item ${isActive?'active':''}" onclick="selectStyle('${item[0]}')">
+<span class="rank-num ${rankClass}">${index+1}</span>
+<div class="rank-info">
+<div class="rank-name">${item[0]}</div>
+<div class="rank-meta">${getStyleShopCount(item[0])}家店铺有售</div>
+</div>
+<div class="rank-value">${item[1]}件</div>
+<div class="rank-bar">
+<div class="rank-bar-fill" style="width:${(item[1]/maxQty*100).toFixed(0)}%"></div>
+</div>
+</li>`;
 }).join('');
 }
 
@@ -760,21 +760,21 @@ colorMap[r.color]+=r.qty;
 var sorted=Object.entries(colorMap).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
 var container=document.getElementById('colorRanking');
 var maxQty=sorted.length>0?sorted[0][1]:1;
-document.getElementById('colorSubtitle').textContent='「'+selectedStyle+'」的畅销色TOP5';
+document.getElementById('colorSubtitle').textContent=`「${selectedStyle}」的畅销色TOP5`;
 container.innerHTML=sorted.map(function(item,index){
 var rankClass=index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':'rank-other';
 var isActive=selectedColor===item[0];
-return'<li class="ranking-item '+(isActive?'active':'')+'" onclick="selectColor(''+item[0]+'')">'+
-'<span class="rank-num '+rankClass+'">'+(index+1)+'</span>'+
-'<div class="rank-info">'+
-'<div class="rank-name">'+item[0]+'</div>'+
-'<div class="rank-meta">占比 '+(item[1]/getTotalQty()*100).toFixed(1)+'%</div>'+
-'</div>'+
-'<div class="rank-value">'+item[1]+'件</div>'+
-'<div class="rank-bar">'+
-'<div class="rank-bar-fill" style="width:'+(item[1]/maxQty*100).toFixed(0)+'%"></div>'+
-'</div>'+
-'</li>';
+return `<li class="ranking-item ${isActive?'active':''}" onclick="selectColor('${item[0]}')">
+<span class="rank-num ${rankClass}">${index+1}</span>
+<div class="rank-info">
+<div class="rank-name">${item[0]}</div>
+<div class="rank-meta">占比 ${(item[1]/getTotalQty()*100).toFixed(1)}%</div>
+</div>
+<div class="rank-value">${item[1]}件</div>
+<div class="rank-bar">
+<div class="rank-bar-fill" style="width:${(item[1]/maxQty*100).toFixed(0)}%"></div>
+</div>
+</li>`;
 }).join('');
 }
 
@@ -793,20 +793,20 @@ sizeMap[r.size]+=r.qty;
 var sorted=Object.entries(sizeMap).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
 var container=document.getElementById('sizeRanking');
 var maxQty=sorted.length>0?sorted[0][1]:1;
-document.getElementById('sizeSubtitle').textContent='「'+selectedStyle+'」·「'+selectedColor+'」的畅销尺码TOP5';
+document.getElementById('sizeSubtitle').textContent=`「${selectedStyle}」·「${selectedColor}」的畅销尺码TOP5`;
 container.innerHTML=sorted.map(function(item,index){
 var rankClass=index===0?'rank-1':index===1?'rank-2':index===2?'rank-3':'rank-other';
-return'<li class="ranking-item">'+
-'<span class="rank-num '+rankClass+'">'+(index+1)+'</span>'+
-'<div class="rank-info">'+
-'<div class="rank-name">'+item[0]+'码</div>'+
-'<div class="rank-meta">占比 '+(item[1]/getTotalQty()*100).toFixed(1)+'%</div>'+
-'</div>'+
-'<div class="rank-value">'+item[1]+'件</div>'+
-'<div class="rank-bar">'+
-'<div class="rank-bar-fill" style="width:'+(item[1]/maxQty*100).toFixed(0)+'%"></div>'+
-'</div>'+
-'</li>';
+return `<li class="ranking-item">
+<span class="rank-num ${rankClass}">${index+1}</span>
+<div class="rank-info">
+<div class="rank-name">${item[0]}码</div>
+<div class="rank-meta">占比 ${(item[1]/getTotalQty()*100).toFixed(1)}%</div>
+</div>
+<div class="rank-value">${item[1]}件</div>
+<div class="rank-bar">
+<div class="rank-bar-fill" style="width:${(item[1]/maxQty*100).toFixed(0)}%"></div>
+</div>
+</li>`;
 }).join('');
 }
 
@@ -851,12 +851,12 @@ card.style.display='none';
 return;
 }
 card.style.display='block';
-var html='<span class="path-item" onclick="clearBreadcrumb()">'+getSelectionDesc()+'</span>';
+var html=`<span class="path-item" onclick="clearBreadcrumb()">${getSelectionDesc()}</span>`;
 if(selectedStyle){
-html+='<span class="path-sep">›</span><span class="path-item" onclick="backToStyle()">'+selectedStyle+'</span>';
+html+=`<span class="path-sep">›</span><span class="path-item" onclick="backToStyle()">${selectedStyle}</span>`;
 }
 if(selectedColor){
-html+='<span class="path-sep">›</span><span class="path-current">'+selectedColor+'</span>';
+html+=`<span class="path-sep">›</span><span class="path-current">${selectedColor}</span>`;
 }
 path.innerHTML=html;
 }
@@ -891,15 +891,15 @@ return;
 var sorted=data.sort(function(a,b){return b.qty-a.qty;}).slice(0,50);
 tbody.innerHTML=sorted.map(function(r){
 var shop=appData.shops.find(function(s){return s.id===r.shopId;});
-return'<tr>'+
-'<td><strong>'+(shop?shop.name:r.shopId)+'</strong><br><small style="color:#999">'+(shop?shop.city:'')+'</small></td>'+
-'<td>'+r.style+'</td>'+
-'<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:'+getColorHex(r.color)+';margin-right:6px;vertical-align:middle;border:1px solid #e0e0e0"></span>'+r.color+'</td>'+
-'<td>'+r.size+'</td>'+
-'<td><strong>'+r.qty+'</strong></td>'+
-'<td>¥'+r.amount.toLocaleString()+'</td>'+
-'<td>'+r.stock+'</td>'+
-'</tr>';
+return `<tr>
+<td><strong>${shop?shop.name:r.shopId}</strong><br><small style="color:#999">${shop?shop.city:''}</small></td>
+<td>${r.style}</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${getColorHex(r.color)};margin-right:6px;vertical-align:middle;border:1px solid #e0e0e0"></span>${r.color}</td>
+<td>${r.size}</td>
+<td><strong>${r.qty}</strong></td>
+<td>¥${r.amount.toLocaleString()}</td>
+<td>${r.stock}</td>
+</tr>`;
 }).join('');
 }
 
@@ -910,6 +910,10 @@ document.getElementById('importModal').classList.add('show');
 function closeImportModal(){
 document.getElementById('importModal').classList.remove('show');
 document.getElementById('fileInput').value='';
+}
+
+function triggerFileInput(){
+document.getElementById('fileInput').click();
 }
 
 function handleFileSelect(event){
