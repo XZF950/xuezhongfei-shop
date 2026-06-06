@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>门店诊断系统</title>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.20.3/dist/xlsx.full.min.js"></script>
 <style>
 :root{--bg:#f5f7fa;--card:#fff;--text:#1a1a2e;--text2:#4a4a6a;--border:#e2e8f0;--primary:#2563eb;--primary-light:#dbeafe;--green:#10b981;--green-bg:#d1fae5;--yellow:#f59e0b;--yellow-bg:#fef3c7;--red:#ef4444;--red-bg:#fee2e2;--shadow:0 1px 3px rgba(0,0,0,0.08);--shadow-lg:0 4px 12px rgba(0,0,0,0.1)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -727,8 +727,7 @@ grid.appendChild(card)
 $('diagExportBtn').addEventListener('click',()=>{
 const reports=document.querySelectorAll('.report-card');
 if(!reports.length){showToast('请先生成诊断报告','error');return}
-let csv='店铺名称,月份,ABC级别,售罄率,售罄状态,库销比,库销状态,净销售额,净销量,核心问题,建议1,建议2,建议3
-';
+let csv='店铺名称,月份,ABC级别,售罄率,售罄状态,库销比,库销状态,净销售额,净销量,核心问题,建议1,建议2,建议3\n';
 reports.forEach(card=>{
 const shop=card.querySelector('h3').childNodes[0].textContent.trim();
 const sub=card.querySelector('.sub').textContent;
@@ -746,10 +745,9 @@ const advices=card.querySelectorAll('.report-advice');
 const a1=advices[1]?.textContent?.replace(/^\d+\.\s*/,'')||'';
 const a2=advices[2]?.textContent?.replace(/^\d+\.\s*/,'')||'';
 const a3=advices[3]?.textContent?.replace(/^\d+\.\s*/,'')||'';
-csv+=`"${shop}","${month}","${abc}","${sellout}","${sellStatus}","${inv}","${invStatus}","${sales}","${qty}","${issue}","${a1}","${a2}","${a3}"
-`
+csv+=`"${shop}","${month}","${abc}","${sellout}","${sellStatus}","${inv}","${invStatus}","${sales}","${qty}","${issue}","${a1}","${a2}","${a3}"\n`
 });
-const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+const blob=new Blob([''+csv],{type:'text/csv;charset=utf-8'});
 const url=URL.createObjectURL(blob);
 const a=document.createElement('a');a.href=url;a.download=`门店诊断报告汇总_${new Date().toLocaleDateString('zh-CN')}.csv`;a.click();URL.revokeObjectURL(url);
 showToast('诊断报告已导出','success')
