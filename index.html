@@ -4,7 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>门店诊断系统</title>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.20.3/dist/xlsx.full.min.js"></script>
+<script>
+// XLSX library loader with fallback
+window.XLSX = null;
+(function() {
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.20.3/dist/xlsx.full.min.js';
+  script.onload = function() { console.log('XLSX loaded'); };
+  script.onerror = function() {
+    console.warn('XLSX CDN failed, Excel support disabled');
+    // Try backup CDN
+    var backup = document.createElement('script');
+    backup.src = 'https://unpkg.com/xlsx@0.20.3/dist/xlsx.full.min.js';
+    backup.onerror = function() { console.warn('Backup XLSX CDN also failed'); };
+    document.head.appendChild(backup);
+  };
+  document.head.appendChild(script);
+})();
+</script>
 <style>
 :root{--bg:#f5f7fa;--card:#fff;--text:#1a1a2e;--text2:#4a4a6a;--border:#e2e8f0;--primary:#2563eb;--primary-light:#dbeafe;--green:#10b981;--green-bg:#d1fae5;--yellow:#f59e0b;--yellow-bg:#fef3c7;--red:#ef4444;--red-bg:#fee2e2;--shadow:0 1px 3px rgba(0,0,0,0.08);--shadow-lg:0 4px 12px rgba(0,0,0,0.1)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -331,21 +348,21 @@ return result
 
 function saveToStorage(){
 try{
-localStorage.setItem(STORE_KEYS.summary,JSON.stringify(state.summaryRecords));
-localStorage.setItem(STORE_KEYS.retail,JSON.stringify(state.retailRecords));
-localStorage.setItem(STORE_KEYS.shop,JSON.stringify(state.shopMap));
-localStorage.setItem(STORE_KEYS.meta,JSON.stringify({lastUpdate:new Date().toLocaleString('zh-CN'),summaryCount:state.summaryData.length,retailCount:state.retailData.length,shopCount:Object.keys(state.shopMap).length}));
-localStorage.setItem(STORE_KEYS.gist,JSON.stringify(state.gistConfig));
+SafeStorage.setItem(STORE_KEYS.summary,JSON.stringify(state.summaryRecords));
+SafeStorage.setItem(STORE_KEYS.retail,JSON.stringify(state.retailRecords));
+SafeStorage.setItem(STORE_KEYS.shop,JSON.stringify(state.shopMap));
+SafeStorage.setItem(STORE_KEYS.meta,JSON.stringify({lastUpdate:new Date().toLocaleString('zh-CN'),summaryCount:state.summaryData.length,retailCount:state.retailData.length,shopCount:Object.keys(state.shopMap).length}));
+SafeStorage.setItem(STORE_KEYS.gist,JSON.stringify(state.gistConfig));
 updateDateDisplay()
 }catch(e){showToast('存储空间不足，请导出备份后清理数据','error')}
 }
 
 function loadFromStorage(){
 try{
-const s=localStorage.getItem(STORE_KEYS.summary);
-const r=localStorage.getItem(STORE_KEYS.retail);
-const sh=localStorage.getItem(STORE_KEYS.shop);
-const g=localStorage.getItem(STORE_KEYS.gist);
+const s=SafeStorage.getItem(STORE_KEYS.summary);
+const r=SafeStorage.getItem(STORE_KEYS.retail);
+const sh=SafeStorage.getItem(STORE_KEYS.shop);
+const g=SafeStorage.getItem(STORE_KEYS.gist);
 if(s)state.summaryRecords=JSON.parse(s);
 if(r)state.retailRecords=JSON.parse(r);
 if(sh)state.shopMap=JSON.parse(sh);
@@ -364,7 +381,7 @@ state.retailRecords.forEach(rec=>{if(rec.data)state.retailData.push(...rec.data)
 }
 
 function updateDateDisplay(){
-const meta=localStorage.getItem(STORE_KEYS.meta);
+const meta=SafeStorage.getItem(STORE_KEYS.meta);
 if(meta){
 const m=JSON.parse(meta);
 $('lastUpdate').textContent=`数据更新：${m.lastUpdate||'未知'} | 汇总${m.summaryCount||0}条 | 零售${m.retailCount||0}条 | 店铺${m.shopCount||0}家`
@@ -936,7 +953,12 @@ const opt=document.createElement('option');opt.value=s;opt.textContent=s;shopSel
 oldShops.forEach(v=>{const opt=Array.from(shopSel.options).find(o=>o.value===v);if(opt)opt.selected=true})
 });
 
-showToast('系统已就绪，支持Excel/CSV导入，请先配置云同步或导入数据','success');
+// Check storage availability on load
+if (!SafeStorage.isAvailable()) {
+  showToast('⚠️ 浏览器阻止了本地存储，数据仅在当前页面有效，刷新后会丢失。建议导出JSON备份或使用Chrome浏览器。','error');
+} else {
+  showToast('系统已就绪，支持Excel/CSV导入，请先配置云同步或导入数据','success');
+}
 </script>
 </body>
 </html>
