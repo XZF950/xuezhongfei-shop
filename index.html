@@ -597,24 +597,32 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 btn.addEventListener('click',()=>{
 document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
 btn.classList.add('active');
-document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));
-$(`tab-${btn.dataset.tab}`).classList.remove('hidden');
+document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
+$(`tab-${btn.dataset.tab}`).style.display='block';
 $('adminPanel').classList.remove('show');
+$('adminPanel').style.display='none';
 if(btn.dataset.tab==='diagnosis')updateDiagnosisFilters();
 if(btn.dataset.tab==='retail')updateRetailFilters()
 })
 });
 
 $('adminTrigger').addEventListener('click',()=>{
-$('adminPanel').classList.toggle('show');
-if($('adminPanel').classList.contains('show')){
-document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));
+const panel=$('adminPanel');
+const isHidden=panel.style.display==='none'||panel.style.display==='';
+if(isHidden){
+panel.style.display='block';
+panel.classList.add('show');
+document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
 document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'))
+}else{
+panel.style.display='none';
+panel.classList.remove('show')
 }
 });
 $('closeAdmin').addEventListener('click',()=>{
 $('adminPanel').classList.remove('show');
-$('tab-diagnosis').classList.remove('hidden');
+$('adminPanel').style.display='none';
+$('tab-diagnosis').style.display='block';
 document.querySelector('[data-tab="diagnosis"]').classList.add('active')
 });
 
