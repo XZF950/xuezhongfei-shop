@@ -4,1142 +4,933 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>门店诊断系统</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
-  :root {
-    --bg: #f5f7fa;
-    --card: #fff;
-    --text: #1a1a2e;
-    --text2: #4a4a6a;
-    --border: #e2e8f0;
-    --primary: #2563eb;
-    --primary-light: #dbeafe;
-    --green: #10b981;
-    --green-bg: #d1fae5;
-    --yellow: #f59e0b;
-    --yellow-bg: #fef3c7;
-    --red: #ef4444;
-    --red-bg: #fee2e2;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  * { box-sizing: border-box; margin:0; padding:0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); min-height:100vh; }
-  .container { max-width: 1400px; margin: 0 auto; padding: 16px; }
-
-  .topbar { display:flex; align-items:center; justify-content:space-between; background: var(--card); padding: 12px 24px; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 16px; flex-wrap:wrap; gap:8px; }
-  .topbar h1 { font-size: 18px; font-weight: 700; color: var(--primary); }
-  .topbar .tabs { display:flex; gap:4px; }
-  .topbar .tab-btn { padding: 8px 16px; border-radius: 8px; border:none; background: transparent; color: var(--text2); cursor:pointer; font-size: 14px; font-weight: 500; transition: .2s; }
-  .topbar .tab-btn.active { background: var(--primary); color:#fff; }
-  .topbar .tab-btn:hover:not(.active) { background: var(--primary-light); }
-  .topbar .right { display:flex; align-items:center; gap:12px; }
-  .topbar .date-display { font-size: 13px; color: var(--text2); background: var(--bg); padding: 6px 12px; border-radius: 6px; }
-  .admin-trigger { font-size: 11px; color: #cbd5e1; cursor:pointer; padding: 4px 8px; border-radius: 4px; }
-  .admin-trigger:hover { color: var(--text2); background: #f1f5f9; }
-
-  .card { background: var(--card); border-radius: 12px; box-shadow: var(--shadow); padding: 20px; margin-bottom: 16px; }
-  .card-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display:flex; align-items:center; gap:8px; }
-
-  .filters { display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; margin-bottom: 16px; }
-  .filter-group { display:flex; flex-direction:column; gap:4px; }
-  .filter-group label { font-size: 12px; color: var(--text2); font-weight: 500; }
-  .filter-group select, .filter-group input { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; min-width: 140px; background: #fff; }
-  .btn { padding: 8px 16px; border-radius: 8px; border:none; cursor:pointer; font-size: 13px; font-weight: 600; transition: .2s; display:inline-flex; align-items:center; gap:6px; }
-  .btn-primary { background: var(--primary); color:#fff; }
-  .btn-primary:hover { background: #1d4ed8; }
-  .btn-success { background: var(--green); color:#fff; }
-  .btn-danger { background: var(--red); color:#fff; }
-  .btn-secondary { background: #e2e8f0; color: var(--text); }
-  .btn-sm { padding: 4px 10px; font-size: 12px; }
-
-  table { width:100%; border-collapse:collapse; font-size: 13px; }
-  th { text-align:left; padding: 10px 12px; background: #f8fafc; font-weight: 600; color: var(--text2); border-bottom: 2px solid var(--border); white-space:nowrap; }
-  td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align:middle; }
-  tr:hover td { background: #f8fafc; }
-  .tag { display:inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-  .tag-green { background: var(--green-bg); color: #065f46; }
-  .tag-yellow { background: var(--yellow-bg); color: #92400e; }
-  .tag-red { background: var(--red-bg); color: #991b1b; }
-  .tag-blue { background: var(--primary-light); color: var(--primary); }
-  .tag-gray { background: #f1f5f9; color: #475569; }
-
-  .progress-wrap { width: 100%; background: #e2e8f0; border-radius: 6px; height: 8px; overflow:hidden; margin-top: 4px; }
-  .progress-bar { height: 100%; background: var(--primary); border-radius: 6px; transition: width .3s; }
-  .progress-text { font-size: 11px; color: var(--text2); margin-top: 2px; }
-
-  .rank-section { display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
-  .rank-card { background: var(--card); border-radius: 12px; box-shadow: var(--shadow); padding: 16px; }
-  .rank-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; display:flex; align-items:center; gap:6px; }
-  .rank-item { display:flex; align-items:center; gap:10px; padding: 8px 0; border-bottom: 1px solid var(--border); cursor:pointer; transition:.2s; }
-  .rank-item:hover { background: #f8fafc; margin:0 -8px; padding-left:8px; padding-right:8px; border-radius:6px; }
-  .rank-item.active { background: var(--primary-light); margin:0 -8px; padding-left:8px; padding-right:8px; border-radius:6px; }
-  .rank-num { width: 24px; height: 24px; border-radius: 50%; display:flex; align-items:center; justify-content:center; font-size: 11px; font-weight: 700; background: #e2e8f0; color: var(--text2); flex-shrink:0; }
-  .rank-num.top { background: var(--primary); color:#fff; }
-  .rank-name { flex:1; font-size: 13px; font-weight: 500; }
-  .rank-val { font-size: 13px; font-weight: 600; color: var(--primary); }
-
-  .report-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 16px; }
-  .report-card { background: var(--card); border-radius: 12px; box-shadow: var(--shadow); overflow:hidden; }
-  .report-header { padding: 16px 20px; background: linear-gradient(135deg, #1e293b, #334155); color:#fff; }
-  .report-header h3 { font-size: 16px; font-weight: 700; }
-  .report-header .sub { font-size: 12px; opacity: .8; margin-top: 4px; }
-  .report-body { padding: 16px 20px; }
-  .report-section-title { font-size: 13px; font-weight: 700; color: var(--text2); margin: 16px 0 10px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
-  .report-section-title:first-child { margin-top:0; }
-  .report-metric { display:flex; justify-content:space-between; align-items:center; padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
-  .report-metric .label { font-size: 12px; color: var(--text2); }
-  .report-metric .value { font-size: 13px; font-weight: 600; }
-  .report-advice { background: #f0f9ff; border-left: 3px solid var(--primary); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 8px 0; font-size: 12px; line-height: 1.6; }
-  .report-advice strong { color: var(--primary); }
-
-  .upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 32px; text-align:center; cursor:pointer; transition:.2s; background: #f8fafc; }
-  .upload-zone:hover { border-color: var(--primary); background: var(--primary-light); }
-  .upload-zone.dragover { border-color: var(--primary); background: var(--primary-light); }
-  .upload-zone .icon { font-size: 36px; margin-bottom: 8px; }
-  .upload-zone p { font-size: 14px; color: var(--text2); }
-  .file-list { margin-top: 12px; }
-  .file-item { display:flex; align-items:center; justify-content:space-between; padding: 8px 12px; background: #f8fafc; border-radius: 8px; margin-bottom: 6px; font-size: 13px; }
-  .file-item .name { font-weight: 500; }
-  .file-item .size { color: var(--text2); font-size: 11px; }
-
-  .hidden { display:none !important; }
-
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-
-  @media (max-width: 768px) {
-    .topbar { flex-direction:column; align-items:flex-start; }
-    .filters { flex-direction:column; align-items:stretch; }
-    .filter-group select, .filter-group input { width:100%; }
-    .report-grid { grid-template-columns: 1fr; }
-    .rank-section { grid-template-columns: 1fr; }
-  }
-
-  .toast { position:fixed; bottom:24px; right:24px; background: var(--text); color:#fff; padding: 12px 20px; border-radius: 10px; font-size: 13px; box-shadow: var(--shadow-lg); transform: translateY(100px); opacity:0; transition: .3s; z-index:2000; }
-  .toast.show { transform: translateY(0); opacity:1; }
-
-  .stats-row { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
-  .stat-box { background: var(--card); border-radius: 12px; padding: 16px; box-shadow: var(--shadow); }
-  .stat-box .label { font-size: 12px; color: var(--text2); margin-bottom: 4px; }
-  .stat-box .value { font-size: 24px; font-weight: 700; color: var(--primary); }
-
-  details { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow:hidden; }
-  details summary { padding: 12px 16px; background: #f8fafc; cursor:pointer; font-weight: 600; font-size: 13px; list-style:none; display:flex; justify-content:space-between; align-items:center; }
-  details summary::after { content: "▼"; font-size: 10px; color: var(--text2); transition:.2s; }
-  details[open] summary::after { transform: rotate(180deg); }
-  details .content { padding: 12px 16px; }
-
-  .admin-panel { display:none; }
-  .admin-panel.show { display:block; }
+:root{--bg:#f5f7fa;--card:#fff;--text:#1a1a2e;--text2:#4a4a6a;--border:#e2e8f0;--primary:#2563eb;--primary-light:#dbeafe;--green:#10b981;--green-bg:#d1fae5;--yellow:#f59e0b;--yellow-bg:#fef3c7;--red:#ef4444;--red-bg:#fee2e2;--shadow:0 1px 3px rgba(0,0,0,0.08);--shadow-lg:0 4px 12px rgba(0,0,0,0.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.container{max-width:1400px;margin:0 auto;padding:16px}
+.topbar{display:flex;align-items:center;justify-content:space-between;background:var(--card);padding:12px 24px;border-radius:12px;box-shadow:var(--shadow);margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.topbar h1{font-size:18px;font-weight:700;color:var(--primary)}
+.topbar .tabs{display:flex;gap:4px}
+.topbar .tab-btn{padding:8px 16px;border-radius:8px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:14px;font-weight:500;transition:.2s}
+.topbar .tab-btn.active{background:var(--primary);color:#fff}
+.topbar .tab-btn:hover:not(.active){background:var(--primary-light)}
+.topbar .right{display:flex;align-items:center;gap:12px}
+.topbar .date-display{font-size:13px;color:var(--text2);background:var(--bg);padding:6px 12px;border-radius:6px}
+.admin-trigger{font-size:11px;color:#cbd5e1;cursor:pointer;padding:4px 8px;border-radius:4px}
+.admin-trigger:hover{color:var(--text2);background:#f1f5f9}
+.card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+.card-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:16px}
+.filter-group{display:flex;flex-direction:column;gap:4px}
+.filter-group label{font-size:12px;color:var(--text2);font-weight:500}
+.filter-group select,.filter-group input{padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:140px;background:#fff}
+.btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:#1d4ed8}
+.btn-success{background:var(--green);color:#fff}
+.btn-danger{background:var(--red);color:#fff}
+.btn-secondary{background:#e2e8f0;color:var(--text)}
+.btn-sm{padding:4px 10px;font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;background:#f8fafc;font-weight:600;color:var(--text2);border-bottom:2px solid var(--border);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:#f8fafc}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.tag-green{background:var(--green-bg);color:#065f46}
+.tag-yellow{background:var(--yellow-bg);color:#92400e}
+.tag-red{background:var(--red-bg);color:#991b1b}
+.tag-blue{background:var(--primary-light);color:var(--primary)}
+.tag-gray{background:#f1f5f9;color:#475569}
+.progress-wrap{width:100%;background:#e2e8f0;border-radius:6px;height:8px;overflow:hidden;margin-top:4px}
+.progress-bar{height:100%;background:var(--primary);border-radius:6px;transition:width .3s}
+.progress-text{font-size:11px;color:var(--text2);margin-top:2px}
+.rank-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.rank-card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:16px}
+.rank-card h3{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.rank-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:.2s}
+.rank-item:hover{background:#f8fafc;margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:6px}
+.rank-item.active{background:var(--primary-light);margin:0 -8px;padding-left:8px;padding-right:8px;border-radius:6px}
+.rank-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:#e2e8f0;color:var(--text2);flex-shrink:0}
+.rank-num.top{background:var(--primary);color:#fff}
+.rank-name{flex:1;font-size:13px;font-weight:500}
+.rank-val{font-size:13px;font-weight:600;color:var(--primary)}
+.report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}
+.report-card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.report-header{padding:16px 20px;background:linear-gradient(135deg,#1e293b,#334155);color:#fff}
+.report-header h3{font-size:16px;font-weight:700}
+.report-header .sub{font-size:12px;opacity:.8;margin-top:4px}
+.report-body{padding:16px 20px}
+.report-section-title{font-size:13px;font-weight:700;color:var(--text2);margin:16px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+.report-section-title:first-child{margin-top:0}
+.report-metric{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9}
+.report-metric .label{font-size:12px;color:var(--text2)}
+.report-metric .value{font-size:13px;font-weight:600}
+.report-advice{background:#f0f9ff;border-left:3px solid var(--primary);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0;font-size:12px;line-height:1.6}
+.report-advice strong{color:var(--primary)}
+.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:.2s;background:#f8fafc}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-zone.dragover{border-color:var(--primary);background:var(--primary-light)}
+.upload-zone .icon{font-size:36px;margin-bottom:8px}
+.upload-zone p{font-size:14px;color:var(--text2)}
+.upload-zone p small{color:#94a3b8}
+.file-list{margin-top:12px}
+.file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#f8fafc;border-radius:8px;margin-bottom:6px;font-size:13px}
+.file-item .name{font-weight:500}
+.file-item .size{color:var(--text2);font-size:11px}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+@media(max-width:768px){.topbar{flex-direction:column;align-items:flex-start}.filters{flex-direction:column;align-items:stretch}.filter-group select,.filter-group input{width:100%}.report-grid{grid-template-columns:1fr}.rank-section{grid-template-columns:1fr}}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;box-shadow:var(--shadow-lg);transform:translateY(100px);opacity:0;transition:.3s;z-index:2000}
+.toast.show{transform:translateY(0);opacity:1}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.stat-box{background:var(--card);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.stat-box .label{font-size:12px;color:var(--text2);margin-bottom:4px}
+.stat-box .value{font-size:24px;font-weight:700;color:var(--primary)}
+details{border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+details summary{padding:12px 16px;background:#f8fafc;cursor:pointer;font-weight:600;font-size:13px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::after{content:"▼";font-size:10px;color:var(--text2);transition:.2s}
+details[open] summary::after{transform:rotate(180deg)}
+details .content{padding:12px 16px}
+.admin-panel{display:none}
+.admin-panel.show{display:block}
+.gist-sync-box{background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:16px;margin-bottom:16px}
+.gist-sync-box h4{font-size:14px;color:#0369a1;margin-bottom:10px}
+.gist-sync-box p{font-size:12px;color:#4a5568;margin-bottom:8px;line-height:1.5}
+.gist-sync-box input{width:100%;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;margin-bottom:8px}
+.gist-sync-box .btn-row{display:flex;gap:8px;flex-wrap:wrap}
+.gist-status{font-size:12px;padding:4px 10px;border-radius:4px;display:inline-block;margin-top:4px}
+.gist-status.ok{background:var(--green-bg);color:#065f46}
+.gist-status.err{background:var(--red-bg);color:#991b1b}
+.gist-status.warn{background:var(--yellow-bg);color:#92400e}
 </style>
 <base target="_blank">
 </head>
 <body>
 <div class="container">
-  <div class="topbar">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <h1>🏪 门店智能诊断系统</h1>
-      <div class="tabs" id="mainTabs">
-        <button class="tab-btn active" data-tab="diagnosis">月度汇总诊断</button>
-        <button class="tab-btn" data-tab="retail">零售明细分析</button>
-      </div>
-    </div>
-    <div class="right">
-      <span class="date-display" id="lastUpdate">数据更新：未导入</span>
-      <span class="admin-trigger" id="adminTrigger" title="数据管理后台">⚙️ 数据管理</span>
-    </div>
-  </div>
-
-  <div id="tab-diagnosis" class="tab-content">
-    <div class="card">
-      <div class="filters">
-        <div class="filter-group">
-          <label>月份选择</label>
-          <select id="diagMonthSelect"><option value="">请选择月份</option></select>
-        </div>
-        <div class="filter-group">
-          <label>店铺筛选（多选）</label>
-          <select id="diagShopSelect" multiple size="4" style="min-width:180px;"></select>
-        </div>
-        <div class="filter-group">
-          <label>ABC级别</label>
-          <select id="diagABCSelect">
-            <option value="">全部级别</option>
-            <option value="A">A级</option>
-            <option value="B">B级</option>
-            <option value="C">C级</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>状态筛选</label>
-          <select id="diagStatusSelect">
-            <option value="">全部</option>
-            <option value="green">🟢 绿灯</option>
-            <option value="yellow">🟡 黄灯</option>
-            <option value="red">🔴 红灯</option>
-          </select>
-        </div>
-        <button class="btn btn-primary" id="diagQueryBtn">查询诊断</button>
-        <button class="btn btn-success" id="diagExportBtn">📥 导出所有诊断报告</button>
-      </div>
-    </div>
-    <div class="stats-row" id="diagStats"></div>
-    <div class="report-grid" id="diagReports"></div>
-  </div>
-
-  <div id="tab-retail" class="tab-content hidden">
-    <div class="card">
-      <div class="filters">
-        <div class="filter-group">
-          <label>时间范围</label>
-          <div style="display:flex;align-items:center;gap:6px;">
-            <input type="date" id="retailDateFrom" style="min-width:120px;">
-            <span>~</span>
-            <input type="date" id="retailDateTo" style="min-width:120px;">
-          </div>
-        </div>
-        <div class="filter-group">
-          <label>城市/区域</label>
-          <select id="retailCitySelect"><option value="">全部</option></select>
-        </div>
-        <div class="filter-group">
-          <label>ABC级别</label>
-          <select id="retailABCSelect">
-            <option value="">全部级别</option>
-            <option value="A">A级</option>
-            <option value="B">B级</option>
-            <option value="C">C级</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>店铺选择（多选）</label>
-          <select id="retailShopSelect" multiple size="4" style="min-width:180px;"></select>
-        </div>
-        <button class="btn btn-primary" id="retailQueryBtn">查询分析</button>
-        <button class="btn btn-secondary" id="retailResetBtn">重置</button>
-      </div>
-    </div>
-
-    <div class="rank-section" id="retailRanks">
-      <div class="rank-card">
-        <h3>🏆 畅销款 TOP5 <span id="rank1Scope" style="font-size:12px;color:var(--text2);font-weight:400;">(所有店铺)</span></h3>
-        <div id="rankStyle"></div>
-      </div>
-      <div class="rank-card">
-        <h3>🎨 畅销色 TOP5 <span id="rank2Scope" style="font-size:12px;color:var(--text2);font-weight:400;">(所有店铺)</span></h3>
-        <div id="rankColor"></div>
-      </div>
-      <div class="rank-card">
-        <h3>📏 畅销尺码 TOP5 <span id="rank3Scope" style="font-size:12px;color:var(--text2);font-weight:400;">(所有店铺)</span></h3>
-        <div id="rankSize"></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:16px;">
-      <div class="card-title">🔄 智能调拨建议</div>
-      <div id="transferAdvice"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">📋 滞销款明细</div>
-      <div style="overflow-x:auto;">
-        <table id="unsoldTable">
-          <thead><tr><th>货号</th><th>颜色</th><th>尺码</th><th>销量</th><th>库存</th><th>店铺</th><th>建议</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div id="adminPanel" class="admin-panel">
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <h2 style="font-size:18px;">🔧 数据管理后台</h2>
-        <button class="btn btn-secondary" id="closeAdmin">关闭后台</button>
-      </div>
-
-      <details open>
-        <summary>📊 月度经营汇总数据（XXXX年X月店铺经营汇总表）</summary>
-        <div class="content">
-          <div class="upload-zone" id="summaryUploadZone">
-            <div class="icon">📁</div>
-            <p>拖拽或点击上传 CSV 文件<br><small>表头需包含：年份月份,店铺名称,净销量,净销售额,调入,调出,期末库存,期初,售罄率,库销比</small></p>
-            <input type="file" id="summaryFileInput" accept=".csv" multiple style="display:none;">
-          </div>
-          <div class="file-list" id="summaryFileList"></div>
-          <div class="progress-wrap" id="summaryProgressWrap" style="display:none;"><div class="progress-bar" id="summaryProgressBar" style="width:0%"></div></div>
-          <div class="progress-text" id="summaryProgressText"></div>
-          <div style="margin-top:12px;">
-            <button class="btn btn-primary" id="summaryImportBtn">开始导入</button>
-            <button class="btn btn-secondary" id="summaryClearBtn">清空全部</button>
-          </div>
-          <div style="margin-top:16px;">
-            <div class="card-title" style="font-size:14px;">已导入记录</div>
-            <table>
-              <thead><tr><th>文件名</th><th>记录数</th><th>导入时间</th><th>操作</th></tr></thead>
-              <tbody id="summaryRecords"></tbody>
-            </table>
-          </div>
-        </div>
-      </details>
-
-      <details>
-        <summary>🛒 零售明细数据</summary>
-        <div class="content">
-          <div class="upload-zone" id="retailUploadZone">
-            <div class="icon">📁</div>
-            <p>拖拽或点击上传 CSV 文件<br><small>表头需包含：单据编号,单据日期,店铺名称,商品款号,色号,颜色,尺码号,尺码,数量,单价,金额,大类</small></p>
-            <input type="file" id="retailFileInput" accept=".csv" multiple style="display:none;">
-          </div>
-          <div class="file-list" id="retailFileList"></div>
-          <div class="progress-wrap" id="retailProgressWrap" style="display:none;"><div class="progress-bar" id="retailProgressBar" style="width:0%"></div></div>
-          <div class="progress-text" id="retailProgressText"></div>
-          <div style="margin-top:12px;">
-            <button class="btn btn-primary" id="retailImportBtn">开始导入</button>
-            <button class="btn btn-secondary" id="retailClearBtn">清空全部</button>
-          </div>
-          <div style="margin-top:16px;">
-            <div class="card-title" style="font-size:14px;">已导入记录</div>
-            <table>
-              <thead><tr><th>文件名</th><th>记录数</th><th>时间范围</th><th>导入时间</th><th>操作</th></tr></thead>
-              <tbody id="retailRecords"></tbody>
-            </table>
-          </div>
-        </div>
-      </details>
-
-      <details>
-        <summary>🏪 店铺基础数据（ABC分类）</summary>
-        <div class="content">
-          <div class="upload-zone" id="shopUploadZone">
-            <div class="icon">📁</div>
-            <p>拖拽或点击上传 CSV 文件<br><small>表头需包含：店铺名称,ABC级分类,城市/区域（可选）</small></p>
-            <input type="file" id="shopFileInput" accept=".csv" style="display:none;">
-          </div>
-          <div class="file-list" id="shopFileList"></div>
-          <div class="progress-wrap" id="shopProgressWrap" style="display:none;"><div class="progress-bar" id="shopProgressBar" style="width:0%"></div></div>
-          <div class="progress-text" id="shopProgressText"></div>
-          <div style="margin-top:12px;">
-            <button class="btn btn-primary" id="shopImportBtn">开始导入</button>
-            <button class="btn btn-secondary" id="shopClearBtn">清空全部</button>
-          </div>
-          <div style="margin-top:16px;">
-            <div class="card-title" style="font-size:14px;">已导入店铺</div>
-            <div style="overflow-x:auto;">
-              <table>
-                <thead><tr><th>店铺名称</th><th>ABC级别</th><th>城市/区域</th><th>操作</th></tr></thead>
-                <tbody id="shopRecords"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </details>
-
-      <details>
-        <summary>💾 数据备份与恢复</summary>
-        <div class="content">
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <button class="btn btn-primary" id="exportAllBtn">📤 导出全部数据(JSON)</button>
-            <button class="btn btn-success" id="importAllBtn">📥 导入数据备份(JSON)</button>
-            <input type="file" id="importAllInput" accept=".json" style="display:none;">
-          </div>
-          <p style="margin-top:12px;font-size:12px;color:var(--text2);">提示：导出为JSON文件后，可在其他设备或浏览器中导入恢复全部数据。所有数据均存储在浏览器本地。</p>
-        </div>
-      </details>
-    </div>
-  </div>
+<div class="topbar">
+<div style="display:flex;align-items:center;gap:12px">
+<h1>🏪 门店智能诊断系统</h1>
+<div class="tabs" id="mainTabs">
+<button class="tab-btn active" data-tab="diagnosis">月度汇总诊断</button>
+<button class="tab-btn" data-tab="retail">零售明细分析</button>
+</div>
+</div>
+<div class="right">
+<span class="date-display" id="lastUpdate">数据更新：未导入</span>
+<span class="admin-trigger" id="adminTrigger" title="数据管理后台">⚙️ 数据管理</span>
+</div>
 </div>
 
+<div id="tab-diagnosis" class="tab-content">
+<div class="card">
+<div class="filters">
+<div class="filter-group"><label>月份选择</label><select id="diagMonthSelect"><option value="">请选择月份</option></select></div>
+<div class="filter-group"><label>店铺筛选（多选）</label><select id="diagShopSelect" multiple size="4" style="min-width:180px"></select></div>
+<div class="filter-group"><label>ABC级别</label><select id="diagABCSelect"><option value="">全部级别</option><option value="A">A级</option><option value="B">B级</option><option value="C">C级</option></select></div>
+<div class="filter-group"><label>状态筛选</label><select id="diagStatusSelect"><option value="">全部</option><option value="green">🟢 绿灯</option><option value="yellow">🟡 黄灯</option><option value="red">🔴 红灯</option></select></div>
+<button class="btn btn-primary" id="diagQueryBtn">查询诊断</button>
+<button class="btn btn-success" id="diagExportBtn">📥 导出所有诊断报告</button>
+</div>
+</div>
+<div class="stats-row" id="diagStats"></div>
+<div class="report-grid" id="diagReports"></div>
+</div>
+
+<div id="tab-retail" class="tab-content hidden">
+<div class="card">
+<div class="filters">
+<div class="filter-group"><label>时间范围</label><div style="display:flex;align-items:center;gap:6px"><input type="date" id="retailDateFrom" style="min-width:120px"><span>~</span><input type="date" id="retailDateTo" style="min-width:120px"></div></div>
+<div class="filter-group"><label>城市/区域</label><select id="retailCitySelect"><option value="">全部</option></select></div>
+<div class="filter-group"><label>ABC级别</label><select id="retailABCSelect"><option value="">全部级别</option><option value="A">A级</option><option value="B">B级</option><option value="C">C级</option></select></div>
+<div class="filter-group"><label>店铺选择（多选）</label><select id="retailShopSelect" multiple size="4" style="min-width:180px"></select></div>
+<button class="btn btn-primary" id="retailQueryBtn">查询分析</button>
+<button class="btn btn-secondary" id="retailResetBtn">重置</button>
+</div>
+</div>
+<div class="rank-section" id="retailRanks">
+<div class="rank-card"><h3>🏆 畅销款 TOP5 <span id="rank1Scope" style="font-size:12px;color:var(--text2);font-weight:400">(所有店铺)</span></h3><div id="rankStyle"></div></div>
+<div class="rank-card"><h3>🎨 畅销色 TOP5 <span id="rank2Scope" style="font-size:12px;color:var(--text2);font-weight:400">(所有店铺)</span></h3><div id="rankColor"></div></div>
+<div class="rank-card"><h3>📏 畅销尺码 TOP5 <span id="rank3Scope" style="font-size:12px;color:var(--text2);font-weight:400">(所有店铺)</span></h3><div id="rankSize"></div></div>
+</div>
+<div class="card" style="margin-top:16px"><div class="card-title">🔄 智能调拨建议</div><div id="transferAdvice"></div></div>
+<div class="card"><div class="card-title">📋 滞销款明细</div><div style="overflow-x:auto"><table id="unsoldTable"><thead><tr><th>货号</th><th>颜色</th><th>尺码</th><th>销量</th><th>库存</th><th>店铺</th><th>建议</th></tr></thead><tbody></tbody></table></div></div>
+</div>
+
+<div id="adminPanel" class="admin-panel">
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+<h2 style="font-size:18px">🔧 数据管理后台</h2>
+<button class="btn btn-secondary" id="closeAdmin">关闭后台</button>
+</div>
+
+<details open>
+<summary>☁️ 跨设备云同步（GitHub Gist）</summary>
+<div class="content">
+<div class="gist-sync-box">
+<h4>🔑 GitHub Token 配置</h4>
+<p>1. 访问 <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings → Developer settings → Personal access tokens</a> 生成 Token（勾选 gist 权限）</p>
+<p>2. 将 Token 和 Gist ID 填入下方，所有设备使用相同配置即可自动同步数据</p>
+<input type="password" id="gistToken" placeholder="GitHub Personal Access Token (ghp_xxxxxxxx)">
+<input type="text" id="gistId" placeholder="Gist ID (首次留空，上传后会自动生成)">
+<div class="btn-row">
+<button class="btn btn-primary" id="gistSaveBtn">💾 保存配置</button>
+<button class="btn btn-success" id="gistUploadBtn">☁️ 上传数据到云端</button>
+<button class="btn btn-primary" id="gistDownloadBtn">📥 从云端下载数据</button>
+</div>
+<div id="gistStatus" class="gist-status warn" style="margin-top:8px">未配置同步</div>
+</div>
+</div>
+</details>
+
+<details open>
+<summary>📊 月度经营汇总数据（Excel/CSV）</summary>
+<div class="content">
+<div class="upload-zone" id="summaryUploadZone">
+<div class="icon">📁</div>
+<p>拖拽或点击上传 Excel / CSV 文件<br><small>支持 .xlsx .xls .csv | 表头：年份月份,店铺名称,净销量,净销售额,调入,调出,期末库存,期初,售罄率,库销比</small></p>
+<input type="file" id="summaryFileInput" accept=".csv,.xlsx,.xls" multiple style="display:none">
+</div>
+<div class="file-list" id="summaryFileList"></div>
+<div class="progress-wrap" id="summaryProgressWrap" style="display:none"><div class="progress-bar" id="summaryProgressBar" style="width:0%"></div></div>
+<div class="progress-text" id="summaryProgressText"></div>
+<div style="margin-top:12px">
+<button class="btn btn-primary" id="summaryImportBtn">开始导入</button>
+<button class="btn btn-secondary" id="summaryClearBtn">清空全部</button>
+</div>
+<div style="margin-top:16px">
+<div class="card-title" style="font-size:14px">已导入记录</div>
+<table><thead><tr><th>文件名</th><th>记录数</th><th>导入时间</th><th>操作</th></tr></thead><tbody id="summaryRecords"></tbody></table>
+</div>
+</div>
+</details>
+
+<details>
+<summary>🛒 零售明细数据（Excel/CSV）</summary>
+<div class="content">
+<div class="upload-zone" id="retailUploadZone">
+<div class="icon">📁</div>
+<p>拖拽或点击上传 Excel / CSV 文件<br><small>支持 .xlsx .xls .csv | 表头：单据编号,单据日期,店铺名称,商品款号,色号,颜色,尺码号,尺码,数量,单价,金额,大类</small></p>
+<input type="file" id="retailFileInput" accept=".csv,.xlsx,.xls" multiple style="display:none">
+</div>
+<div class="file-list" id="retailFileList"></div>
+<div class="progress-wrap" id="retailProgressWrap" style="display:none"><div class="progress-bar" id="retailProgressBar" style="width:0%"></div></div>
+<div class="progress-text" id="retailProgressText"></div>
+<div style="margin-top:12px">
+<button class="btn btn-primary" id="retailImportBtn">开始导入</button>
+<button class="btn btn-secondary" id="retailClearBtn">清空全部</button>
+</div>
+<div style="margin-top:16px">
+<div class="card-title" style="font-size:14px">已导入记录</div>
+<table><thead><tr><th>文件名</th><th>记录数</th><th>时间范围</th><th>导入时间</th><th>操作</th></tr></thead><tbody id="retailRecords"></tbody></table>
+</div>
+</div>
+</details>
+
+<details>
+<summary>🏪 店铺基础数据（Excel/CSV）</summary>
+<div class="content">
+<div class="upload-zone" id="shopUploadZone">
+<div class="icon">📁</div>
+<p>拖拽或点击上传 Excel / CSV 文件<br><small>支持 .xlsx .xls .csv | 表头：店铺名称,ABC级分类,城市/区域（可选）</small></p>
+<input type="file" id="shopFileInput" accept=".csv,.xlsx,.xls" style="display:none">
+</div>
+<div class="file-list" id="shopFileList"></div>
+<div class="progress-wrap" id="shopProgressWrap" style="display:none"><div class="progress-bar" id="shopProgressBar" style="width:0%"></div></div>
+<div class="progress-text" id="shopProgressText"></div>
+<div style="margin-top:12px">
+<button class="btn btn-primary" id="shopImportBtn">开始导入</button>
+<button class="btn btn-secondary" id="shopClearBtn">清空全部</button>
+</div>
+<div style="margin-top:16px">
+<div class="card-title" style="font-size:14px">已导入店铺</div>
+<div style="overflow-x:auto">
+<table><thead><tr><th>店铺名称</th><th>ABC级别</th><th>城市/区域</th><th>操作</th></tr></thead><tbody id="shopRecords"></tbody></table>
+</div>
+</div>
+</div>
+</details>
+
+<details>
+<summary>💾 本地数据备份与恢复</summary>
+<div class="content">
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<button class="btn btn-primary" id="exportAllBtn">📤 导出全部数据(JSON)</button>
+<button class="btn btn-success" id="importAllBtn">📥 导入数据备份(JSON)</button>
+<input type="file" id="importAllInput" accept=".json" style="display:none">
+</div>
+<p style="margin-top:12px;font-size:12px;color:var(--text2)">提示：导出为JSON文件后，可在其他设备或浏览器中导入恢复全部数据。推荐配合上方云同步功能使用。</p>
+</div>
+</details>
+</div>
+</div>
+</div>
 <div class="toast" id="toast"></div>
-
 <script>
-// ===================== DATA STORE =====================
-const STORE_KEYS = {
-  summary: 'diag_summary_data',
-  retail: 'diag_retail_data', 
-  shop: 'diag_shop_data',
-  meta: 'diag_meta'
+const STORE_KEYS={summary:'diag_summary_data',retail:'diag_retail_data',shop:'diag_shop_data',meta:'diag_meta',gist:'diag_gist_config'};
+const state={summaryRecords:[],retailRecords:[],shopMap:{},summaryData:[],retailData:[],selectedStyle:null,selectedColor:null,selectedSize:null,gistConfig:{token:'',gistId:''}};
+function $(id){return document.getElementById(id)}
+function showToast(msg,type){
+const t=$('toast');t.textContent=msg;t.style.background=type==='error'?'#ef4444':type==='success'?'#10b981':'#1a1a2e';t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'),3000)
+}
+
+function parseFile(file,onDone){
+const reader=new FileReader();
+const name=file.name.toLowerCase();
+if(name.endsWith('.csv')){
+reader.onload=(e)=>{const text=e.target.result;const data=parseCSV(text);onDone(data,file.name)};
+reader.readAsText(file)
+}else{
+reader.onload=(e)=>{
+try{
+const data=new Uint8Array(e.target.result);
+const workbook=XLSX.read(data,{type:'array'});
+const firstSheet=workbook.Sheets[workbook.SheetNames[0]];
+const jsonData=XLSX.utils.sheet_to_json(firstSheet,{header:1});
+if(!jsonData.length){onDone([],file.name);return}
+const headers=jsonData[0].map(h=>String(h).trim());
+const rows=[];
+for(let i=1;i<jsonData.length;i++){
+const row={};
+jsonData[i].forEach((val,idx)=>{if(headers[idx])row[headers[idx]]=val!==undefined?String(val).trim():''});
+rows.push(row)
+}
+onDone(rows,file.name)
+}catch(err){showToast('Excel解析失败: '+err.message,'error');onDone([],file.name)}
 };
+reader.readAsArrayBuffer(file)
+}
+}
 
-const state = {
-  summaryRecords: [],
-  retailRecords: [],
-  shopMap: {},
-  summaryData: [],
-  retailData: [],
-  selectedStyle: null,
-  selectedColor: null,
-  selectedSize: null
+function parseCSV(text){
+const lines=text.trim().split(/\r?\n/);
+if(!lines.length)return[];
+const headers=lines[0].split(',').map(h=>h.trim().replace(/^\uFEFF/,''));
+const result=[];
+for(let i=1;i<lines.length;i++){
+if(!lines[i].trim())continue;
+const row={};
+let current='';
+let inQuotes=false;
+let colIdx=0;
+for(let j=0;j<lines[i].length;j++){
+const ch=lines[i][j];
+if(ch==='"'){inQuotes=!inQuotes}
+else if(ch===','&&!inQuotes){row[headers[colIdx]]=current.trim();current='';colIdx++}
+else{current+=ch}
+}
+if(colIdx<headers.length)row[headers[colIdx]]=current.trim();
+result.push(row)
+}
+return result
+}
+
+function saveToStorage(){
+try{
+localStorage.setItem(STORE_KEYS.summary,JSON.stringify(state.summaryRecords));
+localStorage.setItem(STORE_KEYS.retail,JSON.stringify(state.retailRecords));
+localStorage.setItem(STORE_KEYS.shop,JSON.stringify(state.shopMap));
+localStorage.setItem(STORE_KEYS.meta,JSON.stringify({lastUpdate:new Date().toLocaleString('zh-CN'),summaryCount:state.summaryData.length,retailCount:state.retailData.length,shopCount:Object.keys(state.shopMap).length}));
+localStorage.setItem(STORE_KEYS.gist,JSON.stringify(state.gistConfig));
+updateDateDisplay()
+}catch(e){showToast('存储空间不足，请导出备份后清理数据','error')}
+}
+
+function loadFromStorage(){
+try{
+const s=localStorage.getItem(STORE_KEYS.summary);
+const r=localStorage.getItem(STORE_KEYS.retail);
+const sh=localStorage.getItem(STORE_KEYS.shop);
+const g=localStorage.getItem(STORE_KEYS.gist);
+if(s)state.summaryRecords=JSON.parse(s);
+if(r)state.retailRecords=JSON.parse(r);
+if(sh)state.shopMap=JSON.parse(sh);
+if(g)state.gistConfig=JSON.parse(g);
+rebuildFlatData();
+updateDateDisplay();
+updateGistUI()
+}catch(e){console.error(e)}
+}
+
+function rebuildFlatData(){
+state.summaryData=[];
+state.retailData=[];
+state.summaryRecords.forEach(rec=>{if(rec.data)state.summaryData.push(...rec.data)});
+state.retailRecords.forEach(rec=>{if(rec.data)state.retailData.push(...rec.data)})
+}
+
+function updateDateDisplay(){
+const meta=localStorage.getItem(STORE_KEYS.meta);
+if(meta){
+const m=JSON.parse(meta);
+$('lastUpdate').textContent=`数据更新：${m.lastUpdate||'未知'} | 汇总${m.summaryCount||0}条 | 零售${m.retailCount||0}条 | 店铺${m.shopCount||0}家`
+}
+}
+
+function getShopABC(shopName){return state.shopMap[shopName]?.abc||''}
+function getShopCity(shopName){return state.shopMap[shopName]?.city||''}
+function getAllShops(){return Object.keys(state.shopMap).sort()}
+function getShopsByABC(abc){return Object.entries(state.shopMap).filter(([_,v])=>v.abc===abc).map(([k])=>k)}
+function getShopsByCity(city){return Object.entries(state.shopMap).filter(([_,v])=>v.city===city).map(([k])=>k)}
+function getCities(){const cities=new Set();Object.values(state.shopMap).forEach(s=>{if(s.city)cities.add(s.city)});return Array.from(cities).sort()}
+function getMonths(){const months=new Set();state.summaryData.forEach(d=>{if(d['年份月份'])months.add(d['年份月份'])});return Array.from(months).sort()}
+
+function updateGistUI(){
+$('gistToken').value=state.gistConfig.token||'';
+$('gistId').value=state.gistConfig.gistId||'';
+const status=$('gistStatus');
+if(state.gistConfig.token&&state.gistConfig.gistId){status.textContent='✅ 已配置云同步（Token + Gist ID）';status.className='gist-status ok'}
+else if(state.gistConfig.token){status.textContent='⚠️ 已保存Token，首次请上传生成Gist ID';status.className='gist-status warn'}
+else{status.textContent='未配置同步';status.className='gist-status warn'}
+}
+
+$('gistSaveBtn').addEventListener('click',()=>{
+state.gistConfig.token=$('gistToken').value.trim();
+state.gistConfig.gistId=$('gistId').value.trim();
+saveToStorage();
+updateGistUI();
+showToast('配置已保存','success')
+});
+
+$('gistUploadBtn').addEventListener('click',async()=>{
+const token=state.gistConfig.token||$('gistToken').value.trim();
+if(!token){showToast('请先输入GitHub Token','error');return}
+const payload={
+description:'门店诊断系统数据备份',
+public:false,
+files:{'store_diagnosis_data.json':{content:JSON.stringify({summaryRecords:state.summaryRecords,retailRecords:state.retailRecords,shopMap:state.shopMap,exportTime:new Date().toISOString()},null,2)}}
 };
-
-function $(id) { return document.getElementById(id); }
-function showToast(msg, type) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.style.background = type==='error' ? '#ef4444' : type==='success' ? '#10b981' : '#1a1a2e';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-function parseCSV(text) {
-  const lines = text.trim().split(/\r?\n/);
-  if (!lines.length) return [];
-  const headers = lines[0].split(',').map(h => h.trim().replace(/^\uFEFF/, ''));
-  const result = [];
-  for (let i = 1; i < lines.length; i++) {
-    const row = {};
-    let current = '';
-    let inQuotes = false;
-    let colIdx = 0;
-    for (let j = 0; j < lines[i].length; j++) {
-      const ch = lines[i][j];
-      if (ch === '"') { inQuotes = !inQuotes; }
-      else if (ch === ',' && !inQuotes) {
-        row[headers[colIdx]] = current.trim();
-        current = '';
-        colIdx++;
-      } else { current += ch; }
-    }
-    if (colIdx < headers.length) row[headers[colIdx]] = current.trim();
-    result.push(row);
-  }
-  return result;
-}
-
-function saveToStorage() {
-  try {
-    localStorage.setItem(STORE_KEYS.summary, JSON.stringify(state.summaryRecords));
-    localStorage.setItem(STORE_KEYS.retail, JSON.stringify(state.retailRecords));
-    localStorage.setItem(STORE_KEYS.shop, JSON.stringify(state.shopMap));
-    localStorage.setItem(STORE_KEYS.meta, JSON.stringify({
-      lastUpdate: new Date().toLocaleString('zh-CN'),
-      summaryCount: state.summaryData.length,
-      retailCount: state.retailData.length,
-      shopCount: Object.keys(state.shopMap).length
-    }));
-    updateDateDisplay();
-  } catch(e) {
-    showToast('存储空间不足，请导出备份后清理数据', 'error');
-  }
-}
-
-function loadFromStorage() {
-  try {
-    const s = localStorage.getItem(STORE_KEYS.summary);
-    const r = localStorage.getItem(STORE_KEYS.retail);
-    const sh = localStorage.getItem(STORE_KEYS.shop);
-    if (s) state.summaryRecords = JSON.parse(s);
-    if (r) state.retailRecords = JSON.parse(r);
-    if (sh) state.shopMap = JSON.parse(sh);
-    rebuildFlatData();
-    updateDateDisplay();
-  } catch(e) { console.error(e); }
-}
-
-function rebuildFlatData() {
-  state.summaryData = [];
-  state.retailData = [];
-  state.summaryRecords.forEach(rec => { if (rec.data) state.summaryData.push(...rec.data); });
-  state.retailRecords.forEach(rec => { if (rec.data) state.retailData.push(...rec.data); });
-}
-
-function updateDateDisplay() {
-  const meta = localStorage.getItem(STORE_KEYS.meta);
-  if (meta) {
-    const m = JSON.parse(meta);
-    $('lastUpdate').textContent = `数据更新：${m.lastUpdate || '未知'} | 汇总${m.summaryCount||0}条 | 零售${m.retailCount||0}条 | 店铺${m.shopCount||0}家`;
-  }
-}
-
-function getShopABC(shopName) { return state.shopMap[shopName]?.abc || ''; }
-function getShopCity(shopName) { return state.shopMap[shopName]?.city || ''; }
-function getAllShops() { return Object.keys(state.shopMap).sort(); }
-function getShopsByABC(abc) { return Object.entries(state.shopMap).filter(([_,v]) => v.abc === abc).map(([k]) => k); }
-function getShopsByCity(city) { return Object.entries(state.shopMap).filter(([_,v]) => v.city === city).map(([k]) => k); }
-function getCities() { const cities = new Set(); Object.values(state.shopMap).forEach(s => { if (s.city) cities.add(s.city); }); return Array.from(cities).sort(); }
-function getMonths() { const months = new Set(); state.summaryData.forEach(d => { if (d['年份月份']) months.add(d['年份月份']); }); return Array.from(months).sort(); }
-
-// ===================== FILE UPLOAD =====================
-const pendingFiles = { summary: [], retail: [], shop: [] };
-
-function setupUpload(zoneId, inputId, listId, key) {
-  const zone = $(zoneId);
-  const input = $(inputId);
-  zone.addEventListener('click', () => input.click());
-  zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-  zone.addEventListener('drop', (e) => {
-    e.preventDefault(); zone.classList.remove('dragover');
-    handleFiles(e.dataTransfer.files, key);
-  });
-  input.addEventListener('change', (e) => { handleFiles(e.target.files, key); input.value = ''; });
-}
-
-function handleFiles(files, key) {
-  pendingFiles[key] = [];
-  for (let f of files) pendingFiles[key].push(f);
-  renderFileList(key);
-}
-
-function renderFileList(key) {
-  const list = $(key + 'FileList');
-  list.innerHTML = '';
-  pendingFiles[key].forEach(f => {
-    const div = document.createElement('div');
-    div.className = 'file-item';
-    div.innerHTML = `<span class="name">${f.name}</span><span class="size">${(f.size/1024).toFixed(1)} KB</span>`;
-    list.appendChild(div);
-  });
-}
-
-async function processFiles(key, onProgress, onDone) {
-  const files = pendingFiles[key];
-  if (!files.length) { showToast('请先选择文件', 'error'); return; }
-  let total = files.length, processed = 0;
-  const allData = [];
-  for (let f of files) {
-    const text = await f.text();
-    let data = parseCSV(text);
-    if (!data || !data.length) { showToast(`${f.name} 解析失败，请确保是CSV格式`, 'error'); continue; }
-    allData.push(...data);
-    processed++;
-    onProgress(Math.round((processed/total)*100));
-  }
-  onDone(allData, files);
-  pendingFiles[key] = [];
-  renderFileList(key);
-}
-
-// ===================== IMPORT HANDLERS =====================
-$('summaryImportBtn').addEventListener('click', () => {
-  const bar = $('summaryProgressBar'), wrap = $('summaryProgressWrap'), txt = $('summaryProgressText');
-  wrap.style.display = 'block';
-  processFiles('summary',
-    pct => { bar.style.width = pct + '%'; txt.textContent = `导入中 ${pct}%`; },
-    (data, files) => {
-      const record = { id: Date.now() + Math.random(), filename: files.map(f=>f.name).join(', '), count: data.length, time: new Date().toLocaleString('zh-CN'), data: data };
-      state.summaryRecords.push(record);
-      rebuildFlatData(); saveToStorage(); renderAdminTables(); updateDiagnosisFilters();
-      bar.style.width = '100%'; txt.textContent = `导入完成！共 ${data.length} 条记录`;
-      showToast(`成功导入 ${data.length} 条汇总数据`, 'success');
-      setTimeout(() => { wrap.style.display = 'none'; bar.style.width = '0%'; txt.textContent = ''; }, 2000);
-    }
-  );
+try{
+let url='https://api.github.com/gists';
+let method='POST';
+if(state.gistConfig.gistId){url=`https://api.github.com/gists/${state.gistConfig.gistId}`;method='PATCH'}
+const res=await fetch(url,{method:method,headers:{'Authorization':`token ${token}`,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify(payload)});
+if(!res.ok){const err=await res.json();throw new Error(err.message||`HTTP ${res.status}`)}
+const data=await res.json();
+state.gistConfig.gistId=data.id;
+state.gistConfig.token=token;
+saveToStorage();
+updateGistUI();
+showToast(`数据已上传至云端！Gist ID: ${data.id}`,'success')
+}catch(err){showToast('上传失败: '+err.message,'error')}
 });
 
-$('retailImportBtn').addEventListener('click', () => {
-  const bar = $('retailProgressBar'), wrap = $('retailProgressWrap'), txt = $('retailProgressText');
-  wrap.style.display = 'block';
-  processFiles('retail',
-    pct => { bar.style.width = pct + '%'; txt.textContent = `导入中 ${pct}%`; },
-    (data, files) => {
-      const record = { id: Date.now() + Math.random(), filename: files.map(f=>f.name).join(', '), count: data.length, time: new Date().toLocaleString('zh-CN'), data: data };
-      state.retailRecords.push(record);
-      rebuildFlatData(); saveToStorage(); renderAdminTables(); updateRetailFilters();
-      bar.style.width = '100%'; txt.textContent = `导入完成！共 ${data.length} 条记录`;
-      showToast(`成功导入 ${data.length} 条零售数据`, 'success');
-      setTimeout(() => { wrap.style.display = 'none'; bar.style.width = '0%'; txt.textContent = ''; }, 2000);
-    }
-  );
+$('gistDownloadBtn').addEventListener('click',async()=>{
+const token=state.gistConfig.token||$('gistToken').value.trim();
+const gistId=state.gistConfig.gistId||$('gistId').value.trim();
+if(!token||!gistId){showToast('请先配置Token和Gist ID','error');return}
+try{
+const res=await fetch(`https://api.github.com/gists/${gistId}`,{headers:{'Authorization':`token ${token}`,'Accept':'application/vnd.github.v3+json'}});
+if(!res.ok)throw new Error(`HTTP ${res.status}`);
+const data=await res.json();
+const fileContent=data.files['store_diagnosis_data.json']?.content;
+if(!fileContent)throw new Error('云端数据文件不存在');
+const parsed=JSON.parse(fileContent);
+if(parsed.summaryRecords)state.summaryRecords=parsed.summaryRecords;
+if(parsed.retailRecords)state.retailRecords=parsed.retailRecords;
+if(parsed.shopMap)state.shopMap=parsed.shopMap;
+rebuildFlatData();
+saveToStorage();
+renderAdminTables();
+updateDiagnosisFilters();
+updateRetailFilters();
+showToast('云端数据已恢复！','success')
+}catch(err){showToast('下载失败: '+err.message,'error')}
 });
 
-$('shopImportBtn').addEventListener('click', () => {
-  const bar = $('shopProgressBar'), wrap = $('shopProgressWrap'), txt = $('shopProgressText');
-  wrap.style.display = 'block';
-  processFiles('shop',
-    pct => { bar.style.width = pct + '%'; txt.textContent = `导入中 ${pct}%`; },
-    (data, files) => {
-      let count = 0;
-      data.forEach(row => {
-        const name = row['店铺名称'] || row['店铺'];
-        const abc = row['ABC级分类'] || row['ABC级别'] || row['ABC'];
-        const city = row['城市'] || row['区域'] || row['城市/区域'] || '';
-        if (name && abc) { state.shopMap[name] = { abc: abc.trim().toUpperCase(), city: city.trim() }; count++; }
-      });
-      saveToStorage(); renderAdminTables(); updateDiagnosisFilters(); updateRetailFilters();
-      bar.style.width = '100%'; txt.textContent = `导入完成！共 ${count} 家店铺`;
-      showToast(`成功导入 ${count} 家店铺`, 'success');
-      setTimeout(() => { wrap.style.display = 'none'; bar.style.width = '0%'; txt.textContent = ''; }, 2000);
-    }
-  );
+const pendingFiles={summary:[],retail:[],shop:[]};
+function setupUpload(zoneId,inputId,listId,key){
+const zone=$(zoneId);
+const input=$(inputId);
+zone.addEventListener('click',()=>input.click());
+zone.addEventListener('dragover',(e)=>{e.preventDefault();zone.classList.add('dragover')});
+zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
+zone.addEventListener('drop',(e)=>{e.preventDefault();zone.classList.remove('dragover');handleFiles(e.dataTransfer.files,key)});
+input.addEventListener('change',(e)=>{handleFiles(e.target.files,key);input.value=''})
+}
+function handleFiles(files,key){pendingFiles[key]=[];for(let f of files)pendingFiles[key].push(f);renderFileList(key)}
+function renderFileList(key){
+const list=$(key+'FileList');
+list.innerHTML='';
+pendingFiles[key].forEach(f=>{
+const div=document.createElement('div');
+div.className='file-item';
+div.innerHTML=`<span class="name">${f.name}</span><span class="size">${(f.size/1024).toFixed(1)} KB</span>`;
+list.appendChild(div)
+})
+}
+function processFiles(key,onProgress,onDone){
+const files=pendingFiles[key];
+if(!files.length){showToast('请先选择文件','error');return}
+let total=files.length,processed=0;
+const allData=[];
+const fileNames=[];
+function processNext(){
+if(processed>=total){onDone(allData,fileNames);pendingFiles[key]=[];renderFileList(key);return}
+const f=files[processed];
+parseFile(f,(data,name)=>{allData.push(...data);fileNames.push(name);processed++;onProgress(Math.round((processed/total)*100));processNext()})
+}
+processNext()
+}
+
+$('summaryImportBtn').addEventListener('click',()=>{
+const bar=$('summaryProgressBar'),wrap=$('summaryProgressWrap'),txt=$('summaryProgressText');
+wrap.style.display='block';
+processFiles('summary',pct=>{bar.style.width=pct+'%';txt.textContent=`导入中 ${pct}%`},(data,names)=>{
+const record={id:Date.now()+Math.random(),filename:names.join(', '),count:data.length,time:new Date().toLocaleString('zh-CN'),data:data};
+state.summaryRecords.push(record);
+rebuildFlatData();saveToStorage();renderAdminTables();updateDiagnosisFilters();
+bar.style.width='100%';txt.textContent=`导入完成！共 ${data.length} 条记录`;
+showToast(`成功导入 ${data.length} 条汇总数据`,'success');
+setTimeout(()=>{wrap.style.display='none';bar.style.width='0%';txt.textContent=''},2000)
+})
 });
 
-// ===================== RENDER ADMIN TABLES =====================
-function renderAdminTables() {
-  const sumBody = $('summaryRecords');
-  sumBody.innerHTML = '';
-  state.summaryRecords.forEach(rec => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${rec.filename}</td><td>${rec.count}</td><td>${rec.time}</td><td><button class="btn btn-danger btn-sm" data-id="${rec.id}" data-type="summary">删除</button></td>`;
-    sumBody.appendChild(tr);
-  });
-
-  const retBody = $('retailRecords');
-  retBody.innerHTML = '';
-  state.retailRecords.forEach(rec => {
-    const dates = rec.data.map(r => r['单据日期']).filter(Boolean);
-    const range = dates.length ? `${dates[0]} ~ ${dates[dates.length-1]}` : '-';
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${rec.filename}</td><td>${rec.count}</td><td>${range}</td><td>${rec.time}</td><td><button class="btn btn-danger btn-sm" data-id="${rec.id}" data-type="retail">删除</button></td>`;
-    retBody.appendChild(tr);
-  });
-
-  const shopBody = $('shopRecords');
-  shopBody.innerHTML = '';
-  Object.entries(state.shopMap).forEach(([name, info]) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${name}</td><td><span class="tag tag-${info.abc==='A'?'green':info.abc==='B'?'yellow':'red'}">${info.abc}级</span></td><td>${info.city || '-'}</td><td><button class="btn btn-danger btn-sm" data-shop="${name}">删除</button></td>`;
-    shopBody.appendChild(tr);
-  });
-
-  document.querySelectorAll('[data-type]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = parseFloat(e.target.dataset.id);
-      const type = e.target.dataset.type;
-      if (type === 'summary') state.summaryRecords = state.summaryRecords.filter(r => r.id !== id);
-      else state.retailRecords = state.retailRecords.filter(r => r.id !== id);
-      rebuildFlatData(); saveToStorage(); renderAdminTables(); updateDiagnosisFilters(); updateRetailFilters();
-      showToast('已删除该导入记录', 'success');
-    });
-  });
-  document.querySelectorAll('[data-shop]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      delete state.shopMap[e.target.dataset.shop];
-      saveToStorage(); renderAdminTables(); updateDiagnosisFilters(); updateRetailFilters();
-      showToast('已删除该店铺', 'success');
-    });
-  });
-}
-
-// ===================== CLEAR BUTTONS =====================
-$('summaryClearBtn').addEventListener('click', () => {
-  if (!confirm('确定清空所有汇总数据？此操作不可恢复！')) return;
-  state.summaryRecords = []; rebuildFlatData(); saveToStorage(); renderAdminTables(); updateDiagnosisFilters();
-  showToast('已清空全部汇总数据', 'success');
-});
-$('retailClearBtn').addEventListener('click', () => {
-  if (!confirm('确定清空所有零售数据？此操作不可恢复！')) return;
-  state.retailRecords = []; rebuildFlatData(); saveToStorage(); renderAdminTables(); updateRetailFilters();
-  showToast('已清空全部零售数据', 'success');
-});
-$('shopClearBtn').addEventListener('click', () => {
-  if (!confirm('确定清空所有店铺数据？此操作不可恢复！')) return;
-  state.shopMap = {}; saveToStorage(); renderAdminTables(); updateDiagnosisFilters(); updateRetailFilters();
-  showToast('已清空全部店铺数据', 'success');
+$('retailImportBtn').addEventListener('click',()=>{
+const bar=$('retailProgressBar'),wrap=$('retailProgressWrap'),txt=$('retailProgressText');
+wrap.style.display='block';
+processFiles('retail',pct=>{bar.style.width=pct+'%';txt.textContent=`导入中 ${pct}%`},(data,names)=>{
+const record={id:Date.now()+Math.random(),filename:names.join(', '),count:data.length,time:new Date().toLocaleString('zh-CN'),data:data};
+state.retailRecords.push(record);
+rebuildFlatData();saveToStorage();renderAdminTables();updateRetailFilters();
+bar.style.width='100%';txt.textContent=`导入完成！共 ${data.length} 条记录`;
+showToast(`成功导入 ${data.length} 条零售数据`,'success');
+setTimeout(()=>{wrap.style.display='none';bar.style.width='0%';txt.textContent=''},2000)
+})
 });
 
-// ===================== BACKUP / RESTORE =====================
-$('exportAllBtn').addEventListener('click', () => {
-  const data = { summaryRecords: state.summaryRecords, retailRecords: state.retailRecords, shopMap: state.shopMap, exportTime: new Date().toISOString() };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = `门店诊断数据备份_${new Date().toLocaleDateString('zh-CN')}.json`; a.click(); URL.revokeObjectURL(url);
-  showToast('数据备份已导出', 'success');
+$('shopImportBtn').addEventListener('click',()=>{
+const bar=$('shopProgressBar'),wrap=$('shopProgressWrap'),txt=$('shopProgressText');
+wrap.style.display='block';
+processFiles('shop',pct=>{bar.style.width=pct+'%';txt.textContent=`导入中 ${pct}%`},(data,names)=>{
+let count=0;
+data.forEach(row=>{
+const name=row['店铺名称']||row['店铺'];
+const abc=row['ABC级分类']||row['ABC级别']||row['ABC'];
+const city=row['城市']||row['区域']||row['城市/区域']||'';
+if(name&&abc){state.shopMap[name]={abc:abc.trim().toUpperCase(),city:city.trim()};count++}
+});
+saveToStorage();renderAdminTables();updateDiagnosisFilters();updateRetailFilters();
+bar.style.width='100%';txt.textContent=`导入完成！共 ${count} 家店铺`;
+showToast(`成功导入 ${count} 家店铺`,'success');
+setTimeout(()=>{wrap.style.display='none';bar.style.width='0%';txt.textContent=''},2000)
+})
 });
 
-$('importAllBtn').addEventListener('click', () => $('importAllInput').click());
-$('importAllInput').addEventListener('change', (e) => {
-  const f = e.target.files[0]; if (!f) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      if (data.summaryRecords) state.summaryRecords = data.summaryRecords;
-      if (data.retailRecords) state.retailRecords = data.retailRecords;
-      if (data.shopMap) state.shopMap = data.shopMap;
-      rebuildFlatData(); saveToStorage(); renderAdminTables(); updateDiagnosisFilters(); updateRetailFilters();
-      showToast('数据恢复成功！', 'success');
-    } catch(err) { showToast('备份文件格式错误', 'error'); }
-  };
-  reader.readAsText(f); e.target.value = '';
+function renderAdminTables(){
+const sumBody=$('summaryRecords');
+sumBody.innerHTML='';
+state.summaryRecords.forEach(rec=>{
+const tr=document.createElement('tr');
+tr.innerHTML=`<td>${rec.filename}</td><td>${rec.count}</td><td>${rec.time}</td><td><button class="btn btn-danger btn-sm" data-id="${rec.id}" data-type="summary">删除</button></td>`;
+sumBody.appendChild(tr)
+});
+const retBody=$('retailRecords');
+retBody.innerHTML='';
+state.retailRecords.forEach(rec=>{
+const dates=rec.data.map(r=>r['单据日期']).filter(Boolean);
+const range=dates.length?`${dates[0]} ~ ${dates[dates.length-1]}`:'-';
+const tr=document.createElement('tr');
+tr.innerHTML=`<td>${rec.filename}</td><td>${rec.count}</td><td>${range}</td><td>${rec.time}</td><td><button class="btn btn-danger btn-sm" data-id="${rec.id}" data-type="retail">删除</button></td>`;
+retBody.appendChild(tr)
+});
+const shopBody=$('shopRecords');
+shopBody.innerHTML='';
+Object.entries(state.shopMap).forEach(([name,info])=>{
+const tr=document.createElement('tr');
+tr.innerHTML=`<td>${name}</td><td><span class="tag tag-${info.abc==='A'?'green':info.abc==='B'?'yellow':'red'}">${info.abc}级</span></td><td>${info.city||'-'}</td><td><button class="btn btn-danger btn-sm" data-shop="${name}">删除</button></td>`;
+shopBody.appendChild(tr)
+});
+document.querySelectorAll('[data-type]').forEach(btn=>{
+btn.addEventListener('click',(e)=>{
+const id=parseFloat(e.target.dataset.id);
+const type=e.target.dataset.type;
+if(type==='summary')state.summaryRecords=state.summaryRecords.filter(r=>r.id!==id);
+else state.retailRecords=state.retailRecords.filter(r=>r.id!==id);
+rebuildFlatData();saveToStorage();renderAdminTables();updateDiagnosisFilters();updateRetailFilters();
+showToast('已删除该导入记录','success')
+})
+});
+document.querySelectorAll('[data-shop]').forEach(btn=>{
+btn.addEventListener('click',(e)=>{
+delete state.shopMap[e.target.dataset.shop];
+saveToStorage();renderAdminTables();updateDiagnosisFilters();updateRetailFilters();
+showToast('已删除该店铺','success')
+})
+})
+}
+
+$('summaryClearBtn').addEventListener('click',()=>{if(!confirm('确定清空所有汇总数据？此操作不可恢复！'))return;state.summaryRecords=[];rebuildFlatData();saveToStorage();renderAdminTables();updateDiagnosisFilters();showToast('已清空全部汇总数据','success')});
+$('retailClearBtn').addEventListener('click',()=>{if(!confirm('确定清空所有零售数据？此操作不可恢复！'))return;state.retailRecords=[];rebuildFlatData();saveToStorage();renderAdminTables();updateRetailFilters();showToast('已清空全部零售数据','success')});
+$('shopClearBtn').addEventListener('click',()=>{if(!confirm('确定清空所有店铺数据？此操作不可恢复！'))return;state.shopMap={};saveToStorage();renderAdminTables();updateDiagnosisFilters();updateRetailFilters();showToast('已清空全部店铺数据','success')});
+
+$('exportAllBtn').addEventListener('click',()=>{
+const data={summaryRecords:state.summaryRecords,retailRecords:state.retailRecords,shopMap:state.shopMap,exportTime:new Date().toISOString()};
+const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');a.href=url;a.download=`门店诊断数据备份_${new Date().toLocaleDateString('zh-CN')}.json`;a.click();URL.revokeObjectURL(url);
+showToast('数据备份已导出','success')
 });
 
-// ===================== TAB SWITCHING =====================
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-    $(`tab-${btn.dataset.tab}`).classList.remove('hidden');
-    $('adminPanel').classList.remove('show');
-    if (btn.dataset.tab === 'diagnosis') updateDiagnosisFilters();
-    if (btn.dataset.tab === 'retail') updateRetailFilters();
-  });
+$('importAllBtn').addEventListener('click',()=>$('importAllInput').click());
+$('importAllInput').addEventListener('change',(e)=>{
+const f=e.target.files[0];if(!f)return;
+const reader=new FileReader();
+reader.onload=(ev)=>{
+try{
+const data=JSON.parse(ev.target.result);
+if(data.summaryRecords)state.summaryRecords=data.summaryRecords;
+if(data.retailRecords)state.retailRecords=data.retailRecords;
+if(data.shopMap)state.shopMap=data.shopMap;
+rebuildFlatData();saveToStorage();renderAdminTables();updateDiagnosisFilters();updateRetailFilters();
+showToast('数据恢复成功！','success')
+}catch(err){showToast('备份文件格式错误','error')}
+};
+reader.readAsText(f);e.target.value=''
 });
 
-// ===================== ADMIN PANEL TOGGLE =====================
-$('adminTrigger').addEventListener('click', () => {
-  $('adminPanel').classList.toggle('show');
-  if ($('adminPanel').classList.contains('show')) {
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  }
-});
-$('closeAdmin').addEventListener('click', () => {
-  $('adminPanel').classList.remove('show');
-  $('tab-diagnosis').classList.remove('hidden');
-  document.querySelector('[data-tab="diagnosis"]').classList.add('active');
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+btn.addEventListener('click',()=>{
+document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));
+$(`tab-${btn.dataset.tab}`).classList.remove('hidden');
+$('adminPanel').classList.remove('show');
+if(btn.dataset.tab==='diagnosis')updateDiagnosisFilters();
+if(btn.dataset.tab==='retail')updateRetailFilters()
+})
 });
 
-// ===================== DIAGNOSIS FILTERS =====================
-function updateDiagnosisFilters() {
-  const monthSel = $('diagMonthSelect');
-  const oldVal = monthSel.value;
-  monthSel.innerHTML = '<option value="">请选择月份</option>';
-  getMonths().forEach(m => { const opt = document.createElement('option'); opt.value = m; opt.textContent = m; monthSel.appendChild(opt); });
-  if (oldVal) monthSel.value = oldVal;
-
-  const shopSel = $('diagShopSelect');
-  const oldShops = Array.from(shopSel.selectedOptions).map(o => o.value);
-  shopSel.innerHTML = '';
-  getAllShops().forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = s; shopSel.appendChild(opt); });
-  oldShops.forEach(v => { const opt = Array.from(shopSel.options).find(o => o.value === v); if (opt) opt.selected = true; });
+$('adminTrigger').addEventListener('click',()=>{
+$('adminPanel').classList.toggle('show');
+if($('adminPanel').classList.contains('show')){
+document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hidden'));
+document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'))
 }
-
-function updateRetailFilters() {
-  const citySel = $('retailCitySelect');
-  const oldCity = citySel.value;
-  citySel.innerHTML = '<option value="">全部</option>';
-  getCities().forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.textContent = c; citySel.appendChild(opt); });
-  citySel.value = oldCity;
-
-  const shopSel = $('retailShopSelect');
-  const oldShops = Array.from(shopSel.selectedOptions).map(o => o.value);
-  shopSel.innerHTML = '';
-  getAllShops().forEach(s => { const opt = document.createElement('option'); opt.value = s; opt.textContent = `${s} (${getShopABC(s)||'?'})`; shopSel.appendChild(opt); });
-  oldShops.forEach(v => { const opt = Array.from(shopSel.options).find(o => o.value === v); if (opt) opt.selected = true; });
-}
-
-// ===================== DIAGNOSIS LOGIC =====================
-function getStatusColor(val, avg, type) {
-  if (type === 'sellout') {
-    if (val >= avg * 1.05) return 'green';
-    if (val >= avg * 0.85) return 'yellow';
-    return 'red';
-  } else {
-    if (val <= avg * 1.05) return 'green';
-    if (val <= avg * 1.3) return 'yellow';
-    return 'red';
-  }
-}
-
-function getStatusTag(color) {
-  if (color === 'green') return '<span class="tag tag-green">🟢 绿灯</span>';
-  if (color === 'yellow') return '<span class="tag tag-yellow">🟡 黄灯</span>';
-  return '<span class="tag tag-red">🔴 红灯</span>';
-}
-
-function calcAvgByABC(month, abc, metric) {
-  const shops = getShopsByABC(abc);
-  const vals = state.summaryData.filter(d => d['年份月份'] === month && shops.includes(d['店铺名称'])).map(d => parseFloat(d[metric]) || 0).filter(v => v > 0);
-  if (!vals.length) return 0;
-  return vals.reduce((a,b) => a+b, 0) / vals.length;
-}
-
-$('diagQueryBtn').addEventListener('click', () => {
-  const month = $('diagMonthSelect').value;
-  if (!month) { showToast('请选择月份', 'error'); return; }
-
-  const abcFilter = $('diagABCSelect').value;
-  const statusFilter = $('diagStatusSelect').value;
-  const shopOpts = Array.from($('diagShopSelect').selectedOptions).map(o => o.value);
-
-  let shops = getAllShops();
-  if (abcFilter) shops = shops.filter(s => getShopABC(s) === abcFilter);
-  if (shopOpts.length) shops = shops.filter(s => shopOpts.includes(s));
-
-  const abcGroups = {};
-  shops.forEach(s => { const abc = getShopABC(s) || '?'; if (!abcGroups[abc]) abcGroups[abc] = []; abcGroups[abc].push(s); });
-
-  const reports = [];
-  const stats = { green: 0, yellow: 0, red: 0 };
-
-  Object.entries(abcGroups).forEach(([abc, groupShops]) => {
-    const avgSellout = calcAvgByABC(month, abc, '售罄率');
-    const avgInv = calcAvgByABC(month, abc, '库销比');
-
-    groupShops.forEach(shop => {
-      const row = state.summaryData.find(d => d['年份月份'] === month && d['店铺名称'] === shop);
-      if (!row) return;
-
-      const sellout = parseFloat(row['售罄率']) || 0;
-      const inv = parseFloat(row['库销比']) || 0;
-      const netSales = parseFloat(row['净销售额']) || 0;
-      const netQty = parseFloat(row['净销量']) || 0;
-
-      const selloutStatus = getStatusColor(sellout, avgSellout || sellout, 'sellout');
-      const invStatus = getStatusColor(inv, avgInv || inv, 'invturn');
-      const overallStatus = (selloutStatus === 'red' || invStatus === 'red') ? 'red' : (selloutStatus === 'yellow' || invStatus === 'yellow') ? 'yellow' : 'green';
-
-      if (statusFilter && overallStatus !== statusFilter) return;
-      stats[overallStatus]++;
-
-      const hist = state.summaryData.filter(d => d['店铺名称'] === shop && d['年份月份'] !== month);
-      const histSellout = hist.length ? (hist.reduce((a,d) => a + (parseFloat(d['售罄率'])||0), 0) / hist.length) : sellout;
-      const histInv = hist.length ? (hist.reduce((a,d) => a + (parseFloat(d['库销比'])||0), 0) / hist.length) : inv;
-
-      const momSellout = histSellout ? ((sellout - histSellout) / histSellout * 100).toFixed(1) : '0';
-      const momInv = histInv ? ((inv - histInv) / histInv * 100).toFixed(1) : '0';
-
-      let coreIssue = '', advice = [];
-      if (selloutStatus === 'red') {
-        coreIssue = '售罄率明显低于同级平均，库存周转压力大';
-        advice = ['加大主推款陈列面积，调整黄金位置', '对滞销款进行限时折扣促销', '加强导购连带销售培训'];
-      } else if (invStatus === 'red') {
-        coreIssue = '库销比过高，库存积压风险大';
-        advice = ['暂停补货，优先消化现有库存', '开展会员专属清仓活动', '向畅销店铺调拨库存'];
-      } else if (selloutStatus === 'yellow') {
-        coreIssue = '售罄率略低于同级，需关注趋势';
-        advice = ['优化橱窗展示，提升进店率', '增加试穿体验环节', '关注竞品动态调整定价'];
-      } else {
-        coreIssue = '整体运营健康，保持现有策略';
-        advice = ['维持当前陈列和主推策略', '关注新品上市节奏', '分享优秀经验至同级店铺'];
-      }
-
-      reports.push({ shop, month, abc, sellout, inv, netSales, netQty, avgSellout, avgInv, momSellout, momInv, selloutStatus, invStatus, overallStatus, coreIssue, advice, histSellout, histInv });
-    });
-  });
-
-  renderDiagnosis(reports, stats);
+});
+$('closeAdmin').addEventListener('click',()=>{
+$('adminPanel').classList.remove('show');
+$('tab-diagnosis').classList.remove('hidden');
+document.querySelector('[data-tab="diagnosis"]').classList.add('active')
 });
 
-function renderDiagnosis(reports, stats) {
-  $('diagStats').innerHTML = `
-    <div class="stat-box"><div class="label">诊断店铺数</div><div class="value">${reports.length}</div></div>
-    <div class="stat-box"><div class="label">🟢 绿灯店铺</div><div class="value" style="color:var(--green)">${stats.green}</div></div>
-    <div class="stat-box"><div class="label">🟡 黄灯店铺</div><div class="value" style="color:var(--yellow)">${stats.yellow}</div></div>
-    <div class="stat-box"><div class="label">🔴 红灯店铺</div><div class="value" style="color:var(--red)">${stats.red}</div></div>
-  `;
-
-  const grid = $('diagReports');
-  grid.innerHTML = '';
-  reports.forEach(r => {
-    const card = document.createElement('div');
-    card.className = 'report-card';
-    card.innerHTML = `
-      <div class="report-header">
-        <h3>${r.shop} <span style="font-size:12px;opacity:.7">(${r.abc}级)</span></h3>
-        <div class="sub">${r.month} 诊断报告 | ${getStatusTag(r.overallStatus)}</div>
-      </div>
-      <div class="report-body">
-        <div class="report-section-title">一、核心指标看板</div>
-        <div class="report-metric"><span class="label">售罄率</span><span class="value">${r.sellout}% ${getStatusTag(r.selloutStatus)}</span></div>
-        <div class="report-metric"><span class="label">同级平均售罄率</span><span class="value">${r.avgSellout.toFixed(1)}%</span></div>
-        <div class="report-metric"><span class="label">历史均值</span><span class="value">${r.histSellout.toFixed(1)}%</span></div>
-        <div class="report-metric"><span class="label">环比</span><span class="value" style="color:${parseFloat(r.momSellout)>=0?'var(--green)':'var(--red)'}">${r.momSellout>0?'+':''}${r.momSellout}%</span></div>
-        <div class="report-metric"><span class="label">库销比</span><span class="value">${r.inv} ${getStatusTag(r.invStatus)}</span></div>
-        <div class="report-metric"><span class="label">同级平均库销比</span><span class="value">${r.avgInv.toFixed(1)}</span></div>
-        <div class="report-metric"><span class="label">净销售额</span><span class="value">¥${r.netSales.toLocaleString()}</span></div>
-        <div class="report-metric"><span class="label">净销量</span><span class="value">${r.netQty}件</span></div>
-
-        <div class="report-section-title">二、一句话诊断</div>
-        <div class="report-advice"><strong>核心问题：</strong>${r.coreIssue}</div>
-
-        <div class="report-section-title">三、行动建议</div>
-        ${r.advice.map((a,i) => `<div class="report-advice">${i+1}. ${a}</div>`).join('')}
-        <p style="font-size:11px;color:var(--text2);margin-top:8px;">备注：下月初复查执行效果。</p>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
+function updateDiagnosisFilters(){
+const monthSel=$('diagMonthSelect');
+const oldVal=monthSel.value;
+monthSel.innerHTML='<option value="">请选择月份</option>';
+getMonths().forEach(m=>{const opt=document.createElement('option');opt.value=m;opt.textContent=m;monthSel.appendChild(opt)});
+if(oldVal)monthSel.value=oldVal;
+const shopSel=$('diagShopSelect');
+const oldShops=Array.from(shopSel.selectedOptions).map(o=>o.value);
+shopSel.innerHTML='';
+getAllShops().forEach(s=>{const opt=document.createElement('option');opt.value=s;opt.textContent=s;shopSel.appendChild(opt)});
+oldShops.forEach(v=>{const opt=Array.from(shopSel.options).find(o=>o.value===v);if(opt)opt.selected=true})
 }
 
-$('diagExportBtn').addEventListener('click', () => {
-  const reports = document.querySelectorAll('.report-card');
-  if (!reports.length) { showToast('请先生成诊断报告', 'error'); return; }
-  let csv = '店铺名称,月份,ABC级别,售罄率,售罄状态,库销比,库销状态,净销售额,净销量,核心问题,建议1,建议2,建议3\n';
-  reports.forEach(card => {
-    const shop = card.querySelector('h3').childNodes[0].textContent.trim();
-    const sub = card.querySelector('.sub').textContent;
-    const month = sub.split(' ')[0];
-    const abc = card.querySelector('h3 span').textContent.replace(/[()]/g, '');
-    const metrics = card.querySelectorAll('.report-metric .value');
-    const sellout = metrics[0]?.textContent?.split('%')[0]?.trim() || '';
-    const sellStatus = metrics[0]?.querySelector('.tag')?.textContent?.trim() || '';
-    const inv = metrics[4]?.textContent?.split(' ')[0]?.trim() || '';
-    const invStatus = metrics[4]?.querySelector('.tag')?.textContent?.trim() || '';
-    const sales = metrics[6]?.textContent?.replace('¥', '').replace(/,/g, '') || '';
-    const qty = metrics[7]?.textContent?.replace('件', '').replace(/,/g, '') || '';
-    const issue = card.querySelector('.report-advice strong')?.nextSibling?.textContent?.trim() || '';
-    const advices = card.querySelectorAll('.report-advice');
-    const a1 = advices[1]?.textContent?.replace(/^\d+\.\s*/, '') || '';
-    const a2 = advices[2]?.textContent?.replace(/^\d+\.\s*/, '') || '';
-    const a3 = advices[3]?.textContent?.replace(/^\d+\.\s*/, '') || '';
-    csv += `"${shop}","${month}","${abc}","${sellout}","${sellStatus}","${inv}","${invStatus}","${sales}","${qty}","${issue}","${a1}","${a2}","${a3}"\n`;
-  });
-  const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = `门店诊断报告汇总_${new Date().toLocaleDateString('zh-CN')}.csv`; a.click(); URL.revokeObjectURL(url);
-  showToast('诊断报告已导出', 'success');
+function updateRetailFilters(){
+const citySel=$('retailCitySelect');
+const oldCity=citySel.value;
+citySel.innerHTML='<option value="">全部</option>';
+getCities().forEach(c=>{const opt=document.createElement('option');opt.value=c;opt.textContent=c;citySel.appendChild(opt)});
+citySel.value=oldCity;
+const shopSel=$('retailShopSelect');
+const oldShops=Array.from(shopSel.selectedOptions).map(o=>o.value);
+shopSel.innerHTML='';
+getAllShops().forEach(s=>{const opt=document.createElement('option');opt.value=s;opt.textContent=`${s} (${getShopABC(s)||'?'})`;shopSel.appendChild(opt)});
+oldShops.forEach(v=>{const opt=Array.from(shopSel.options).find(o=>o.value===v);if(opt)opt.selected=true})
+}
+
+function getStatusColor(val,avg,type){
+if(type==='sellout'){if(val>=avg*1.05)return'green';if(val>=avg*0.85)return'yellow';return'red'}
+else{if(val<=avg*1.05)return'green';if(val<=avg*1.3)return'yellow';return'red'}
+}
+function getStatusTag(color){
+if(color==='green')return'<span class="tag tag-green">🟢 绿灯</span>';
+if(color==='yellow')return'<span class="tag tag-yellow">🟡 黄灯</span>';
+return'<span class="tag tag-red">🔴 红灯</span>'
+}
+function calcAvgByABC(month,abc,metric){
+const shops=getShopsByABC(abc);
+const vals=state.summaryData.filter(d=>d['年份月份']===month&&shops.includes(d['店铺名称'])).map(d=>parseFloat(d[metric])||0).filter(v=>v>0);
+if(!vals.length)return 0;
+return vals.reduce((a,b)=>a+b,0)/vals.length
+}
+
+$('diagQueryBtn').addEventListener('click',()=>{
+const month=$('diagMonthSelect').value;
+if(!month){showToast('请选择月份','error');return}
+const abcFilter=$('diagABCSelect').value;
+const statusFilter=$('diagStatusSelect').value;
+const shopOpts=Array.from($('diagShopSelect').selectedOptions).map(o=>o.value);
+let shops=getAllShops();
+if(abcFilter)shops=shops.filter(s=>getShopABC(s)===abcFilter);
+if(shopOpts.length)shops=shops.filter(s=>shopOpts.includes(s));
+const abcGroups={};
+shops.forEach(s=>{const abc=getShopABC(s)||'?';if(!abcGroups[abc])abcGroups[abc]=[];abcGroups[abc].push(s)});
+const reports=[];
+const stats={green:0,yellow:0,red:0};
+Object.entries(abcGroups).forEach(([abc,groupShops])=>{
+const avgSellout=calcAvgByABC(month,abc,'售罄率');
+const avgInv=calcAvgByABC(month,abc,'库销比');
+groupShops.forEach(shop=>{
+const row=state.summaryData.find(d=>d['年份月份']===month&&d['店铺名称']===shop);
+if(!row)return;
+const sellout=parseFloat(row['售罄率'])||0;
+const inv=parseFloat(row['库销比'])||0;
+const netSales=parseFloat(row['净销售额'])||0;
+const netQty=parseFloat(row['净销量'])||0;
+const selloutStatus=getStatusColor(sellout,avgSellout||sellout,'sellout');
+const invStatus=getStatusColor(inv,avgInv||inv,'invturn');
+const overallStatus=(selloutStatus==='red'||invStatus==='red')?'red':(selloutStatus==='yellow'||invStatus==='yellow')?'yellow':'green';
+if(statusFilter&&overallStatus!==statusFilter)return;
+stats[overallStatus]++;
+const hist=state.summaryData.filter(d=>d['店铺名称']===shop&&d['年份月份']!==month);
+const histSellout=hist.length?(hist.reduce((a,d)=>a+(parseFloat(d['售罄率'])||0),0)/hist.length):sellout;
+const histInv=hist.length?(hist.reduce((a,d)=>a+(parseFloat(d['库销比'])||0),0)/hist.length):inv;
+const momSellout=histSellout?((sellout-histSellout)/histSellout*100).toFixed(1):'0';
+const momInv=histInv?((inv-histInv)/histInv*100).toFixed(1):'0';
+let coreIssue='',advice=[];
+if(selloutStatus==='red'){coreIssue='售罄率明显低于同级平均，库存周转压力大';advice=['加大主推款陈列面积，调整黄金位置','对滞销款进行限时折扣促销','加强导购连带销售培训']}
+else if(invStatus==='red'){coreIssue='库销比过高，库存积压风险大';advice=['暂停补货，优先消化现有库存','开展会员专属清仓活动','向畅销店铺调拨库存']}
+else if(selloutStatus==='yellow'){coreIssue='售罄率略低于同级，需关注趋势';advice=['优化橱窗展示，提升进店率','增加试穿体验环节','关注竞品动态调整定价']}
+else{coreIssue='整体运营健康，保持现有策略';advice=['维持当前陈列和主推策略','关注新品上市节奏','分享优秀经验至同级店铺']}
+reports.push({shop,month,abc,sellout,inv,netSales,netQty,avgSellout,avgInv,momSellout,momInv,selloutStatus,invStatus,overallStatus,coreIssue,advice,histSellout,histInv})
+})
+});
+renderDiagnosis(reports,stats)
 });
 
-// ===================== RETAIL ANALYSIS =====================
-function getFilteredRetailData() {
-  const from = $('retailDateFrom').value;
-  const to = $('retailDateTo').value;
-  const city = $('retailCitySelect').value;
-  const abc = $('retailABCSelect').value;
-  const shops = Array.from($('retailShopSelect').selectedOptions).map(o => o.value);
-  let data = state.retailData;
-  if (from) data = data.filter(d => d['单据日期'] >= from);
-  if (to) data = data.filter(d => d['单据日期'] <= to);
-  if (city) data = data.filter(d => getShopCity(d['店铺名称']) === city);
-  if (abc) data = data.filter(d => getShopABC(d['店铺名称']) === abc);
-  if (shops.length) data = data.filter(d => shops.includes(d['店铺名称']));
-  return data;
+function renderDiagnosis(reports,stats){
+$('diagStats').innerHTML=`<div class="stat-box"><div class="label">诊断店铺数</div><div class="value">${reports.length}</div></div><div class="stat-box"><div class="label">🟢 绿灯店铺</div><div class="value" style="color:var(--green)">${stats.green}</div></div><div class="stat-box"><div class="label">🟡 黄灯店铺</div><div class="value" style="color:var(--yellow)">${stats.yellow}</div></div><div class="stat-box"><div class="label">🔴 红灯店铺</div><div class="value" style="color:var(--red)">${stats.red}</div></div>`;
+const grid=$('diagReports');
+grid.innerHTML='';
+reports.forEach(r=>{
+const card=document.createElement('div');
+card.className='report-card';
+card.innerHTML=`<div class="report-header"><h3>${r.shop} <span style="font-size:12px;opacity:.7">(${r.abc}级)</span></h3><div class="sub">${r.month} 诊断报告 | ${getStatusTag(r.overallStatus)}</div></div><div class="report-body"><div class="report-section-title">一、核心指标看板</div><div class="report-metric"><span class="label">售罄率</span><span class="value">${r.sellout}% ${getStatusTag(r.selloutStatus)}</span></div><div class="report-metric"><span class="label">同级平均售罄率</span><span class="value">${r.avgSellout.toFixed(1)}%</span></div><div class="report-metric"><span class="label">历史均值</span><span class="value">${r.histSellout.toFixed(1)}%</span></div><div class="report-metric"><span class="label">环比</span><span class="value" style="color:${parseFloat(r.momSellout)>=0?'var(--green)':'var(--red)'}">${r.momSellout>0?'+':''}${r.momSellout}%</span></div><div class="report-metric"><span class="label">库销比</span><span class="value">${r.inv} ${getStatusTag(r.invStatus)}</span></div><div class="report-metric"><span class="label">同级平均库销比</span><span class="value">${r.avgInv.toFixed(1)}</span></div><div class="report-metric"><span class="label">净销售额</span><span class="value">¥${r.netSales.toLocaleString()}</span></div><div class="report-metric"><span class="label">净销量</span><span class="value">${r.netQty}件</span></div><div class="report-section-title">二、一句话诊断</div><div class="report-advice"><strong>核心问题：</strong>${r.coreIssue}</div><div class="report-section-title">三、行动建议</div>${r.advice.map((a,i)=>`<div class="report-advice">${i+1}. ${a}</div>`).join('')}<p style="font-size:11px;color:var(--text2);margin-top:8px">备注：下月初复查执行效果。</p></div>`;
+grid.appendChild(card)
+})
 }
 
-function aggregateByField(data, field) {
-  const map = {};
-  data.forEach(d => {
-    const key = d[field];
-    if (!key) return;
-    const qty = parseFloat(d['数量']) || 0;
-    if (!map[key]) map[key] = 0;
-    map[key] += qty;
-  });
-  return Object.entries(map).sort((a,b) => b[1] - a[1]);
-}
-
-function aggregateByFieldFiltered(data, field, filters) {
-  let filtered = data;
-  Object.entries(filters).forEach(([k,v]) => { if (v) filtered = filtered.filter(d => d[k] === v); });
-  return aggregateByField(filtered, field);
-}
-
-function renderRank(containerId, data, onClick) {
-  const container = $(containerId);
-  container.innerHTML = '';
-  data.slice(0, 5).forEach(([name, val], i) => {
-    const div = document.createElement('div');
-    div.className = 'rank-item';
-    if ((containerId === 'rankStyle' && state.selectedStyle === name) ||
-        (containerId === 'rankColor' && state.selectedColor === name) ||
-        (containerId === 'rankSize' && state.selectedSize === name)) {
-      div.classList.add('active');
-    }
-    div.innerHTML = `<div class="rank-num ${i<3?'top':''}">${i+1}</div><div class="rank-name">${name}</div><div class="rank-val">${val}件</div>`;
-    div.addEventListener('click', () => onClick(name));
-    container.appendChild(div);
-  });
-}
-
-function updateRanks() {
-  const data = getFilteredRetailData();
-  const scope = [];
-  const shops = Array.from($('retailShopSelect').selectedOptions).map(o => o.value);
-  const abc = $('retailABCSelect').value;
-  const city = $('retailCitySelect').value;
-  if (shops.length === 1) scope.push(shops[0]);
-  else if (abc) scope.push(abc + '级店铺');
-  else if (city) scope.push(city);
-  else scope.push('所有店铺');
-
-  $('rank1Scope').textContent = `(${scope.join(', ')})`;
-  $('rank2Scope').textContent = `(${scope.join(', ')})`;
-  $('rank3Scope').textContent = `(${scope.join(', ')})`;
-
-  // Rank 1: Style
-  const styleData = aggregateByField(data, '商品款号');
-  renderRank('rankStyle', styleData, (name) => {
-    state.selectedStyle = state.selectedStyle === name ? null : name;
-    state.selectedColor = null; state.selectedSize = null;
-    updateRanks();
-  });
-
-  // Rank 2: Color
-  let colorData;
-  if (state.selectedStyle) {
-    colorData = aggregateByFieldFiltered(data, '颜色', { '商品款号': state.selectedStyle });
-  } else {
-    colorData = aggregateByField(data, '颜色');
-  }
-  renderRank('rankColor', colorData, (name) => {
-    state.selectedColor = state.selectedColor === name ? null : name;
-    state.selectedSize = null;
-    updateRanks();
-  });
-
-  // Rank 3: Size
-  let sizeData;
-  if (state.selectedStyle && state.selectedColor) {
-    sizeData = aggregateByFieldFiltered(data, '尺码', { '商品款号': state.selectedStyle, '颜色': state.selectedColor });
-  } else if (state.selectedStyle) {
-    sizeData = aggregateByFieldFiltered(data, '尺码', { '商品款号': state.selectedStyle });
-  } else {
-    sizeData = aggregateByField(data, '尺码');
-  }
-  renderRank('rankSize', sizeData, (name) => {
-    state.selectedSize = state.selectedSize === name ? null : name;
-    updateRanks();
-  });
-
-  renderTransferAdvice(data);
-  renderUnsoldTable(data);
-}
-
-function renderTransferAdvice(data) {
-  const container = $('transferAdvice');
-
-  // Find items with low sales in some shops but high in others
-  const shopItemMap = {};
-  data.forEach(d => {
-    const shop = d['店铺名称'];
-    const style = d['商品款号'];
-    const color = d['颜色'];
-    const size = d['尺码'];
-    const qty = parseFloat(d['数量']) || 0;
-    const key = `${style}|${color}|${size}`;
-    if (!shopItemMap[shop]) shopItemMap[shop] = {};
-    if (!shopItemMap[shop][key]) shopItemMap[shop][key] = 0;
-    shopItemMap[shop][key] += qty;
-  });
-
-  const advice = [];
-  const allShops = Object.keys(shopItemMap);
-  allShops.forEach(fromShop => {
-    Object.entries(shopItemMap[fromShop]).forEach(([key, qty]) => {
-      if (qty <= 1) {
-        // This item sells poorly here, find a shop that sells it well
-        const [style, color, size] = key.split('|');
-        let bestShop = null, bestQty = 0;
-        allShops.forEach(toShop => {
-          if (toShop === fromShop) return;
-          const toQty = shopItemMap[toShop]?.[key] || 0;
-          if (toQty > bestQty) { bestQty = toQty; bestShop = toShop; }
-        });
-        if (bestShop && bestQty >= 3) {
-          advice.push({ from: fromShop, to: bestShop, style, color, size, fromQty: qty, toQty: bestQty });
-        }
-      }
-    });
-  });
-
-  if (!advice.length) {
-    container.innerHTML = '<p style="color:var(--text2);font-size:13px;">暂无调拨建议，当前筛选条件下各店铺商品销售分布较均匀。</p>';
-    return;
-  }
-
-  container.innerHTML = advice.slice(0, 10).map(a => `
-    <div class="report-advice" style="margin-bottom:8px;">
-      <strong>调拨建议：</strong>建议将 <b>${a.from}</b> 的 <b>${a.style} ${a.color} ${a.size}</b>（销量${a.fromQty}件）
-      调拨至 <b>${a.to}</b>（该店同款销量${a.toQty}件）
-    </div>
-  `).join('');
-}
-
-function renderUnsoldTable(data) {
-  const tbody = $('unsoldTable').querySelector('tbody');
-  tbody.innerHTML = '';
-
-  // Aggregate by style+color+size+shop
-  const map = {};
-  data.forEach(d => {
-    const key = `${d['商品款号']}|${d['颜色']}|${d['尺码']}|${d['店铺名称']}`;
-    if (!map[key]) map[key] = { style: d['商品款号'], color: d['颜色'], size: d['尺码'], shop: d['店铺名称'], qty: 0, amount: 0 };
-    map[key].qty += parseFloat(d['数量']) || 0;
-    map[key].amount += parseFloat(d['金额']) || 0;
-  });
-
-  const unsold = Object.values(map).filter(i => i.qty <= 1).sort((a,b) => a.qty - b.qty).slice(0, 20);
-
-  unsold.forEach(item => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${item.style}</td>
-      <td>${item.color}</td>
-      <td>${item.size}</td>
-      <td>${item.qty}</td>
-      <td>${item.amount.toFixed(2)}</td>
-      <td>${item.shop}</td>
-      <td><span class="tag tag-red">建议调拨/促销</span></td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  if (!unsold.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text2);">当前筛选条件下无滞销商品</td></tr>';
-  }
-}
-
-$('retailQueryBtn').addEventListener('click', () => {
-  if (!state.retailData.length) { showToast('请先导入零售明细数据', 'error'); return; }
-  updateRanks();
-  showToast('分析完成', 'success');
+$('diagExportBtn').addEventListener('click',()=>{
+const reports=document.querySelectorAll('.report-card');
+if(!reports.length){showToast('请先生成诊断报告','error');return}
+let csv='店铺名称,月份,ABC级别,售罄率,售罄状态,库销比,库销状态,净销售额,净销量,核心问题,建议1,建议2,建议3
+';
+reports.forEach(card=>{
+const shop=card.querySelector('h3').childNodes[0].textContent.trim();
+const sub=card.querySelector('.sub').textContent;
+const month=sub.split(' ')[0];
+const abc=card.querySelector('h3 span').textContent.replace(/[()]/g,'');
+const metrics=card.querySelectorAll('.report-metric .value');
+const sellout=metrics[0]?.textContent?.split('%')[0]?.trim()||'';
+const sellStatus=metrics[0]?.querySelector('.tag')?.textContent?.trim()||'';
+const inv=metrics[4]?.textContent?.split(' ')[0]?.trim()||'';
+const invStatus=metrics[4]?.querySelector('.tag')?.textContent?.trim()||'';
+const sales=metrics[6]?.textContent?.replace('¥','').replace(/,/g,'')||'';
+const qty=metrics[7]?.textContent?.replace('件','').replace(/,/g,'')||'';
+const issue=card.querySelector('.report-advice strong')?.nextSibling?.textContent?.trim()||'';
+const advices=card.querySelectorAll('.report-advice');
+const a1=advices[1]?.textContent?.replace(/^\d+\.\s*/,'')||'';
+const a2=advices[2]?.textContent?.replace(/^\d+\.\s*/,'')||'';
+const a3=advices[3]?.textContent?.replace(/^\d+\.\s*/,'')||'';
+csv+=`"${shop}","${month}","${abc}","${sellout}","${sellStatus}","${inv}","${invStatus}","${sales}","${qty}","${issue}","${a1}","${a2}","${a3}"
+`
+});
+const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');a.href=url;a.download=`门店诊断报告汇总_${new Date().toLocaleDateString('zh-CN')}.csv`;a.click();URL.revokeObjectURL(url);
+showToast('诊断报告已导出','success')
 });
 
-$('retailResetBtn').addEventListener('click', () => {
-  $('retailDateFrom').value = '';
-  $('retailDateTo').value = '';
-  $('retailCitySelect').value = '';
-  $('retailABCSelect').value = '';
-  Array.from($('retailShopSelect').options).forEach(o => o.selected = false);
-  state.selectedStyle = null;
-  state.selectedColor = null;
-  state.selectedSize = null;
-  updateRanks();
+function getFilteredRetailData(){
+const from=$('retailDateFrom').value;
+const to=$('retailDateTo').value;
+const city=$('retailCitySelect').value;
+const abc=$('retailABCSelect').value;
+const shops=Array.from($('retailShopSelect').selectedOptions).map(o=>o.value);
+let data=state.retailData;
+if(from)data=data.filter(d=>d['单据日期']>=from);
+if(to)data=data.filter(d=>d['单据日期']<=to);
+if(city)data=data.filter(d=>getShopCity(d['店铺名称'])===city);
+if(abc)data=data.filter(d=>getShopABC(d['店铺名称'])===abc);
+if(shops.length)data=data.filter(d=>shops.includes(d['店铺名称']));
+return data
+}
+function aggregateByField(data,field){
+const map={};
+data.forEach(d=>{
+const key=d[field];
+if(!key)return;
+const qty=parseFloat(d['数量'])||0;
+if(!map[key])map[key]=0;
+map[key]+=qty
+});
+return Object.entries(map).sort((a,b)=>b[1]-a[1])
+}
+function aggregateByFieldFiltered(data,field,filters){
+let filtered=data;
+Object.entries(filters).forEach(([k,v])=>{if(v)filtered=filtered.filter(d=>d[k]===v)});
+return aggregateByField(filtered,field)
+}
+function renderRank(containerId,data,onClick){
+const container=$(containerId);
+container.innerHTML='';
+data.slice(0,5).forEach(([name,val],i)=>{
+const div=document.createElement('div');
+div.className='rank-item';
+if((containerId==='rankStyle'&&state.selectedStyle===name)||(containerId==='rankColor'&&state.selectedColor===name)||(containerId==='rankSize'&&state.selectedSize===name))div.classList.add('active');
+div.innerHTML=`<div class="rank-num ${i<3?'top':''}">${i+1}</div><div class="rank-name">${name}</div><div class="rank-val">${val}件</div>`;
+div.addEventListener('click',()=>onClick(name));
+container.appendChild(div)
+})
+}
+function updateRanks(){
+const data=getFilteredRetailData();
+const scope=[];
+const shops=Array.from($('retailShopSelect').selectedOptions).map(o=>o.value);
+const abc=$('retailABCSelect').value;
+const city=$('retailCitySelect').value;
+if(shops.length===1)scope.push(shops[0]);
+else if(abc)scope.push(abc+'级店铺');
+else if(city)scope.push(city);
+else scope.push('所有店铺');
+$('rank1Scope').textContent=`(${scope.join(', ')})`;
+$('rank2Scope').textContent=`(${scope.join(', ')})`;
+$('rank3Scope').textContent=`(${scope.join(', ')})`;
+const styleData=aggregateByField(data,'商品款号');
+renderRank('rankStyle',styleData,(name)=>{state.selectedStyle=state.selectedStyle===name?null:name;state.selectedColor=null;state.selectedSize=null;updateRanks()});
+let colorData;
+if(state.selectedStyle){colorData=aggregateByFieldFiltered(data,'颜色',{'商品款号':state.selectedStyle})}
+else{colorData=aggregateByField(data,'颜色')}
+renderRank('rankColor',colorData,(name)=>{state.selectedColor=state.selectedColor===name?null:name;state.selectedSize=null;updateRanks()});
+let sizeData;
+if(state.selectedStyle&&state.selectedColor){sizeData=aggregateByFieldFiltered(data,'尺码',{'商品款号':state.selectedStyle,'颜色':state.selectedColor})}
+else if(state.selectedStyle){sizeData=aggregateByFieldFiltered(data,'尺码',{'商品款号':state.selectedStyle})}
+else{sizeData=aggregateByField(data,'尺码')}
+renderRank('rankSize',sizeData,(name)=>{state.selectedSize=state.selectedSize===name?null:name;updateRanks()});
+renderTransferAdvice(data);
+renderUnsoldTable(data)
+}
+
+function renderTransferAdvice(data){
+const container=$('transferAdvice');
+const shopItemMap={};
+data.forEach(d=>{
+const shop=d['店铺名称'];
+const style=d['商品款号'];
+const color=d['颜色'];
+const size=d['尺码'];
+const qty=parseFloat(d['数量'])||0;
+const key=`${style}|${color}|${size}`;
+if(!shopItemMap[shop])shopItemMap[shop]={};
+if(!shopItemMap[shop][key])shopItemMap[shop][key]=0;
+shopItemMap[shop][key]+=qty
+});
+const advice=[];
+const allShops=Object.keys(shopItemMap);
+allShops.forEach(fromShop=>{
+Object.entries(shopItemMap[fromShop]).forEach(([key,qty])=>{
+if(qty<=1){
+const[style,color,size]=key.split('|');
+let bestShop=null,bestQty=0;
+allShops.forEach(toShop=>{
+if(toShop===fromShop)return;
+const toQty=shopItemMap[toShop]?.[key]||0;
+if(toQty>bestQty){bestQty=toQty;bestShop=toShop}
+});
+if(bestShop&&bestQty>=3){advice.push({from:fromShop,to:bestShop,style,color,size,fromQty:qty,toQty:bestQty})}
+}
+})
+});
+if(!advice.length){container.innerHTML='<p style="color:var(--text2);font-size:13px">暂无调拨建议，当前筛选条件下各店铺商品销售分布较均匀。</p>';return}
+container.innerHTML=advice.slice(0,10).map(a=>`<div class="report-advice" style="margin-bottom:8px"><strong>调拨建议：</strong>建议将 <b>${a.from}</b> 的 <b>${a.style} ${a.color} ${a.size}</b>（销量${a.fromQty}件）调拨至 <b>${a.to}</b>（该店同款销量${a.toQty}件）</div>`).join('')
+}
+
+function renderUnsoldTable(data){
+const tbody=$('unsoldTable').querySelector('tbody');
+tbody.innerHTML='';
+const map={};
+data.forEach(d=>{
+const key=`${d['商品款号']}|${d['颜色']}|${d['尺码']}|${d['店铺名称']}`;
+if(!map[key])map[key]={style:d['商品款号'],color:d['颜色'],size:d['尺码'],shop:d['店铺名称'],qty:0,amount:0};
+map[key].qty+=parseFloat(d['数量'])||0;
+map[key].amount+=parseFloat(d['金额'])||0
+});
+const unsold=Object.values(map).filter(i=>i.qty<=1).sort((a,b)=>a.qty-b.qty).slice(0,20);
+unsold.forEach(item=>{
+const tr=document.createElement('tr');
+tr.innerHTML=`<td>${item.style}</td><td>${item.color}</td><td>${item.size}</td><td>${item.qty}</td><td>${item.amount.toFixed(2)}</td><td>${item.shop}</td><td><span class="tag tag-red">建议调拨/促销</span></td>`;
+tbody.appendChild(tr)
+});
+if(!unsold.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text2)">当前筛选条件下无滞销商品</td></tr>'}
+}
+
+$('retailQueryBtn').addEventListener('click',()=>{if(!state.retailData.length){showToast('请先导入零售明细数据','error');return}updateRanks();showToast('分析完成','success')});
+$('retailResetBtn').addEventListener('click',()=>{
+$('retailDateFrom').value='';
+$('retailDateTo').value='';
+$('retailCitySelect').value='';
+$('retailABCSelect').value='';
+Array.from($('retailShopSelect').options).forEach(o=>o.selected=false);
+state.selectedStyle=null;state.selectedColor=null;state.selectedSize=null;
+updateRanks()
 });
 
-// ===================== INIT =====================
-setupUpload('summaryUploadZone', 'summaryFileInput', 'summaryFileList', 'summary');
-setupUpload('retailUploadZone', 'retailFileInput', 'retailFileList', 'retail');
-setupUpload('shopUploadZone', 'shopFileInput', 'shopFileList', 'shop');
+setupUpload('summaryUploadZone','summaryFileInput','summaryFileList','summary');
+setupUpload('retailUploadZone','retailFileInput','retailFileList','retail');
+setupUpload('shopUploadZone','shopFileInput','shopFileList','shop');
 
 loadFromStorage();
 renderAdminTables();
 updateDiagnosisFilters();
 updateRetailFilters();
 
-// Auto-update shop filter when city/abc changes
-$('retailCitySelect').addEventListener('change', () => {
-  const city = $('retailCitySelect').value;
-  const abc = $('retailABCSelect').value;
-  const shopSel = $('retailShopSelect');
-  const oldShops = Array.from(shopSel.selectedOptions).map(o => o.value);
-  shopSel.innerHTML = '';
-  getAllShops().forEach(s => {
-    if (city && getShopCity(s) !== city) return;
-    if (abc && getShopABC(s) !== abc) return;
-    const opt = document.createElement('option');
-    opt.value = s; opt.textContent = `${s} (${getShopABC(s)||'?'})`;
-    shopSel.appendChild(opt);
-  });
-  oldShops.forEach(v => { const opt = Array.from(shopSel.options).find(o => o.value === v); if (opt) opt.selected = true; });
+$('retailCitySelect').addEventListener('change',()=>{
+const city=$('retailCitySelect').value;
+const abc=$('retailABCSelect').value;
+const shopSel=$('retailShopSelect');
+const oldShops=Array.from(shopSel.selectedOptions).map(o=>o.value);
+shopSel.innerHTML='';
+getAllShops().forEach(s=>{
+if(city&&getShopCity(s)!==city)return;
+if(abc&&getShopABC(s)!==abc)return;
+const opt=document.createElement('option');opt.value=s;opt.textContent=`${s} (${getShopABC(s)||'?'})`;shopSel.appendChild(opt)
+});
+oldShops.forEach(v=>{const opt=Array.from(shopSel.options).find(o=>o.value===v);if(opt)opt.selected=true})
 });
 
-$('retailABCSelect').addEventListener('change', () => {
-  const city = $('retailCitySelect').value;
-  const abc = $('retailABCSelect').value;
-  const shopSel = $('retailShopSelect');
-  const oldShops = Array.from(shopSel.selectedOptions).map(o => o.value);
-  shopSel.innerHTML = '';
-  getAllShops().forEach(s => {
-    if (city && getShopCity(s) !== city) return;
-    if (abc && getShopABC(s) !== abc) return;
-    const opt = document.createElement('option');
-    opt.value = s; opt.textContent = `${s} (${getShopABC(s)||'?'})`;
-    shopSel.appendChild(opt);
-  });
-  oldShops.forEach(v => { const opt = Array.from(shopSel.options).find(o => o.value === v); if (opt) opt.selected = true; });
+$('retailABCSelect').addEventListener('change',()=>{
+const city=$('retailCitySelect').value;
+const abc=$('retailABCSelect').value;
+const shopSel=$('retailShopSelect');
+const oldShops=Array.from(shopSel.selectedOptions).map(o=>o.value);
+shopSel.innerHTML='';
+getAllShops().forEach(s=>{
+if(city&&getShopCity(s)!==city)return;
+if(abc&&getShopABC(s)!==abc)return;
+const opt=document.createElement('option');opt.value=s;opt.textContent=`${s} (${getShopABC(s)||'?'})`;shopSel.appendChild(opt)
+});
+oldShops.forEach(v=>{const opt=Array.from(shopSel.options).find(o=>o.value===v);if(opt)opt.selected=true})
 });
 
-// Sync diag shop filter with ABC
-$('diagABCSelect').addEventListener('change', () => {
-  const abc = $('diagABCSelect').value;
-  const shopSel = $('diagShopSelect');
-  const oldShops = Array.from(shopSel.selectedOptions).map(o => o.value);
-  shopSel.innerHTML = '';
-  getAllShops().forEach(s => {
-    if (abc && getShopABC(s) !== abc) return;
-    const opt = document.createElement('option');
-    opt.value = s; opt.textContent = s;
-    shopSel.appendChild(opt);
-  });
-  oldShops.forEach(v => { const opt = Array.from(shopSel.options).find(o => o.value === v); if (opt) opt.selected = true; });
+$('diagABCSelect').addEventListener('change',()=>{
+const abc=$('diagABCSelect').value;
+const shopSel=$('diagShopSelect');
+const oldShops=Array.from(shopSel.selectedOptions).map(o=>o.value);
+shopSel.innerHTML='';
+getAllShops().forEach(s=>{
+if(abc&&getShopABC(s)!==abc)return;
+const opt=document.createElement('option');opt.value=s;opt.textContent=s;shopSel.appendChild(opt)
+});
+oldShops.forEach(v=>{const opt=Array.from(shopSel.options).find(o=>o.value===v);if(opt)opt.selected=true})
 });
 
-showToast('系统已就绪，请先在数据管理中导入基础数据', 'success');
+showToast('系统已就绪，支持Excel/CSV导入，请先配置云同步或导入数据','success');
 </script>
 </body>
 </html>
