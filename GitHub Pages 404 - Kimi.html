@@ -1,5 +1,2420 @@
-<!doctype html> <html lang="zh-CN" translate="no" class="light"> <head> <script type="module" crossorigin src="//statics.moonshot.cn/kimi-web-seo/assets/polyfills-DIdxs4Gp.js"></script> <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kimi AI 官网 - K2.6 上线</title>
-<meta name="description" content="Kimi K2.6 模型发布！全新建站功能可生成极具设计感的网站，支持轻量后端模块；Agent 集群全面升级，Office 文档一键转可复用技能。Claw 群组同步开启内测，探索多 Agent 协作的全新可能。">
-<meta name="keywords" content="Kimi, AI, K2.6, Kimi K2.6, Kimi 官网, 视觉编程, Agent 集群, PPT, Excel, PDF, Moonshot, Moonshot AI, 月之暗面, 深度研究, 建站">  <link rel="shortcut icon" href="/favicon.ico"> <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <meta name="renderer" content="webkit"> <meta name="force-rendering" content="webkit"> <meta name="mobile-web-app-capable" content="yes"> <meta name="apple-mobile-web-app-status-bar-style" content="black"> <meta name="apple-mobile-web-app-title" content="Kimi"> <meta name="format-detection" content="telephone=no,email=no"> <meta name="msvalidate.01" content="38E0A3C40C0983D8FED5BD0B59E78653"> <meta name="baidu-site-verification" content="codeva-oC0GIbxpdb"> <meta name="sogou_site_verification" content="K4KQFuej81">   <script>window.OVERSEA=false</script> <script type="module" crossorigin src="//statics.moonshot.cn/kimi-web-seo/assets/index-DwHIoAj4.js"></script> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/rolldown-runtime-CtLqhC6a.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/framework-CbSiJTlV.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/_plugin-vue_export-helper-DNW4j-dv.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/katex-CLyXPy3k.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/vendor-CgCurXkZ.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/validate_pb-C4d1SIYt.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/core-BXNy5V_X.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/dayjs.min-BFZ_fz8v.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.utils-GMjEwobZ.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.bridge-BdDnOOFL.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.log-CKdDisMD.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/promise-D8l7rJLl.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/request-B050O3XD.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/annotations_pb-C6W6zlnS.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/field_behavior_pb-D6GtFkca.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/artifact_pb-CdpKiLqT.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/scenario_pb-C1j8dMEC.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/job_pb-CHPnmDsQ.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimiplus_pb-BtBMDluK.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/options_pb-C2Pe6YDd.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/message_ref_pb-DCQRGUBn.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/memory_pb-BXmB8MqL.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/user_context_pb-BAWtcaIn.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/goods_pb-BPr4n030.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/response_pb-BR4TEZ3r.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.message-BOnAiUjQ.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/model-BozsdOkm.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/user-Bav45Pjq.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/check-BvQ2XJde.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/formatter-D9-u_ZRd.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/subscription-DU2-asl7.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/config-C7PKm4jU.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/bot_pb-HPulRIp9.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/form.modal-BXP09fsc.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Loading-Dt55m9gg.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Button-DdhALGbb.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.icon-DeDLChEm.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.button-D0acMFNz.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.confirm-B6dzsg1r.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Image-B8cecO4R.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Tooltip-BvMsJCxr.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/WithTooltip-D3oFPaHw.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/ImageThumbnail-BOp81guX.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.imagePreview-DDXbCUCf.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Modal-DBqQqidN.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.modal-BrC-xTCq.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Tooltip-B_k85jz4.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/chatBase-uYoMcPqC.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/loadExternalScript-DVxqICcW.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/captcha-1O-t7XDS.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/googleLoginModel-D1D512ng.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/desktop-CFuUviqR.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/login-ZhofZQ6e.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/theme-gZ_4vgR0.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/RiveImg-D-mHo3TG.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/RunningText-DAc0hm5C.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/button-CLnLPawZ.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/copy-button-DeULKRwy.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/v4-Dcu8wDVB.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/router-CMk9iKzd.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/claw-bot-C4PIgogy.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/chunk-GIYVHLCQ-ClQqqd6P.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi.css-COdee7H2.js"> <link rel="modulepreload" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/PopoverMenu-DoVhva2c.js"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/katex-BTdWhSYS.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/vendor-t6ip80KM.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Loading-_FPPz63B.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Button-B_jrYFEc.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi-C1dNVZ_H.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi-jCVormhs.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Image-D3ht6cJq.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Tooltip-LpF9yzhX.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/WithTooltip-CViyiqjM.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/ImageThumbnail-9Jupfg5C.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Modal-BdF34-du.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/kimi-AgKO8nFt.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/Tooltip-VbI1pHK5.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/captcha-CuD_oCrT.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/login-ZytcTNyW.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/RiveImg-BXdTu5Pl.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/RunningText-B5atj1q7.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/button-BAfgdnek.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/copy-button-BmJAMs-G.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/claw-bot-BJUbccxz.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/PopoverMenu-Djc6Z3sh.css"> <link rel="stylesheet" crossorigin href="//statics.moonshot.cn/kimi-web-seo/assets/index-D7TpTa0j.css"> </head> <body> <div id="app"></div>  </body> </html> 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雪中飞门店诊断系统</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+            color: white;
+            padding: 16px 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .logo-icon { width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.1);
+            padding: 4px;
+            border-radius: 10px;
+        }
+        .nav-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: none;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+        }
+        .nav-tab:hover { color: white; background: rgba(255,255,255,0.1); }
+        .nav-tab.active { background: var(--primary); color: white; }
+        .nav-tab.admin { font-size: 12px; opacity: 0.6; }
+        .nav-tab.admin:hover { opacity: 1; }
+
+        /* Status Bar */
+        .status-bar {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 8px 0;
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .status-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .status-online { background: #d1fae5; color: #065f46; }
+        .status-offline { background: #fee2e2; color: #991b1b; }
+        .status-local { background: #fef3c7; color: #92400e; }
+        .sync-btn {
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--gray-300);
+            background: white;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .sync-btn:hover { background: var(--gray-50); border-color: var(--primary); }
+
+        /* Main Content */
+        .main-content { padding: 24px 0; }
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-bottom: 16px;
+        }
+
+        /* Filters */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+            border: 1px solid var(--gray-200);
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            min-width: 140px;
+        }
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-warning { background: var(--warning); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-secondary { background: var(--gray-200); color: var(--gray-700); }
+        .btn-sm { padding: 6px 12px; font-size: 13px; }
+
+        /* Shop Filter Panel */
+        .shop-filter-panel {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .shop-filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .shop-filter-title { font-size: 16px; font-weight: 600; }
+        .shop-filter-actions { display: flex; gap: 8px; }
+        .shop-filter-section {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .shop-filter-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .shop-filter-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .shop-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .shop-tag {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--gray-300);
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .shop-tag:hover { border-color: var(--primary); color: var(--primary); }
+        .shop-tag.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .shop-tag.disabled { opacity: 0.4; cursor: not-allowed; }
+        .shop-search {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .shop-search:focus { outline: none; border-color: var(--primary); }
+        .shop-selected-count {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        /* Tables */
+        .table-container { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th {
+            background: var(--gray-50);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray-700);
+            border-bottom: 2px solid var(--gray-200);
+            white-space: nowrap;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+        tr:hover { background: var(--gray-50); }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+
+        /* Traffic Lights */
+        .light {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .light-green { background: #d1fae5; color: #065f46; }
+        .light-yellow { background: #fef3c7; color: #92400e; }
+        .light-red { background: #fee2e2; color: #991b1b; }
+        .light-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .light-green .light-dot { background: var(--success); }
+        .light-yellow .light-dot { background: var(--warning); }
+        .light-red .light-dot { background: var(--danger); }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 16px 0;
+            display: none;
+        }
+        .progress-container.active { display: block; }
+        .progress-bar-bg {
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .progress-text {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* Import Records */
+        .import-record {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--gray-50);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid var(--gray-200);
+        }
+        .import-record-info { display: flex; flex-direction: column; gap: 2px; }
+        .import-record-name { font-weight: 500; font-size: 14px; }
+        .import-record-meta { font-size: 12px; color: var(--gray-500); }
+        .import-record-actions { display: flex; gap: 8px; }
+
+        /* Diagnosis Report */
+        .diagnosis-report {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .diagnosis-header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--gray-800);
+        }
+        .diagnosis-header h2 { font-size: 22px; margin-bottom: 8px; }
+        .diagnosis-header p { color: var(--gray-500); font-size: 14px; }
+        .diagnosis-section { margin-bottom: 24px; }
+        .diagnosis-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        .diagnosis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .diagnosis-card {
+            background: var(--gray-50);
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid var(--gray-200);
+        }
+        .diagnosis-card-label {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 4px;
+        }
+        .diagnosis-card-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .diagnosis-card-compare {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+
+        /* Rankings */
+        .ranking-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 1024px) {
+            .ranking-container { grid-template-columns: 1fr; }
+        }
+        .ranking-box {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .ranking-box-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-100);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ranking-item:hover { background: var(--gray-50); margin: 0 -12px; padding: 8px 12px; border-radius: 6px; }
+        .ranking-item:last-child { border-bottom: none; }
+        .ranking-item.selected { background: #eff6ff; margin: 0 -12px; padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--primary); }
+        .ranking-rank {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .ranking-rank.top { background: #fef3c7; color: #92400e; }
+        .ranking-rank.normal { background: var(--gray-200); color: var(--gray-600); }
+        .ranking-name { flex: 1; font-size: 14px; }
+        .ranking-value { font-weight: 600; color: var(--gray-700); font-size: 14px; }
+
+        /* Transfer Suggestions */
+        .transfer-suggestion {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .transfer-suggestion-title {
+            font-weight: 600;
+            color: #9a3412;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .transfer-suggestion-content {
+            font-size: 13px;
+            color: #c2410c;
+            line-height: 1.8;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gray-100);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover { background: var(--gray-200); }
+
+        /* Firebase Config Notice */
+        .config-notice {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .config-notice strong { color: #92400e; }
+        .config-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* Export Buttons */
+        .export-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-400);
+        }
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        .empty-state-text { font-size: 16px; margin-bottom: 8px; }
+        .empty-state-hint { font-size: 13px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 12px; }
+            .nav-tabs { flex-wrap: wrap; justify-content: center; }
+            .filter-bar { flex-direction: column; }
+            .diagnosis-grid { grid-template-columns: 1fr; }
+            .ranking-container { grid-template-columns: 1fr; }
+        }
+
+        /* Hide/Show */
+        .hidden { display: none !important; }
+
+        /* Tabs within page */
+        .sub-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 8px;
+        }
+        .sub-tab {
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            background: transparent;
+            color: var(--gray-500);
+        }
+        .sub-tab:hover { color: var(--gray-700); background: var(--gray-100); }
+        .sub-tab.active { color: var(--primary); background: #eff6ff; }
+        .sub-page { display: none; }
+        .sub-page.active { display: block; }
+
+        /* Loading */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--gray-300);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Data source badge */
+        .source-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        .source-local { background: #e0e7ff; color: #3730a3; }
+        .source-cloud { background: #d1fae5; color: #065f46; }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">❄️</div>
+                <span>雪中飞门店诊断系统</span>
+            </div>
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="switchPage('diagnosis')">月度汇总诊断</button>
+                <button class="nav-tab" onclick="switchPage('retail')">零售明细分析</button>
+                <button class="nav-tab admin" onclick="switchPage('admin')">⚙️ 数据管理</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <div class="status-content">
+            <div>
+                <span id="connectionStatus" class="status-indicator status-local">
+                    <span class="loading-spinner" style="display:none" id="syncSpinner"></span>
+                    <span id="syncStatusText">本地模式（未配置云端）</span>
+                </span>
+                <span id="dataStats" style="margin-left:12px; font-size:12px;"></span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <span id="lastSyncTime" style="font-size:12px;"></span>
+                <button class="sync-btn" onclick="syncData()" id="syncBtn" style="display:none;">🔄 同步云端</button>
+                <button class="sync-btn" onclick="exportAllData()">📥 导出备份</button>
+                <button class="sync-btn" onclick="importBackup()">📤 导入备份</button>
+                <input type="file" id="backupInput" style="display:none" accept=".json" onchange="handleBackupImport(event)">
+            </div>
+        </div>
+    </div>
+
+    <div class="container main-content">
+        <!-- ==================== 数据管理后台 ==================== -->
+        <div id="page-admin" class="page">
+            <div class="card">
+                <div class="card-title">🔧 系统配置</div>
+                <div class="config-notice" id="configNotice">
+                    <strong>⚠️ 要实现跨设备同步，请配置 Firebase</strong><br>
+                    1. 访问 <a href="https://console.firebase.google.com" target="_blank">Firebase Console</a> 创建项目<br>
+                    2. 添加网页应用，复制配置代码粘贴到下方<br>
+                    3. 创建 Firestore 数据库（测试模式即可）<br>
+                    <input type="text" class="config-input" id="firebaseConfig" placeholder='{"apiKey":"...","authDomain":"...","projectId":"..."}'>
+                    <button class="btn btn-primary btn-sm" style="margin-top:8px;" onclick="saveFirebaseConfig()">保存配置并连接</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📊 店铺基础数据（ABC分类）</div>
+                <div class="card-subtitle">导入相对稳定的店铺数据，表头：店铺名称、ABC级分类、城市（可选）</div>
+                <div style="display:flex; gap:10px; margin-bottom:16px;">
+                    <input type="file" id="shopFile" accept=".xlsx,.xls,.csv" onchange="handleShopFile(event)">
+                    <button class="btn btn-primary" onclick="document.getElementById('shopFile').click()">选择文件</button>
+                    <button class="btn btn-success" onclick="uploadShopData()" id="uploadShopBtn" disabled>确认导入</button>
+                </div>
+                <div class="progress-container" id="shopProgress">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="shopProgressBar"></div></div>
+                    <div class="progress-text" id="shopProgressText">准备导入...</div>
+                </div>
+                <div id="shopPreview"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📈 月度经营汇总数据（历史对照组）</div>
+                <div class="card-subtitle">表头：年份月份、店铺名称、净销量、净销售额、调入、调出、期末库存、期初、售罄率、库销比。支持多次导入，自动累计。</div>
+                <div style="display:flex; gap:10px; margin-bottom:16px;">
+                    <input type="file" id="summaryFile" accept=".xlsx,.xls,.csv" onchange="handleSummaryFile(event)">
+                    <button class="btn btn-primary" onclick="document.getElementById('summaryFile').click()">选择文件</button>
+                    <button class="btn btn-success" onclick="uploadSummaryData()" id="uploadSummaryBtn" disabled>确认导入</button>
+                </div>
+                <div class="progress-container" id="summaryProgress">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="summaryProgressBar"></div></div>
+                    <div class="progress-text" id="summaryProgressText">准备导入...</div>
+                </div>
+                <div id="summaryRecords"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🛍️ 零售明细数据</div>
+                <div class="card-subtitle">表头：单据编号、单据日期、店铺名称、商品款号、色号、颜色、尺码号、尺码、数量、金额等。支持多次导入累计，数据量较大请耐心等待进度条。</div>
+                <div style="display:flex; gap:10px; margin-bottom:16px;">
+                    <input type="file" id="retailFile" accept=".xlsx,.xls,.csv" onchange="handleRetailFile(event)">
+                    <button class="btn btn-primary" onclick="document.getElementById('retailFile').click()">选择文件</button>
+                    <button class="btn btn-success" onclick="uploadRetailData()" id="uploadRetailBtn" disabled>确认导入</button>
+                </div>
+                <div class="progress-container" id="retailProgress">
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" id="retailProgressBar"></div></div>
+                    <div class="progress-text" id="retailProgressText">准备导入...</div>
+                </div>
+                <div id="retailRecords"></div>
+            </div>
+
+            <div class="card" style="background:#fee2e2; border-color:#fca5a5;">
+                <div class="card-title" style="color:#991b1b;">⚠️ 危险操作</div>
+                <button class="btn btn-danger" onclick="clearAllData()">🗑️ 清空所有本地数据</button>
+                <p style="font-size:13px; color:#991b1b; margin-top:8px;">此操作将删除所有本地数据，无法恢复。建议先导出备份。</p>
+            </div>
+        </div>
+
+        <!-- ==================== 月度汇总诊断 ==================== -->
+        <div id="page-diagnosis" class="page active">
+            <div class="shop-filter-panel">
+                <div class="shop-filter-header">
+                    <div class="shop-filter-title">🏪 店铺筛选</div>
+                    <div class="shop-filter-actions">
+                        <button class="btn btn-sm btn-secondary" onclick="selectAllShops(true)">全选</button>
+                        <button class="btn btn-sm btn-secondary" onclick="selectAllShops(false)">全不选</button>
+                        <span class="shop-selected-count" id="shopSelectedCount">已选 0 家</span>
+                    </div>
+                </div>
+
+                <input type="text" class="shop-search" id="shopSearchInput" placeholder="🔍 搜索店铺名称..." oninput="filterShops()">
+
+                <div class="shop-filter-section">
+                    <div class="shop-filter-label">按 ABC 级别</div>
+                    <div class="shop-tags" id="abcFilterTags"></div>
+                </div>
+
+                <div class="shop-filter-section">
+                    <div class="shop-filter-label">按 城市区域</div>
+                    <div class="shop-tags" id="cityFilterTags"></div>
+                </div>
+
+                <div class="shop-filter-section">
+                    <div class="shop-filter-label">按 红绿灯状态</div>
+                    <div class="shop-tags" id="lightFilterTags">
+                        <span class="shop-tag" data-filter="light" data-value="green" onclick="toggleFilterTag(this)">🟢 绿灯</span>
+                        <span class="shop-tag" data-filter="light" data-value="yellow" onclick="toggleFilterTag(this)">🟡 黄灯</span>
+                        <span class="shop-tag" data-filter="light" data-value="red" onclick="toggleFilterTag(this)">🔴 红灯</span>
+                    </div>
+                </div>
+
+                <div class="shop-filter-section">
+                    <div class="shop-filter-label">店铺列表（点击选择/取消）</div>
+                    <div class="shop-tags" id="shopListTags"></div>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>时间选择</label>
+                    <select id="diagTimeSelect" onchange="updateDiagnosis()">
+                        <option value="">请选择月份</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>对比基准</label>
+                    <select id="diagCompareType" onchange="updateDiagnosis()">
+                        <option value="abc">ABC同级平均</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>快速操作</label>
+                    <button class="btn btn-primary" onclick="generateDiagnosisReports()">📋 生成诊断报告</button>
+                </div>
+                <div class="filter-group">
+                    <label>批量导出</label>
+                    <button class="btn btn-success" onclick="exportDiagnosisBatch()">📦 导出所有诊断表</button>
+                </div>
+            </div>
+
+            <div id="diagnosisResults"></div>
+            <div id="diagnosisEmpty" class="empty-state" style="display:none;">
+                <div class="empty-state-icon">📊</div>
+                <div class="empty-state-text">请先选择店铺和时间</div>
+                <div class="empty-state-hint">在上方筛选店铺并选择诊断月份</div>
+            </div>
+        </div>
+
+        <!-- ==================== 零售明细分析 ==================== -->
+        <div id="page-retail" class="page">
+            <div class="shop-filter-panel">
+                <div class="shop-filter-header">
+                    <div class="shop-filter-title">🏪 店铺筛选</div>
+                    <div class="shop-filter-actions">
+                        <button class="btn btn-sm btn-secondary" onclick="selectAllRetailShops(true)">全选</button>
+                        <button class="btn btn-sm btn-secondary" onclick="selectAllRetailShops(false)">全不选</button>
+                        <span class="shop-selected-count" id="retailShopSelectedCount">已选 0 家</span>
+                    </div>
+                </div>
+                <input type="text" class="shop-search" id="retailShopSearch" placeholder="🔍 搜索店铺名称..." oninput="filterRetailShops()">
+                <div class="shop-filter-section">
+                    <div class="shop-filter-label">按 ABC 级别</div>
+                    <div class="shop-tags" id="retailAbcFilterTags"></div>
+                </div>
+                <div class="shop-filter-section">
+                    <div class="shop-filter-label">按 城市区域</div>
+                    <div class="shop-tags" id="retailCityFilterTags"></div>
+                </div>
+                <div class="shop-filter-section">
+                    <div class="shop-filter-label">店铺列表</div>
+                    <div class="shop-tags" id="retailShopListTags"></div>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>时间范围</label>
+                    <select id="retailTimeType" onchange="updateRetailAnalysis()">
+                        <option value="single">单月/单日</option>
+                        <option value="range">时间区间</option>
+                    </select>
+                </div>
+                <div class="filter-group" id="singleDateGroup">
+                    <label>选择日期</label>
+                    <input type="date" id="retailSingleDate" onchange="updateRetailAnalysis()">
+                </div>
+                <div class="filter-group hidden" id="rangeDateGroup">
+                    <label>开始日期</label>
+                    <input type="date" id="retailStartDate" onchange="updateRetailAnalysis()">
+                </div>
+                <div class="filter-group hidden" id="rangeDateEndGroup">
+                    <label>结束日期</label>
+                    <input type="date" id="retailEndDate" onchange="updateRetailAnalysis()">
+                </div>
+                <div class="filter-group">
+                    <label>分析</label>
+                    <button class="btn btn-primary" onclick="updateRetailAnalysis()">🔍 查询分析</button>
+                </div>
+            </div>
+
+            <div class="sub-tabs">
+                <button class="sub-tab active" onclick="switchRetailTab('ranking')">📊 畅销/滞销排名</button>
+                <button class="sub-tab" onclick="switchRetailTab('transfer')">🚚 智能调拨建议</button>
+                <button class="sub-tab" onclick="switchRetailTab('detail')">📋 明细数据</button>
+            </div>
+
+            <div id="retail-ranking" class="sub-page active">
+                <div class="ranking-container">
+                    <div class="ranking-box">
+                        <div class="ranking-box-title">
+                            <span>🏆 畅销款 TOP5</span>
+                            <span style="font-size:12px; color:var(--gray-400);">按销量</span>
+                        </div>
+                        <div id="topStyles"></div>
+                    </div>
+                    <div class="ranking-box">
+                        <div class="ranking-box-title">
+                            <span>🎨 畅销色 TOP</span>
+                            <span style="font-size:12px; color:var(--gray-400);">联动款</span>
+                        </div>
+                        <div id="topColors"></div>
+                    </div>
+                    <div class="ranking-box">
+                        <div class="ranking-box-title">
+                            <span>📏 畅销尺码 TOP</span>
+                            <span style="font-size:12px; color:var(--gray-400);">联动色</span>
+                        </div>
+                        <div id="topSizes"></div>
+                    </div>
+                </div>
+                <div class="ranking-container">
+                    <div class="ranking-box">
+                        <div class="ranking-box-title">
+                            <span>⚠️ 滞销款 TOP5</span>
+                            <span style="font-size:12px; color:var(--gray-400);">按销量</span>
+                        </div>
+                        <div id="bottomStyles"></div>
+                    </div>
+                    <div class="ranking-box">
+                        <div class="ranking-box-title">
+                            <span>🎨 滞销色 TOP</span>
+                            <span style="font-size:12px; color:var(--gray-400);">联动款</span>
+                        </div>
+                        <div id="bottomColors"></div>
+                    </div>
+                    <div class="ranking-box">
+                        <div class="ranking-box-title">
+                            <span>📏 滞销尺码 TOP</span>
+                            <span style="font-size:12px; color:var(--gray-400);">联动色</span>
+                        </div>
+                        <div id="bottomSizes"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="retail-transfer" class="sub-page">
+                <div id="transferSuggestions"></div>
+                <div id="transferEmpty" class="empty-state">
+                    <div class="empty-state-icon">🚚</div>
+                    <div class="empty-state-text">暂无调拨建议</div>
+                    <div class="empty-state-hint">选择店铺和时间后，系统将分析各店库存与销售差异</div>
+                </div>
+            </div>
+
+            <div id="retail-detail" class="sub-page">
+                <div class="table-container">
+                    <table id="retailDetailTable">
+                        <thead>
+                            <tr>
+                                <th>单据日期</th>
+                                <th>店铺</th>
+                                <th>商品款号</th>
+                                <th>颜色</th>
+                                <th>尺码</th>
+                                <th class="text-right">数量</th>
+                                <th class="text-right">金额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="retailDetailBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 全局状态 ====================
+        const AppState = {
+            firebase: null,
+            db: null,
+            useCloud: false,
+            shopData: [],      // {店铺名称, ABC级分类, 城市}
+            summaryData: [],   // {年份月份, 店铺名称, 净销量, ...}
+            retailData: [],    // {单据日期, 店铺名称, 商品款号, ...}
+            importHistory: {
+                shop: [],
+                summary: [],
+                retail: []
+            },
+            selectedShops: new Set(),
+            selectedRetailShops: new Set(),
+            filterAbc: new Set(),
+            filterCity: new Set(),
+            filterLight: new Set(),
+            retailFilterAbc: new Set(),
+            retailFilterCity: new Set(),
+            selectedStyle: null,
+            selectedColor: null,
+            selectedBottomStyle: null,
+            selectedBottomColor: null,
+            currentDiagMonth: '',
+            firebaseConfig: null
+        };
+
+        // ==================== Firebase 配置 ====================
+        function saveFirebaseConfig() {
+            const configStr = document.getElementById('firebaseConfig').value.trim();
+            if (!configStr) {
+                alert('请输入 Firebase 配置');
+                return;
+            }
+            try {
+                const config = JSON.parse(configStr);
+                localStorage.setItem('firebase_config', JSON.stringify(config));
+                initFirebase(config);
+            } catch(e) {
+                alert('配置格式错误，请确保是有效的 JSON');
+            }
+        }
+
+        function initFirebase(config) {
+            try {
+                if (!config.apiKey || !config.projectId) {
+                    throw new Error('配置缺少必要字段');
+                }
+                AppState.firebase = firebase.initializeApp(config);
+                AppState.db = firebase.firestore();
+                AppState.useCloud = true;
+                AppState.firebaseConfig = config;
+
+                document.getElementById('connectionStatus').className = 'status-indicator status-online';
+                document.getElementById('syncStatusText').textContent = '云端已连接';
+                document.getElementById('syncBtn').style.display = 'inline-flex';
+                document.getElementById('configNotice').style.display = 'none';
+
+                // 从云端加载数据
+                loadFromCloud();
+            } catch(e) {
+                console.error('Firebase初始化失败:', e);
+                alert('Firebase连接失败: ' + e.message);
+            }
+        }
+
+        // 检查本地是否有配置
+        const savedConfig = localStorage.getItem('firebase_config');
+        if (savedConfig) {
+            try {
+                initFirebase(JSON.parse(savedConfig));
+            } catch(e) {
+                console.log('自动连接失败', e);
+            }
+        }
+
+        // ==================== 本地存储（IndexedDB）====================
+        const DB_NAME = 'XueZhongFeiDB';
+        const DB_VERSION = 1;
+        let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        let db = null;
+
+        function initIndexedDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => { db = request.result; resolve(db); };
+                request.onupgradeneeded = (event) => {
+                    const database = event.target.result;
+                    if (!database.objectStoreNames.contains('shopData')) database.createObjectStore('shopData', {keyPath: '店铺名称'});
+                    if (!database.objectStoreNames.contains('summaryData')) database.createObjectStore('summaryData', {autoIncrement: true});
+                    if (!database.objectStoreNames.contains('retailData')) database.createObjectStore('retailData', {autoIncrement: true});
+                    if (!database.objectStoreNames.contains('importHistory')) database.createObjectStore('importHistory', {keyPath: 'id'});
+                };
+            });
+        }
+
+        async function saveToIndexedDB(storeName, data) {
+            if (!db) await initIndexedDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction([storeName], 'readwrite');
+                const store = tx.objectStore(storeName);
+                // 清空后写入
+                const clearReq = store.clear();
+                clearReq.onsuccess = () => {
+                    if (Array.isArray(data)) {
+                        data.forEach(item => store.put(item));
+                    } else {
+                        store.put(data);
+                    }
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = () => reject(tx.error);
+                };
+            });
+        }
+
+        async function loadFromIndexedDB(storeName) {
+            if (!db) await initIndexedDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction([storeName], 'readonly');
+                const store = tx.objectStore(storeName);
+                const request = store.getAll();
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // ==================== 数据加载 ====================
+        async function loadAllData() {
+            try {
+                await initIndexedDB();
+                const shop = await loadFromIndexedDB('shopData');
+                const summary = await loadFromIndexedDB('summaryData');
+                const retail = await loadFromIndexedDB('retailData');
+                const history = await loadFromIndexedDB('importHistory');
+
+                if (shop.length) AppState.shopData = shop;
+                if (summary.length) AppState.summaryData = summary;
+                if (retail.length) AppState.retailData = retail;
+                if (history.length) {
+                    history.forEach(h => {
+                        if (h.type === 'shop') AppState.importHistory.shop.push(h);
+                        if (h.type === 'summary') AppState.importHistory.summary.push(h);
+                        if (h.type === 'retail') AppState.importHistory.retail.push(h);
+                    });
+                }
+
+                updateUI();
+                updateStats();
+            } catch(e) {
+                console.log('本地数据加载失败或为空', e);
+            }
+        }
+
+        async function loadFromCloud() {
+            if (!AppState.db) return;
+            try {
+                const shopSnap = await AppState.db.collection('shopData').get();
+                AppState.shopData = shopSnap.docs.map(d => d.data());
+
+                const summarySnap = await AppState.db.collection('summaryData').get();
+                AppState.summaryData = summarySnap.docs.map(d => d.data());
+
+                const retailSnap = await AppState.db.collection('retailData').get();
+                AppState.retailData = retailSnap.docs.map(d => d.data());
+
+                updateUI();
+                updateStats();
+                document.getElementById('lastSyncTime').textContent = '上次同步: ' + new Date().toLocaleString();
+            } catch(e) {
+                console.error('云端加载失败', e);
+            }
+        }
+
+        async function syncData() {
+            if (!AppState.db) {
+                alert('未配置云端，请先配置Firebase');
+                return;
+            }
+            const btn = document.getElementById('syncBtn');
+            const spinner = document.getElementById('syncSpinner');
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+
+            try {
+                // 批量写入云端（分批处理避免超限）
+                const batchSize = 500;
+
+                // 清空云端数据
+                const collections = ['shopData', 'summaryData', 'retailData'];
+                for (const coll of collections) {
+                    const snap = await AppState.db.collection(coll).get();
+                    const batch = AppState.db.batch();
+                    snap.docs.forEach(doc => batch.delete(doc.ref));
+                    await batch.commit();
+                }
+
+                // 写入店铺数据
+                for (let i = 0; i < AppState.shopData.length; i += batchSize) {
+                    const batch = AppState.db.batch();
+                    AppState.shopData.slice(i, i + batchSize).forEach(item => {
+                        const ref = AppState.db.collection('shopData').doc(item.店铺名称 || 'unknown');
+                        batch.set(ref, item);
+                    });
+                    await batch.commit();
+                }
+
+                // 写入汇总数据
+                for (let i = 0; i < AppState.summaryData.length; i += batchSize) {
+                    const batch = AppState.db.batch();
+                    AppState.summaryData.slice(i, i + batchSize).forEach((item, idx) => {
+                        const ref = AppState.db.collection('summaryData').doc('s_' + i + '_' + idx);
+                        batch.set(ref, item);
+                    });
+                    await batch.commit();
+                }
+
+                // 写入零售数据（可能很大，分片）
+                for (let i = 0; i < AppState.retailData.length; i += batchSize) {
+                    const batch = AppState.db.batch();
+                    AppState.retailData.slice(i, i + batchSize).forEach((item, idx) => {
+                        const ref = AppState.db.collection('retailData').doc('r_' + i + '_' + idx);
+                        batch.set(ref, item);
+                    });
+                    await batch.commit();
+                }
+
+                document.getElementById('lastSyncTime').textContent = '同步成功: ' + new Date().toLocaleString();
+                alert('云端同步成功！');
+            } catch(e) {
+                console.error(e);
+                alert('同步失败: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        // ==================== 文件导入处理 ====================
+        let pendingShopData = [];
+        let pendingSummaryData = [];
+        let pendingRetailData = [];
+
+        function readFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, {type: 'array'});
+                        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const json = XLSX.utils.sheet_to_json(firstSheet, {header: 1});
+                        resolve(json);
+                    } catch(err) {
+                        reject(err);
+                    }
+                };
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function handleShopFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            readFile(file).then(data => {
+                const headers = data[0];
+                const rows = data.slice(1).filter(r => r[0]);
+                pendingShopData = rows.map(r => {
+                    const obj = {};
+                    headers.forEach((h, i) => obj[h] = r[i]);
+                    return obj;
+                });
+                document.getElementById('uploadShopBtn').disabled = false;
+                document.getElementById('shopPreview').innerHTML = 
+                    `<p style="color:var(--success); font-size:14px;">✅ 已读取 ${pendingShopData.length} 条店铺数据，点击"确认导入"提交</p>`;
+            }).catch(e => {
+                alert('文件读取失败: ' + e.message);
+            });
+        }
+
+        function handleSummaryFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            readFile(file).then(data => {
+                const headers = data[0];
+                const rows = data.slice(1).filter(r => r[0]);
+                pendingSummaryData = rows.map(r => {
+                    const obj = {};
+                    headers.forEach((h, i) => obj[h] = r[i]);
+                    return obj;
+                });
+                document.getElementById('uploadSummaryBtn').disabled = false;
+                alert(`已读取 ${pendingSummaryData.length} 条汇总数据，点击确认导入`);
+            }).catch(e => {
+                alert('文件读取失败: ' + e.message);
+            });
+        }
+
+        function handleRetailFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            readFile(file).then(data => {
+                const headers = data[0];
+                const rows = data.slice(1).filter(r => r[0]);
+                pendingRetailData = rows.map(r => {
+                    const obj = {};
+                    headers.forEach((h, i) => obj[h] = r[i]);
+                    return obj;
+                });
+                document.getElementById('uploadRetailBtn').disabled = false;
+                alert(`已读取 ${pendingRetailData.length} 条零售数据，点击确认导入`);
+            }).catch(e => {
+                alert('文件读取失败: ' + e.message);
+            });
+        }
+
+        // ==================== 带进度条的导入 ====================
+        async function uploadShopData() {
+            if (!pendingShopData.length) return;
+            const progressContainer = document.getElementById('shopProgress');
+            const progressBar = document.getElementById('shopProgressBar');
+            const progressText = document.getElementById('shopProgressText');
+            progressContainer.classList.add('active');
+
+            // 合并数据（去重：店铺名称相同则覆盖）
+            const existingMap = new Map(AppState.shopData.map(s => [s.店铺名称, s]));
+            let updated = 0, added = 0;
+            for (let i = 0; i < pendingShopData.length; i++) {
+                const item = pendingShopData[i];
+                if (existingMap.has(item.店铺名称)) {
+                    existingMap.set(item.店铺名称, item);
+                    updated++;
+                } else {
+                    existingMap.set(item.店铺名称, item);
+                    added++;
+                }
+                const pct = Math.round((i + 1) / pendingShopData.length * 100);
+                progressBar.style.width = pct + '%';
+                progressText.textContent = `正在处理... ${i+1}/${pendingShopData.length} (${pct}%)`;
+                await new Promise(r => setTimeout(r, 10)); // 让UI更新
+            }
+            AppState.shopData = Array.from(existingMap.values());
+
+            // 保存
+            await saveToIndexedDB('shopData', AppState.shopData);
+
+            // 记录导入历史
+            const record = {
+                id: 'shop_' + Date.now(),
+                type: 'shop',
+                fileName: document.getElementById('shopFile').files[0]?.name || '未知文件',
+                count: pendingShopData.length,
+                added: added,
+                updated: updated,
+                time: new Date().toLocaleString()
+            };
+            AppState.importHistory.shop.push(record);
+            await saveImportHistory();
+
+            pendingShopData = [];
+            document.getElementById('uploadShopBtn').disabled = true;
+            document.getElementById('shopFile').value = '';
+            progressBar.style.width = '100%';
+            progressText.textContent = `导入完成！新增${added}条，更新${updated}条`;
+
+            updateUI();
+            updateStats();
+            renderImportRecords();
+        }
+
+        async function uploadSummaryData() {
+            if (!pendingSummaryData.length) return;
+            const progressContainer = document.getElementById('summaryProgress');
+            const progressBar = document.getElementById('summaryProgressBar');
+            const progressText = document.getElementById('summaryProgressText');
+            progressContainer.classList.add('active');
+
+            // 汇总数据直接追加（不去重，因为不同月份的数据可以共存）
+            // 但同一店铺同月份的数据应该覆盖
+            const existingMap = new Map();
+            AppState.summaryData.forEach(s => {
+                const key = (s.年份月份 || s['年份月份']) + '_' + (s.店铺名称 || s['店铺名称']);
+                existingMap.set(key, s);
+            });
+
+            let added = 0, updated = 0;
+            for (let i = 0; i < pendingSummaryData.length; i++) {
+                const item = pendingSummaryData[i];
+                const ym = item.年份月份 || item['年份月份'];
+                const shop = item.店铺名称 || item['店铺名称'];
+                const key = ym + '_' + shop;
+                if (existingMap.has(key)) updated++;
+                else added++;
+                existingMap.set(key, item);
+
+                const pct = Math.round((i + 1) / pendingSummaryData.length * 100);
+                progressBar.style.width = pct + '%';
+                progressText.textContent = `正在处理... ${i+1}/${pendingSummaryData.length} (${pct}%)`;
+                if (i % 100 === 0) await new Promise(r => setTimeout(r, 1));
+            }
+            AppState.summaryData = Array.from(existingMap.values());
+
+            await saveToIndexedDB('summaryData', AppState.summaryData);
+
+            const record = {
+                id: 'summary_' + Date.now(),
+                type: 'summary',
+                fileName: document.getElementById('summaryFile').files[0]?.name || '未知文件',
+                count: pendingSummaryData.length,
+                added: added,
+                updated: updated,
+                time: new Date().toLocaleString()
+            };
+            AppState.importHistory.summary.push(record);
+            await saveImportHistory();
+
+            pendingSummaryData = [];
+            document.getElementById('uploadSummaryBtn').disabled = true;
+            document.getElementById('summaryFile').value = '';
+            progressBar.style.width = '100%';
+            progressText.textContent = `导入完成！新增${added}条，更新${updated}条`;
+
+            updateUI();
+            updateStats();
+            renderImportRecords();
+            populateTimeSelect();
+        }
+
+        async function uploadRetailData() {
+            if (!pendingRetailData.length) return;
+            const progressContainer = document.getElementById('retailProgress');
+            const progressBar = document.getElementById('retailProgressBar');
+            const progressText = document.getElementById('retailProgressText');
+            progressContainer.classList.add('active');
+
+            // 零售数据量大，分批追加
+            const batchSize = 1000;
+            const total = pendingRetailData.length;
+
+            for (let start = 0; start < total; start += batchSize) {
+                const end = Math.min(start + batchSize, total);
+                const batch = pendingRetailData.slice(start, end);
+                AppState.retailData.push(...batch);
+
+                const pct = Math.round(end / total * 100);
+                progressBar.style.width = pct + '%';
+                progressText.textContent = `正在导入... ${end}/${total} (${pct}%) - 已处理${AppState.retailData.length}条累计`;
+                await new Promise(r => setTimeout(r, 50)); // 让UI呼吸
+            }
+
+            await saveToIndexedDB('retailData', AppState.retailData);
+
+            const record = {
+                id: 'retail_' + Date.now(),
+                type: 'retail',
+                fileName: document.getElementById('retailFile').files[0]?.name || '未知文件',
+                count: pendingRetailData.length,
+                totalAccumulated: AppState.retailData.length,
+                time: new Date().toLocaleString()
+            };
+            AppState.importHistory.retail.push(record);
+            await saveImportHistory();
+
+            pendingRetailData = [];
+            document.getElementById('uploadRetailBtn').disabled = true;
+            document.getElementById('retailFile').value = '';
+            progressBar.style.width = '100%';
+            progressText.textContent = `导入完成！累计${AppState.retailData.length}条零售数据`;
+
+            updateUI();
+            updateStats();
+            renderImportRecords();
+        }
+
+        async function saveImportHistory() {
+            const all = [
+                ...AppState.importHistory.shop.map(h => ({...h})),
+                ...AppState.importHistory.summary.map(h => ({...h})),
+                ...AppState.importHistory.retail.map(h => ({...h}))
+            ];
+            await saveToIndexedDB('importHistory', all);
+        }
+
+        // ==================== 导入记录展示 ====================
+        function renderImportRecords() {
+            const shopHtml = AppState.importHistory.shop.map(r => `
+                <div class="import-record">
+                    <div class="import-record-info">
+                        <span class="import-record-name">🏪 ${r.fileName}</span>
+                        <span class="import-record-meta">${r.time} | ${r.count}条 (新增${r.added},更新${r.updated})</span>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="deleteImportRecord('shop', '${r.id}')">删除</button>
+                </div>
+            `).join('') || '<p style="color:var(--gray-400); font-size:13px;">暂无导入记录</p>';
+            document.getElementById('shopPreview').innerHTML = '<div style="margin-top:16px;">' + shopHtml + '</div>';
+
+            const summaryHtml = AppState.importHistory.summary.map(r => `
+                <div class="import-record">
+                    <div class="import-record-info">
+                        <span class="import-record-name">📈 ${r.fileName}</span>
+                        <span class="import-record-meta">${r.time} | ${r.count}条 (新增${r.added},更新${r.updated})</span>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="deleteImportRecord('summary', '${r.id}')">删除</button>
+                </div>
+            `).join('') || '<p style="color:var(--gray-400); font-size:13px;">暂无导入记录</p>';
+            document.getElementById('summaryRecords').innerHTML = summaryHtml;
+
+            const retailHtml = AppState.importHistory.retail.map(r => `
+                <div class="import-record">
+                    <div class="import-record-info">
+                        <span class="import-record-name">🛍️ ${r.fileName}</span>
+                        <span class="import-record-meta">${r.time} | 本次${r.count}条 | 累计${r.totalAccumulated}条</span>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="deleteImportRecord('retail', '${r.id}')">删除本次</button>
+                </div>
+            `).join('') || '<p style="color:var(--gray-400); font-size:13px;">暂无导入记录</p>';
+            document.getElementById('retailRecords').innerHTML = retailHtml;
+        }
+
+        async function deleteImportRecord(type, id) {
+            if (!confirm('确定删除这条导入记录？数据将从系统中移除。')) return;
+
+            const record = AppState.importHistory[type].find(r => r.id === id);
+            if (!record) return;
+
+            // 从数据中移除该批次导入的数据（简化处理：重新从剩余记录构建）
+            // 实际应该记录每条数据的来源，这里简化：只移除记录，数据保留（避免误删）
+            // 或者根据情况处理：如果是店铺数据，可以安全移除；如果是汇总/零售，需要更谨慎
+
+            AppState.importHistory[type] = AppState.importHistory[type].filter(r => r.id !== id);
+            await saveImportHistory();
+            renderImportRecords();
+            alert('记录已删除。注意：实际数据仍保留在系统中，如需清理请使用"清空所有数据"后重新导入。');
+        }
+
+        async function clearAllData() {
+            if (!confirm('⚠️ 确定清空所有数据？此操作不可恢复！建议先导出备份。')) return;
+            if (!confirm('再次确认：将删除所有店铺、汇总、零售数据？')) return;
+
+            AppState.shopData = [];
+            AppState.summaryData = [];
+            AppState.retailData = [];
+            AppState.importHistory = {shop: [], summary: [], retail: []};
+
+            await saveToIndexedDB('shopData', []);
+            await saveToIndexedDB('summaryData', []);
+            await saveToIndexedDB('retailData', []);
+            await saveToIndexedDB('importHistory', []);
+
+            updateUI();
+            updateStats();
+            renderImportRecords();
+            alert('所有数据已清空');
+        }
+
+        // ==================== 导出/导入备份 ====================
+        function exportAllData() {
+            const data = {
+                shopData: AppState.shopData,
+                summaryData: AppState.summaryData,
+                retailData: AppState.retailData,
+                importHistory: AppState.importHistory,
+                exportTime: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `xuezhongfei_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importBackup() {
+            document.getElementById('backupInput').click();
+        }
+
+        async function handleBackupImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.shopData) AppState.shopData = data.shopData;
+                    if (data.summaryData) AppState.summaryData = data.summaryData;
+                    if (data.retailData) AppState.retailData = data.retailData;
+                    if (data.importHistory) AppState.importHistory = data.importHistory;
+
+                    await saveToIndexedDB('shopData', AppState.shopData);
+                    await saveToIndexedDB('summaryData', AppState.summaryData);
+                    await saveToIndexedDB('retailData', AppState.retailData);
+                    await saveImportHistory();
+
+                    updateUI();
+                    updateStats();
+                    renderImportRecords();
+                    populateTimeSelect();
+                    alert('备份恢复成功！');
+                } catch(err) {
+                    alert('备份文件解析失败: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // ==================== UI 更新 ====================
+        function updateUI() {
+            renderShopFilters();
+            renderRetailShopFilters();
+            populateTimeSelect();
+            renderImportRecords();
+        }
+
+        function updateStats() {
+            const stats = `店铺:${AppState.shopData.length} | 汇总:${AppState.summaryData.length} | 零售:${AppState.retailData.length}`;
+            document.getElementById('dataStats').textContent = stats;
+        }
+
+        function switchPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (page === 'diagnosis') {
+                renderShopFilters();
+                populateTimeSelect();
+            } else if (page === 'retail') {
+                renderRetailShopFilters();
+            }
+        }
+
+        // ==================== 店铺筛选渲染 ====================
+        function renderShopFilters() {
+            const shops = AppState.shopData;
+            if (!shops.length) {
+                document.getElementById('abcFilterTags').innerHTML = '<span style="color:var(--gray-400); font-size:13px;">请先导入店铺数据</span>';
+                document.getElementById('cityFilterTags').innerHTML = '';
+                document.getElementById('shopListTags').innerHTML = '';
+                return;
+            }
+
+            // ABC级别标签
+            const abcLevels = [...new Set(shops.map(s => s.ABC级分类 || s['ABC级分类']).filter(Boolean))].sort();
+            document.getElementById('abcFilterTags').innerHTML = abcLevels.map(abc => 
+                `<span class="shop-tag ${AppState.filterAbc.has(abc) ? 'selected' : ''}" data-filter="abc" data-value="${abc}" onclick="toggleFilterTag(this)">${abc}级</span>`
+            ).join('');
+
+            // 城市标签（从店铺名称提取或从城市字段）
+            const cities = [...new Set(shops.map(s => {
+                const cityField = s.城市 || s['城市'];
+                if (cityField) return cityField;
+                // 从店铺名称提取：假设前几个字是城市
+                const name = s.店铺名称 || s['店铺名称'] || '';
+                // 简单提取：如果包含"市"，取到市为止
+                const match = name.match(/^(.*?市)/);
+                return match ? match[1] : name.substring(0, 4);
+            }).filter(Boolean))].sort();
+
+            document.getElementById('cityFilterTags').innerHTML = cities.map(city => 
+                `<span class="shop-tag ${AppState.filterCity.has(city) ? 'selected' : ''}" data-filter="city" data-value="${city}" onclick="toggleFilterTag(this)">${city}</span>`
+            ).join('');
+
+            // 店铺列表（受筛选影响）
+            renderShopList();
+        }
+
+        function renderShopList() {
+            const shops = AppState.shopData.filter(s => {
+                const abc = s.ABC级分类 || s['ABC级分类'];
+                const city = s.城市 || s['城市'];
+                const name = s.店铺名称 || s['店铺名称'] || '';
+                const search = document.getElementById('shopSearchInput').value.trim();
+
+                if (AppState.filterAbc.size && !AppState.filterAbc.has(abc)) return false;
+                if (AppState.filterCity.size) {
+                    const shopCity = city || (name.match(/^(.*?市)/)?.[1] || name.substring(0, 4));
+                    if (!AppState.filterCity.has(shopCity)) return false;
+                }
+                if (search && !name.includes(search)) return false;
+                return true;
+            });
+
+            document.getElementById('shopListTags').innerHTML = shops.map(s => {
+                const name = s.店铺名称 || s['店铺名称'];
+                const isSelected = AppState.selectedShops.has(name);
+                return `<span class="shop-tag ${isSelected ? 'selected' : ''}" onclick="toggleShopSelection('${name}')">${name}</span>`;
+            }).join('');
+
+            document.getElementById('shopSelectedCount').textContent = `已选 ${AppState.selectedShops.size} 家`;
+        }
+
+        function toggleFilterTag(el) {
+            const filter = el.dataset.filter;
+            const value = el.dataset.value;
+            const set = filter === 'abc' ? AppState.filterAbc : filter === 'city' ? AppState.filterCity : AppState.filterLight;
+
+            if (set.has(value)) {
+                set.delete(value);
+                el.classList.remove('selected');
+            } else {
+                set.add(value);
+                el.classList.add('selected');
+            }
+
+            renderShopList();
+            updateDiagnosis();
+        }
+
+        function toggleShopSelection(shopName) {
+            if (AppState.selectedShops.has(shopName)) {
+                AppState.selectedShops.delete(shopName);
+            } else {
+                AppState.selectedShops.add(shopName);
+            }
+            renderShopList();
+            updateDiagnosis();
+        }
+
+        function selectAllShops(select) {
+            const shops = AppState.shopData.filter(s => {
+                const abc = s.ABC级分类 || s['ABC级分类'];
+                const city = s.城市 || s['城市'];
+                const name = s.店铺名称 || s['店铺名称'] || '';
+                const search = document.getElementById('shopSearchInput').value.trim();
+
+                if (AppState.filterAbc.size && !AppState.filterAbc.has(abc)) return false;
+                if (AppState.filterCity.size) {
+                    const shopCity = city || (name.match(/^(.*?市)/)?.[1] || name.substring(0, 4));
+                    if (!AppState.filterCity.has(shopCity)) return false;
+                }
+                if (search && !name.includes(search)) return false;
+                return true;
+            });
+
+            shops.forEach(s => {
+                const name = s.店铺名称 || s['店铺名称'];
+                if (select) AppState.selectedShops.add(name);
+                else AppState.selectedShops.delete(name);
+            });
+            renderShopList();
+            updateDiagnosis();
+        }
+
+        function filterShops() {
+            renderShopList();
+        }
+
+        // ==================== 零售页面店铺筛选 ====================
+        function renderRetailShopFilters() {
+            const shops = AppState.shopData;
+            if (!shops.length) {
+                document.getElementById('retailAbcFilterTags').innerHTML = '<span style="color:var(--gray-400); font-size:13px;">请先导入店铺数据</span>';
+                return;
+            }
+
+            const abcLevels = [...new Set(shops.map(s => s.ABC级分类 || s['ABC级分类']).filter(Boolean))].sort();
+            document.getElementById('retailAbcFilterTags').innerHTML = abcLevels.map(abc => 
+                `<span class="shop-tag ${AppState.retailFilterAbc.has(abc) ? 'selected' : ''}" data-filter="retailAbc" data-value="${abc}" onclick="toggleRetailFilterTag(this)">${abc}级</span>`
+            ).join('');
+
+            const cities = [...new Set(shops.map(s => {
+                const cityField = s.城市 || s['城市'];
+                if (cityField) return cityField;
+                const name = s.店铺名称 || s['店铺名称'] || '';
+                const match = name.match(/^(.*?市)/);
+                return match ? match[1] : name.substring(0, 4);
+            }).filter(Boolean))].sort();
+
+            document.getElementById('retailCityFilterTags').innerHTML = cities.map(city => 
+                `<span class="shop-tag ${AppState.retailFilterCity.has(city) ? 'selected' : ''}" data-filter="retailCity" data-value="${city}" onclick="toggleRetailFilterTag(this)">${city}</span>`
+            ).join('');
+
+            renderRetailShopList();
+        }
+
+        function renderRetailShopList() {
+            const shops = AppState.shopData.filter(s => {
+                const abc = s.ABC级分类 || s['ABC级分类'];
+                const city = s.城市 || s['城市'];
+                const name = s.店铺名称 || s['店铺名称'] || '';
+                const search = document.getElementById('retailShopSearch').value.trim();
+
+                if (AppState.retailFilterAbc.size && !AppState.retailFilterAbc.has(abc)) return false;
+                if (AppState.retailFilterCity.size) {
+                    const shopCity = city || (name.match(/^(.*?市)/)?.[1] || name.substring(0, 4));
+                    if (!AppState.retailFilterCity.has(shopCity)) return false;
+                }
+                if (search && !name.includes(search)) return false;
+                return true;
+            });
+
+            document.getElementById('retailShopListTags').innerHTML = shops.map(s => {
+                const name = s.店铺名称 || s['店铺名称'];
+                const isSelected = AppState.selectedRetailShops.has(name);
+                return `<span class="shop-tag ${isSelected ? 'selected' : ''}" onclick="toggleRetailShopSelection('${name}')">${name}</span>`;
+            }).join('');
+
+            document.getElementById('retailShopSelectedCount').textContent = `已选 ${AppState.selectedRetailShops.size} 家`;
+        }
+
+        function toggleRetailFilterTag(el) {
+            const filter = el.dataset.filter;
+            const value = el.dataset.value;
+            const set = filter === 'retailAbc' ? AppState.retailFilterAbc : AppState.retailFilterCity;
+
+            if (set.has(value)) {
+                set.delete(value);
+                el.classList.remove('selected');
+            } else {
+                set.add(value);
+                el.classList.add('selected');
+            }
+            renderRetailShopList();
+        }
+
+        function toggleRetailShopSelection(shopName) {
+            if (AppState.selectedRetailShops.has(shopName)) {
+                AppState.selectedRetailShops.delete(shopName);
+            } else {
+                AppState.selectedRetailShops.add(shopName);
+            }
+            renderRetailShopList();
+        }
+
+        function selectAllRetailShops(select) {
+            const shops = AppState.shopData.filter(s => {
+                const abc = s.ABC级分类 || s['ABC级分类'];
+                const city = s.城市 || s['城市'];
+                const name = s.店铺名称 || s['店铺名称'] || '';
+                const search = document.getElementById('retailShopSearch').value.trim();
+
+                if (AppState.retailFilterAbc.size && !AppState.retailFilterAbc.has(abc)) return false;
+                if (AppState.retailFilterCity.size) {
+                    const shopCity = city || (name.match(/^(.*?市)/)?.[1] || name.substring(0, 4));
+                    if (!AppState.retailFilterCity.has(shopCity)) return false;
+                }
+                if (search && !name.includes(search)) return false;
+                return true;
+            });
+
+            shops.forEach(s => {
+                const name = s.店铺名称 || s['店铺名称'];
+                if (select) AppState.selectedRetailShops.add(name);
+                else AppState.selectedRetailShops.delete(name);
+            });
+            renderRetailShopList();
+        }
+
+        function filterRetailShops() {
+            renderRetailShopList();
+        }
+
+        // ==================== 时间选择 ====================
+        function populateTimeSelect() {
+            const select = document.getElementById('diagTimeSelect');
+            const months = [...new Set(AppState.summaryData.map(s => s.年份月份 || s['年份月份']).filter(Boolean))].sort();
+
+            let html = '<option value="">请选择月份</option>';
+            months.forEach(m => {
+                html += `<option value="${m}">${m}</option>`;
+            });
+            select.innerHTML = html;
+        }
+
+        // ==================== 诊断逻辑（核心修复）====================
+        function getShopABC(shopName) {
+            const shop = AppState.shopData.find(s => (s.店铺名称 || s['店铺名称']) === shopName);
+            return shop ? (shop.ABC级分类 || shop['ABC级分类']) : '未分类';
+        }
+
+        function parseYearMonth(ym) {
+            // 处理格式：2024-04~06 或 2024-07
+            if (ym.includes('~')) {
+                const [year, months] = ym.split('-');
+                const [startMonth] = months.split('~');
+                return {year: parseInt(year), month: parseInt(startMonth), isRange: true, raw: ym};
+            }
+            const [year, month] = ym.split('-');
+            return {year: parseInt(year), month: parseInt(month), isRange: false, raw: ym};
+        }
+
+        function getPrevMonth(ym) {
+            const p = parseYearMonth(ym);
+            if (p.month === 1) return (p.year - 1) + '-12';
+            if (p.month >= 10) return p.year + '-' + p.month;
+            return p.year + '-0' + (p.month - 1);
+        }
+
+        function getPrevYearSameMonth(ym) {
+            const p = parseYearMonth(ym);
+            return (p.year - 1) + '-' + (p.month < 10 ? '0' + p.month : p.month);
+        }
+
+        function getAbcAverage(month, abcLevel) {
+            const shops = AppState.shopData.filter(s => (s.ABC级分类 || s['ABC级分类']) === abcLevel);
+            const shopNames = shops.map(s => s.店铺名称 || s['店铺名称']);
+            const data = AppState.summaryData.filter(s => {
+                const sMonth = s.年份月份 || s['年份月份'];
+                const sShop = s.店铺名称 || s['店铺名称'];
+                return sMonth === month && shopNames.includes(sShop);
+            });
+
+            if (!data.length) return null;
+
+            const avg = (field) => data.reduce((sum, d) => sum + (parseFloat(d[field]) || 0), 0) / data.length;
+            return {
+                净销量: avg('净销量'),
+                净销售额: avg('净销售额'),
+                调入: avg('调入'),
+                调出: avg('调出'),
+                期末库存: avg('期末库存'),
+                期初: avg('期初'),
+                售罄率: avg('售罄率'),
+                库销比: avg('库销比')
+            };
+        }
+
+        function calculateLight(value, avg, higherIsBetter = true) {
+            if (!avg || avg === 0) return 'gray';
+            const ratio = value / avg;
+            if (higherIsBetter) {
+                if (ratio >= 1) return 'green';
+                if (ratio >= 0.8) return 'yellow';
+                return 'red';
+            } else {
+                if (ratio <= 1) return 'green';
+                if (ratio <= 1.2) return 'yellow';
+                return 'red';
+            }
+        }
+
+        function getLightHTML(light) {
+            const map = {
+                green: '<span class="light light-green"><span class="light-dot"></span>绿灯</span>',
+                yellow: '<span class="light light-yellow"><span class="light-dot"></span>黄灯</span>',
+                red: '<span class="light light-red"><span class="light-dot"></span>红灯</span>',
+                gray: '<span class="light" style="background:var(--gray-200);color:var(--gray-500)"><span class="light-dot" style="background:var(--gray-400)"></span>无数据</span>'
+            };
+            return map[light] || map.gray;
+        }
+
+        function updateDiagnosis() {
+            const month = document.getElementById('diagTimeSelect').value;
+            if (!month || !AppState.selectedShops.size) {
+                document.getElementById('diagnosisResults').innerHTML = '';
+                document.getElementById('diagnosisEmpty').style.display = 'block';
+                return;
+            }
+            document.getElementById('diagnosisEmpty').style.display = 'none';
+            generateDiagnosisReports();
+        }
+
+        function generateDiagnosisReports() {
+            const month = document.getElementById('diagTimeSelect').value;
+            const resultsDiv = document.getElementById('diagnosisResults');
+            resultsDiv.innerHTML = '';
+
+            AppState.selectedShops.forEach(shopName => {
+                const current = AppState.summaryData.find(s => {
+                    return (s.店铺名称 || s['店铺名称']) === shopName && (s.年份月份 || s['年份月份']) === month;
+                });
+
+                if (!current) return;
+
+                const abc = getShopABC(shopName);
+                const abcAvg = getAbcAverage(month, abc);
+
+                // 环比：上一个月份
+                const prevMonth = getPrevMonth(month);
+                const prevData = AppState.summaryData.find(s => {
+                    return (s.店铺名称 || s['店铺名称']) === shopName && (s.年份月份 || s['年份月份']) === prevMonth;
+                });
+
+                // 同比：上一年同月（仅当该店有上年数据时才显示）
+                const prevYearMonth = getPrevYearSameMonth(month);
+                const prevYearData = AppState.summaryData.find(s => {
+                    return (s.店铺名称 || s['店铺名称']) === shopName && (s.年份月份 || s['年份月份']) === prevYearMonth;
+                });
+
+                const sellRate = parseFloat(current.售罄率 || current['售罄率']) || 0;
+                const stockRatio = parseFloat(current.库销比 || current['库销比']) || 0;
+
+                const avgSellRate = abcAvg ? abcAvg.售罄率 : 0;
+                const avgStockRatio = abcAvg ? abcAvg.库销比 : 0;
+
+                const sellLight = calculateLight(sellRate, avgSellRate, true);
+                const stockLight = calculateLight(stockRatio, avgStockRatio, false);
+
+                // 计算环比
+                let sellMoM = null, stockMoM = null;
+                if (prevData) {
+                    const prevSell = parseFloat(prevData.售罄率 || prevData['售罄率']) || 0;
+                    const prevStock = parseFloat(prevData.库销比 || prevData['库销比']) || 0;
+                    sellMoM = prevSell ? ((sellRate - prevSell) / prevSell * 100).toFixed(1) : null;
+                    stockMoM = prevStock ? ((stockRatio - prevStock) / prevStock * 100).toFixed(1) : null;
+                }
+
+                // 计算同比（仅当有上年数据）
+                let sellYoY = null, stockYoY = null;
+                if (prevYearData) {
+                    const prevYSell = parseFloat(prevYearData.售罄率 || prevYearData['售罄率']) || 0;
+                    const prevYStock = parseFloat(prevYearData.库销比 || prevYearData['库销比']) || 0;
+                    sellYoY = prevYSell ? ((sellRate - prevYSell) / prevYSell * 100).toFixed(1) : null;
+                    stockYoY = prevYStock ? ((stockRatio - prevYStock) / prevYStock * 100).toFixed(1) : null;
+                }
+
+                const html = `
+                    <div class="diagnosis-report" id="report-${shopName}">
+                        <div class="diagnosis-header">
+                            <h2>🏪 门店健康诊断报告</h2>
+                            <p>店铺名称：${shopName} &nbsp;|&nbsp; 诊断月份：${month} &nbsp;|&nbsp; ABC级别：${abc}</p>
+                        </div>
+
+                        <div class="diagnosis-section">
+                            <div class="diagnosis-section-title">一、核心指标看板</div>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>指标</th>
+                                            <th class="text-right">本月值</th>
+                                            <th class="text-right">同级平均</th>
+                                            <th class="text-right">环比</th>
+                                            <th class="text-right">同比</th>
+                                            <th class="text-center">状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>售罄率</strong></td>
+                                            <td class="text-right">${(sellRate * 100).toFixed(1)}%</td>
+                                            <td class="text-right">${avgSellRate ? (avgSellRate * 100).toFixed(1) + '%' : '-'}</td>
+                                            <td class="text-right">${sellMoM !== null ? (sellMoM > 0 ? '+' : '') + sellMoM + '%' : '<span style="color:var(--gray-400)">无上月数据</span>'}</td>
+                                            <td class="text-right">${sellYoY !== null ? (sellYoY > 0 ? '+' : '') + sellYoY + '%' : '<span style="color:var(--gray-400)">无上年数据</span>'}</td>
+                                            <td class="text-center">${getLightHTML(sellLight)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>库销比</strong></td>
+                                            <td class="text-right">${stockRatio.toFixed(2)}</td>
+                                            <td class="text-right">${avgStockRatio ? avgStockRatio.toFixed(2) : '-'}</td>
+                                            <td class="text-right">${stockMoM !== null ? (stockMoM > 0 ? '+' : '') + stockMoM + '%' : '<span style="color:var(--gray-400)">无上月数据</span>'}</td>
+                                            <td class="text-right">${stockYoY !== null ? (stockYoY > 0 ? '+' : '') + stockYoY + '%' : '<span style="color:var(--gray-400)">无上年数据</span>'}</td>
+                                            <td class="text-center">${getLightHTML(stockLight)}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="margin-top:12px; font-size:13px; color:var(--gray-500);">
+                                <span class="light light-green"><span class="light-dot"></span>绿灯</span> 优于同级平均或健康 &nbsp;
+                                <span class="light light-yellow"><span class="light-dot"></span>黄灯</span> 略低于同级平均，需关注 &nbsp;
+                                <span class="light light-red"><span class="light-dot"></span>红灯</span> 明显落后，需立即干预
+                            </div>
+                        </div>
+
+                        <div class="diagnosis-section">
+                            <div class="diagnosis-section-title">二、销售与库存概况</div>
+                            <div class="diagnosis-grid">
+                                <div class="diagnosis-card">
+                                    <div class="diagnosis-card-label">净销量</div>
+                                    <div class="diagnosis-card-value">${current.净销量 || current['净销量'] || 0}</div>
+                                    <div class="diagnosis-card-compare">同级平均: ${abcAvg ? Math.round(abcAvg.净销量) : '-'}</div>
+                                </div>
+                                <div class="diagnosis-card">
+                                    <div class="diagnosis-card-label">净销售额</div>
+                                    <div class="diagnosis-card-value">¥${(current.净销售额 || current['净销售额'] || 0).toLocaleString()}</div>
+                                    <div class="diagnosis-card-compare">同级平均: ${abcAvg ? '¥' + Math.round(abcAvg.净销售额).toLocaleString() : '-'}</div>
+                                </div>
+                                <div class="diagnosis-card">
+                                    <div class="diagnosis-card-label">期末库存</div>
+                                    <div class="diagnosis-card-value">${current.期末库存 || current['期末库存'] || 0}</div>
+                                    <div class="diagnosis-card-compare">同级平均: ${abcAvg ? Math.round(abcAvg.期末库存) : '-'}</div>
+                                </div>
+                                <div class="diagnosis-card">
+                                    <div class="diagnosis-card-label">调入 / 调出</div>
+                                    <div class="diagnosis-card-value">${current.调入 || current['调入'] || 0} / ${current.调出 || current['调出'] || 0}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="diagnosis-section">
+                            <div class="diagnosis-section-title">三、一句话诊断</div>
+                            <div style="background:var(--gray-50); padding:16px; border-radius:8px; font-size:14px; line-height:1.8;">
+                                <p><strong>核心问题：</strong>${generateCoreProblem(sellLight, stockLight, sellRate, stockRatio)}</p>
+                                <p><strong>改进机会：</strong>${generateOpportunity(sellLight, stockLight)}</p>
+                            </div>
+                        </div>
+
+                        <div class="diagnosis-section">
+                            <div class="diagnosis-section-title">四、3条行动建议</div>
+                            <div style="background:var(--gray-50); padding:16px; border-radius:8px; font-size:14px; line-height:2;">
+                                <p>1. <strong>陈列调整：</strong>${generateSuggestion('陈列', sellLight, stockLight)}</p>
+                                <p>2. <strong>主推话术：</strong>${generateSuggestion('话术', sellLight, stockLight)}</p>
+                                <p>3. <strong>促销动作：</strong>${generateSuggestion('促销', sellLight, stockLight)}</p>
+                            </div>
+                            <p style="font-size:12px; color:var(--gray-500); margin-top:8px;">备注：下月初复查执行效果。</p>
+                        </div>
+                    </div>
+                `;
+                resultsDiv.innerHTML += html;
+            });
+        }
+
+        function generateCoreProblem(sellLight, stockLight, sellRate, stockRatio) {
+            if (sellLight === 'red') return `售罄率仅${(sellRate*100).toFixed(1)}%，远低于同级平均水平，库存周转缓慢，资金占用严重。`;
+            if (stockLight === 'red') return `库销比高达${stockRatio.toFixed(2)}，库存积压风险高，需加速去化。`;
+            if (sellLight === 'yellow') return '售罄率略低于同级平均，销售动力不足，需关注人货场匹配度。';
+            if (stockLight === 'yellow') return '库销比处于警戒区间，库存结构需要优化调整。';
+            return '整体运营健康，建议保持当前策略并寻找增量机会。';
+        }
+
+        function generateOpportunity(sellLight, stockLight) {
+            if (sellLight === 'green' && stockLight === 'green') return '可尝试提升客单价或引入新品测试市场反应。';
+            if (sellLight === 'red') return '通过精准调拨和促销组合，有望在下月提升20%以上售罄率。';
+            if (stockLight === 'red') return '优先消化滞销库存，释放资金用于畅销款补货。';
+            return '优化SKU结构，聚焦核心畅销款，提升连带率。';
+        }
+
+        function generateSuggestion(type, sellLight, stockLight) {
+            const suggestions = {
+                '陈列': {
+                    red: '将滞销款移至次要位置，黄金位置全部陈列畅销款及新品。',
+                    yellow: '调整动线设计，增加畅销款曝光面，试衣间附近设置搭配区。',
+                    green: '保持现有陈列逻辑，尝试主题场景化陈列提升连带率。'
+                },
+                '话术': {
+                    red: '全员培训FABE话术，重点演练价格异议处理，每单必推搭配款。',
+                    yellow: '强化产品卖点记忆，每日晨会抽查话术掌握情况。',
+                    green: '提炼Top销售话术，全员复制推广，建立销售标杆。'
+                },
+                '促销': {
+                    red: '立即启动买赠/满减活动，滞销款组合特价出清，限时3天。',
+                    yellow: '会员专属折扣激活沉睡客户，周末闪购制造紧迫感。',
+                    green: '控制折扣深度，以积分翻倍/会员日维护客情为主。'
+                }
+            };
+            const light = sellLight === 'red' || stockLight === 'red' ? 'red' : 
+                          sellLight === 'yellow' || stockLight === 'yellow' ? 'yellow' : 'green';
+            return suggestions[type][light];
+        }
+
+        function exportDiagnosisBatch() {
+            const reports = document.querySelectorAll('.diagnosis-report');
+            if (!reports.length) {
+                alert('请先生成诊断报告');
+                return;
+            }
+
+            let html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>诊断报告汇总</title>
+                <style>body{font-family:Arial,sans-serif; padding:20px;} .report{border:2px solid #333; margin-bottom:30px; padding:20px; page-break-after:always;} table{width:100%; border-collapse:collapse; margin:10px 0;} th,td{border:1px solid #ccc; padding:8px; text-align:left;} th{background:#f0f0f0;} .green{background:#d4edda;} .yellow{background:#fff3cd;} .red{background:#f8d7da;}</style>
+                </head><body><h1>门店诊断报告汇总</h1><p>生成时间：${new Date().toLocaleString()}</p>`;
+
+            reports.forEach(r => {
+                html += `<div class="report">${r.innerHTML}</div>`;
+            });
+            html += '</body></html>';
+
+            const blob = new Blob([html], {type: 'text/html'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `诊断报告汇总_${new Date().toISOString().slice(0,10)}.html`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ==================== 零售明细分析 ====================
+        function switchRetailTab(tab) {
+            document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
+            document.getElementById('retail-' + tab).classList.add('active');
+        }
+
+        document.getElementById('retailTimeType').addEventListener('change', function() {
+            const isRange = this.value === 'range';
+            document.getElementById('singleDateGroup').classList.toggle('hidden', isRange);
+            document.getElementById('rangeDateGroup').classList.toggle('hidden', !isRange);
+            document.getElementById('rangeDateEndGroup').classList.toggle('hidden', !isRange);
+        });
+
+        function updateRetailAnalysis() {
+            const timeType = document.getElementById('retailTimeType').value;
+            let startDate, endDate;
+
+            if (timeType === 'single') {
+                const date = document.getElementById('retailSingleDate').value;
+                if (!date) return;
+                startDate = date;
+                endDate = date;
+            } else {
+                startDate = document.getElementById('retailStartDate').value;
+                endDate = document.getElementById('retailEndDate').value;
+                if (!startDate || !endDate) return;
+            }
+
+            const selectedShops = Array.from(AppState.selectedRetailShops);
+            if (!selectedShops.length) {
+                alert('请至少选择一个店铺');
+                return;
+            }
+
+            // 筛选零售数据
+            const filtered = AppState.retailData.filter(r => {
+                const rShop = r.店铺名称 || r['店铺名称'];
+                const rDate = r.单据日期 || r['单据日期'];
+                if (!selectedShops.includes(rShop)) return false;
+                if (!rDate) return false;
+                const d = new Date(rDate);
+                const s = new Date(startDate);
+                const e = new Date(endDate);
+                return d >= s && d <= e;
+            });
+
+            if (!filtered.length) {
+                document.getElementById('topStyles').innerHTML = '<p style="color:var(--gray-400); padding:20px;">该时间段无数据</p>';
+                document.getElementById('topColors').innerHTML = '';
+                document.getElementById('topSizes').innerHTML = '';
+                return;
+            }
+
+            // 畅销款排名
+            const styleMap = {};
+            filtered.forEach(r => {
+                const style = r.商品款号 || r['商品款号'] || '未知';
+                const qty = parseInt(r.数量 || r['数量']) || 0;
+                styleMap[style] = (styleMap[style] || 0) + qty;
+            });
+            const topStyles = Object.entries(styleMap).sort((a,b) => b[1] - a[1]).slice(0, 5);
+
+            renderRanking('topStyles', topStyles, 'style', (style) => {
+                AppState.selectedStyle = style;
+                AppState.selectedColor = null;
+                updateColorRanking(filtered, style, 'top');
+                updateSizeRanking(filtered, style, null, 'top');
+            });
+
+            // 默认显示第一个款的色和尺码
+            if (topStyles.length) {
+                AppState.selectedStyle = topStyles[0][0];
+                updateColorRanking(filtered, topStyles[0][0], 'top');
+                updateSizeRanking(filtered, topStyles[0][0], null, 'top');
+            }
+
+            // 滞销款排名
+            const bottomStyles = Object.entries(styleMap).sort((a,b) => a[1] - b[1]).slice(0, 5);
+            renderRanking('bottomStyles', bottomStyles, 'bottomStyle', (style) => {
+                AppState.selectedBottomStyle = style;
+                AppState.selectedBottomColor = null;
+                updateColorRanking(filtered, style, 'bottom');
+                updateSizeRanking(filtered, style, null, 'bottom');
+            });
+
+            if (bottomStyles.length) {
+                AppState.selectedBottomStyle = bottomStyles[0][0];
+                updateColorRanking(filtered, bottomStyles[0][0], 'bottom');
+                updateSizeRanking(filtered, bottomStyles[0][0], null, 'bottom');
+            }
+
+            // 调拨建议
+            generateTransferSuggestions(filtered, topStyles, bottomStyles);
+
+            // 明细表格
+            renderRetailDetail(filtered);
+        }
+
+        function renderRanking(containerId, data, type, onClick) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = data.map((item, idx) => {
+                const isSelected = (type === 'style' && AppState.selectedStyle === item[0]) ||
+                                  (type === 'bottomStyle' && AppState.selectedBottomStyle === item[0]);
+                return `
+                    <div class="ranking-item ${isSelected ? 'selected' : ''}" onclick="handleRankingClick('${type}', '${item[0]}')">
+                        <div style="display:flex; align-items:center; flex:1;">
+                            <span class="ranking-rank ${idx < 3 ? 'top' : 'normal'}">${idx + 1}</span>
+                            <span class="ranking-name">${item[0]}</span>
+                        </div>
+                        <span class="ranking-value">${item[1]}件</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleRankingClick(type, value) {
+            const filtered = getCurrentFilteredRetailData();
+            if (type === 'style') {
+                AppState.selectedStyle = value;
+                AppState.selectedColor = null;
+                updateColorRanking(filtered, value, 'top');
+                updateSizeRanking(filtered, value, null, 'top');
+                // 重新渲染样式列表高亮
+                updateRetailAnalysis();
+            } else if (type === 'bottomStyle') {
+                AppState.selectedBottomStyle = value;
+                AppState.selectedBottomColor = null;
+                updateColorRanking(filtered, value, 'bottom');
+                updateSizeRanking(filtered, value, null, 'bottom');
+                updateRetailAnalysis();
+            }
+        }
+
+        function getCurrentFilteredRetailData() {
+            const timeType = document.getElementById('retailTimeType').value;
+            let startDate, endDate;
+            if (timeType === 'single') {
+                startDate = endDate = document.getElementById('retailSingleDate').value;
+            } else {
+                startDate = document.getElementById('retailStartDate').value;
+                endDate = document.getElementById('retailEndDate').value;
+            }
+            const selectedShops = Array.from(AppState.selectedRetailShops);
+            return AppState.retailData.filter(r => {
+                const rShop = r.店铺名称 || r['店铺名称'];
+                const rDate = r.单据日期 || r['单据日期'];
+                if (!selectedShops.includes(rShop)) return false;
+                const d = new Date(rDate);
+                const s = new Date(startDate);
+                const e = new Date(endDate);
+                return d >= s && d <= e;
+            });
+        }
+
+        function updateColorRanking(filtered, style, mode) {
+            const colorMap = {};
+            filtered.filter(r => (r.商品款号 || r['商品款号']) === style).forEach(r => {
+                const color = r.颜色 || r['颜色'] || '未知';
+                const qty = parseInt(r.数量 || r['数量']) || 0;
+                colorMap[color] = (colorMap[color] || 0) + qty;
+            });
+            const sorted = Object.entries(colorMap).sort((a,b) => b[1] - a[1]);
+            const containerId = mode === 'top' ? 'topColors' : 'bottomColors';
+            const selectedColor = mode === 'top' ? AppState.selectedColor : AppState.selectedBottomColor;
+
+            document.getElementById(containerId).innerHTML = sorted.map((item, idx) => {
+                const isSelected = selectedColor === item[0];
+                return `
+                    <div class="ranking-item ${isSelected ? 'selected' : ''}" onclick="handleColorClick('${mode}', '${item[0]}')">
+                        <div style="display:flex; align-items:center; flex:1;">
+                            <span class="ranking-rank ${idx < 3 ? 'top' : 'normal'}">${idx + 1}</span>
+                            <span class="ranking-name">${item[0]}</span>
+                        </div>
+                        <span class="ranking-value">${item[1]}件</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handleColorClick(mode, color) {
+            const filtered = getCurrentFilteredRetailData();
+            const style = mode === 'top' ? AppState.selectedStyle : AppState.selectedBottomStyle;
+            if (mode === 'top') AppState.selectedColor = color;
+            else AppState.selectedBottomColor = color;
+            updateSizeRanking(filtered, style, color, mode);
+            updateColorRanking(filtered, style, mode); // 刷新高亮
+        }
+
+        function updateSizeRanking(filtered, style, color, mode) {
+            let sizeData = filtered.filter(r => (r.商品款号 || r['商品款号']) === style);
+            if (color) {
+                sizeData = sizeData.filter(r => (r.颜色 || r['颜色']) === color);
+            }
+
+            const sizeMap = {};
+            sizeData.forEach(r => {
+                const size = r.尺码 || r['尺码'] || '未知';
+                const qty = parseInt(r.数量 || r['数量']) || 0;
+                sizeMap[size] = (sizeMap[size] || 0) + qty;
+            });
+            const sorted = Object.entries(sizeMap).sort((a,b) => b[1] - a[1]);
+            const containerId = mode === 'top' ? 'topSizes' : 'bottomSizes';
+
+            document.getElementById(containerId).innerHTML = sorted.map((item, idx) => `
+                <div class="ranking-item">
+                    <div style="display:flex; align-items:center; flex:1;">
+                        <span class="ranking-rank ${idx < 3 ? 'top' : 'normal'}">${idx + 1}</span>
+                        <span class="ranking-name">${item[0]}</span>
+                    </div>
+                    <span class="ranking-value">${item[1]}件</span>
+                </div>
+            `).join('');
+        }
+
+        function generateTransferSuggestions(filtered, topStyles, bottomStyles) {
+            const container = document.getElementById('transferSuggestions');
+            const suggestions = [];
+
+            // 分析每个店铺每个款色尺码的销售情况
+            const shopStyleColorSize = {};
+            filtered.forEach(r => {
+                const shop = r.店铺名称 || r['店铺名称'];
+                const style = r.商品款号 || r['商品款号'];
+                const color = r.颜色 || r['颜色'];
+                const size = r.尺码 || r['尺码'];
+                const qty = parseInt(r.数量 || r['数量']) || 0;
+                const key = `${shop}_${style}_${color}_${size}`;
+                shopStyleColorSize[key] = (shopStyleColorSize[key] || 0) + qty;
+            });
+
+            // 找出滞销店和畅销店的组合
+            const selectedShops = Array.from(AppState.selectedRetailShops);
+            const styleList = topStyles.map(s => s[0]);
+
+            selectedShops.forEach(fromShop => {
+                selectedShops.forEach(toShop => {
+                    if (fromShop === toShop) return;
+                    styleList.forEach(style => {
+                        const colors = [...new Set(filtered.filter(r => (r.商品款号 || r['商品款号']) === style).map(r => r.颜色 || r['颜色']))];
+                        colors.forEach(color => {
+                            const sizes = [...new Set(filtered.filter(r => (r.商品款号 || r['商品款号']) === style && (r.颜色 || r['颜色']) === color).map(r => r.尺码 || r['尺码']))];
+                            sizes.forEach(size => {
+                                const fromKey = `${fromShop}_${style}_${color}_${size}`;
+                                const toKey = `${toShop}_${style}_${color}_${size}`;
+                                const fromQty = shopStyleColorSize[fromKey] || 0;
+                                const toQty = shopStyleColorSize[toKey] || 0;
+
+                                if (fromQty === 0 && toQty >= 3) {
+                                    suggestions.push({
+                                        from: fromShop,
+                                        to: toShop,
+                                        style,
+                                        color,
+                                        size,
+                                        toQty
+                                    });
+                                }
+                            });
+                        });
+                    });
+                });
+            });
+
+            if (suggestions.length) {
+                container.innerHTML = suggestions.slice(0, 20).map(s => `
+                    <div class="transfer-suggestion">
+                        <div class="transfer-suggestion-title">🚚 调拨建议</div>
+                        <div class="transfer-suggestion-content">
+                            建议将 <strong>${s.from}</strong> 的 <strong>${s.style}</strong> / ${s.color} / ${s.size} 
+                            调拨至 <strong>${s.to}</strong>（该店已售${s.toQty}件，需求旺盛）
+                        </div>
+                    </div>
+                `).join('');
+                document.getElementById('transferEmpty').style.display = 'none';
+            } else {
+                container.innerHTML = '';
+                document.getElementById('transferEmpty').style.display = 'block';
+            }
+        }
+
+        function renderRetailDetail(filtered) {
+            const tbody = document.getElementById('retailDetailBody');
+            // 只显示前100条避免卡顿
+            const display = filtered.slice(0, 100);
+            tbody.innerHTML = display.map(r => `
+                <tr>
+                    <td>${r.单据日期 || r['单据日期'] || ''}</td>
+                    <td>${r.店铺名称 || r['店铺名称'] || ''}</td>
+                    <td>${r.商品款号 || r['商品款号'] || ''}</td>
+                    <td>${r.颜色 || r['颜色'] || ''}</td>
+                    <td>${r.尺码 || r['尺码'] || ''}</td>
+                    <td class="text-right">${r.数量 || r['数量'] || 0}</td>
+                    <td class="text-right">${r.金额 || r['金额'] || 0}</td>
+                </tr>
+            `).join('');
+            if (filtered.length > 100) {
+                tbody.innerHTML += `<tr><td colspan="7" style="text-align:center; color:var(--gray-400); padding:16px;">... 还有 ${filtered.length - 100} 条数据，请通过筛选缩小范围 ...</td></tr>`;
+            }
+        }
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadAllData();
+            renderImportRecords();
+
+            // 设置默认日期
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('retailSingleDate').value = today;
+        });
+    </script>
+</body>
+</html>
