@@ -11,27 +11,20 @@
     <style>
         * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         body { background: #0f1117; color: #e2e8f0; }
-        
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #1a1d29; }
         ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
-
-        /* Glassmorphism Cards */
         .glass-card {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
         }
-        
         .glass-card:hover {
             border-color: rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
-        /* Status Lights */
         .light-green { 
             background: linear-gradient(135deg, #10b981, #059669);
             box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
@@ -44,8 +37,6 @@
             background: linear-gradient(135deg, #ef4444, #dc2626);
             box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
         }
-
-        /* Progress Bar Animation */
         @keyframes progress-fill {
             0% { width: 0%; }
             100% { width: var(--progress-width); }
@@ -53,8 +44,6 @@
         .progress-animate {
             animation: progress-fill 0.5s ease-out forwards;
         }
-
-        /* Table Styles */
         .data-table {
             width: 100%;
             border-collapse: separate;
@@ -80,15 +69,11 @@
         .data-table tr:hover td {
             background: rgba(255,255,255,0.02);
         }
-
-        /* Tab Animation */
         .tab-active {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
-        
-        /* Hidden Admin Entry */
         .admin-trigger {
             opacity: 0.3;
             transition: opacity 0.3s;
@@ -96,8 +81,6 @@
         .admin-trigger:hover {
             opacity: 1;
         }
-
-        /* Rank Badge */
         .rank-badge {
             width: 28px;
             height: 28px;
@@ -112,8 +95,6 @@
         .rank-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff; }
         .rank-3 { background: linear-gradient(135deg, #b45309, #92400e); color: #fff; }
         .rank-other { background: rgba(255,255,255,0.1); color: #94a3b8; }
-
-        /* Loading Spinner */
         .spinner {
             width: 20px;
             height: 20px;
@@ -123,24 +104,20 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Modal */
         .modal-overlay {
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(4px);
         }
-
-        /* Print Styles for Reports */
         @media print {
             body { background: white; color: black; }
             .no-print { display: none !important; }
             .glass-card { border: 1px solid #ccc; background: white; }
         }
     </style>
+<base target="_blank">
 </head>
 <body class="min-h-screen">
 
-    <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5 mx-4 mt-4" style="border-radius: 12px;">
         <div class="px-6 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -171,10 +148,8 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="pt-24 pb-8 px-4 max-w-[1600px] mx-auto">
 
-        <!-- ========== SECTION 1: DATA ADMIN (Hidden) ========== -->
         <section id="section-admin" class="hidden space-y-6">
             <div class="glass-card p-6">
                 <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
@@ -184,7 +159,6 @@
                     数据管理后台
                 </h2>
 
-                <!-- Store Data -->
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-4 text-blue-300">店铺基础数据 (ABC分类)</h3>
                     <div class="flex gap-4 mb-4">
@@ -201,7 +175,6 @@
                     <div id="store-uploads" class="space-y-2"></div>
                 </div>
 
-                <!-- Monthly Summary Data -->
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-4 text-purple-300">月度经营汇总表 (历史对照组)</h3>
                     <div class="flex gap-4 mb-4">
@@ -218,7 +191,6 @@
                     <div id="summary-uploads" class="space-y-2"></div>
                 </div>
 
-                <!-- Retail Detail Data -->
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold mb-4 text-emerald-300">零售明细数据</h3>
                     <div class="flex gap-4 mb-4">
@@ -249,9 +221,7 @@
             </div>
         </section>
 
-        <!-- ========== SECTION 2: MONTHLY DIAGNOSIS ========== -->
         <section id="section-diagnosis" class="space-y-6">
-            <!-- Filters -->
             <div class="glass-card p-5">
                 <div class="flex flex-wrap items-end gap-4">
                     <div>
@@ -279,9 +249,9 @@
                         <label class="block text-xs text-gray-400 mb-1.5">状态筛选</label>
                         <select id="diag-status-filter" onchange="updateDiagnosis()" class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-sm min-w-[120px] focus:outline-none focus:border-blue-500">
                             <option value="">全部状态</option>
-                            <option value="green">🟢 绿灯</option>
-                            <option value="yellow">🟡 黄灯</option>
-                            <option value="red">🔴 红灯</option>
+                            <option value="green">绿灯</option>
+                            <option value="yellow">黄灯</option>
+                            <option value="red">红灯</option>
                         </select>
                     </div>
                     <div class="flex-1"></div>
@@ -291,7 +261,6 @@
                 </div>
             </div>
 
-            <!-- Diagnosis Cards Grid -->
             <div id="diagnosis-cards" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                 <div class="glass-card p-8 text-center text-gray-500 col-span-full">
                     <svg class="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,9 +271,7 @@
             </div>
         </section>
 
-        <!-- ========== SECTION 3: RETAIL ANALYSIS ========== -->
         <section id="section-retail" class="hidden space-y-6">
-            <!-- Filters -->
             <div class="glass-card p-5">
                 <div class="flex flex-wrap items-end gap-4">
                     <div>
@@ -336,9 +303,7 @@
                 </div>
             </div>
 
-            <!-- Three-Level Linked Rankings -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Ranking 1: Best Sellers -->
                 <div class="glass-card p-5">
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -358,7 +323,6 @@
                     </div>
                 </div>
 
-                <!-- Ranking 2: Best Colors -->
                 <div class="glass-card p-5">
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-blue-400"></span>
@@ -379,7 +343,6 @@
                     </div>
                 </div>
 
-                <!-- Ranking 3: Best Sizes -->
                 <div class="glass-card p-5">
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
                         <span class="w-2 h-2 rounded-full bg-purple-400"></span>
@@ -401,7 +364,6 @@
                 </div>
             </div>
 
-            <!-- Slow Movers & Transfer Suggestions -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="glass-card p-5">
                     <h3 class="text-lg font-bold mb-4 text-red-400">滞销款预警 TOP 10</h3>
@@ -428,7 +390,6 @@
                 </div>
             </div>
 
-            <!-- Retail Detail Table -->
             <div class="glass-card p-5">
                 <h3 class="text-lg font-bold mb-4">零售明细</h3>
                 <div class="overflow-auto max-h-[600px]">
@@ -452,7 +413,6 @@
 
     </main>
 
-    <!-- Report Modal -->
     <div id="report-modal" class="fixed inset-0 z-[100] hidden">
         <div class="modal-overlay absolute inset-0" onclick="closeReport()"></div>
         <div class="absolute inset-4 md:inset-10 bg-[#0f1117] rounded-2xl border border-white/10 overflow-auto">
@@ -468,13 +428,12 @@
     </div>
 
     <script>
-        // ========== DATA STORE ==========
         const DataStore = {
-            storeData: [],      // [{name, abc, city}]
-            summaryData: [],    // [{yearMonth, storeName, netSales, netAmount, transferIn, transferOut, endStock, beginStock, sellRate, stockRatio}]
-            retailData: [],     // [{docNo, date, status, type, store, guide, pay, styleNo, name, colorNo, color, sizeNo, size, qty, price, amount, tagPrice, tagAmount, realPrice, realAmount, category, createTime}]
+            storeData: [],
+            summaryData: [],
+            retailData: [],
             uploads: { store: [], summary: [], retail: [] },
-            
+
             save() {
                 try {
                     localStorage.setItem('retail_analyzer_data', JSON.stringify({
@@ -488,7 +447,7 @@
                     alert('数据保存失败，可能超出浏览器存储限制。建议定期导出备份。');
                 }
             },
-            
+
             load() {
                 const saved = localStorage.getItem('retail_analyzer_data');
                 if (saved) {
@@ -502,15 +461,13 @@
             }
         };
 
-        // ========== FILE UPLOAD WITH PROGRESS ==========
         async function handleFileUpload(event, type) {
             const file = event.target.files[0];
             if (!file) return;
-            
+
             const uploadId = Date.now();
             const progressId = `progress-${uploadId}`;
-            
-            // Create progress UI
+
             const container = document.getElementById(`${type}-uploads`);
             const progressHtml = `
                 <div id="upload-${uploadId}" class="glass-card p-4 flex items-center gap-4">
@@ -527,18 +484,16 @@
                 </div>
             `;
             container.insertAdjacentHTML('afterbegin', progressHtml);
-            
+
             try {
-                // Simulate progress
                 for (let i = 0; i <= 90; i += 10) {
                     await new Promise(r => setTimeout(r, 50));
                     document.getElementById(progressId).style.width = i + '%';
                     document.getElementById(`${progressId}-text`).textContent = i + '%';
                 }
-                
+
                 const data = await readExcel(file);
-                
-                // Process data based on type
+
                 if (type === 'store') {
                     processStoreData(data);
                 } else if (type === 'summary') {
@@ -546,32 +501,29 @@
                 } else if (type === 'retail') {
                     processRetailData(data, file.name);
                 }
-                
-                // Complete
+
                 document.getElementById(progressId).style.width = '100%';
                 document.getElementById(`${progressId}-text`).textContent = '完成';
                 document.getElementById(`${progressId}-spinner`).style.display = 'none';
-                
-                // Add delete button
+
                 const uploadEl = document.getElementById(`upload-${uploadId}`);
                 uploadEl.innerHTML += `
                     <button onclick="deleteUpload('${type}', ${uploadId})" class="px-3 py-1.5 bg-red-600/20 text-red-400 rounded-lg text-xs hover:bg-red-600/30 transition-colors">
                         删除
                     </button>
                 `;
-                
-                // Save upload record
+
                 DataStore.uploads[type].push({ id: uploadId, name: file.name, date: new Date().toISOString(), count: data.length });
                 DataStore.save();
                 refreshAll();
-                
+
             } catch(err) {
                 document.getElementById(`upload-${uploadId}`).innerHTML += `
                     <span class="text-red-400 text-xs">上传失败: ${err.message}</span>
                     <button onclick="this.parentElement.remove()" class="px-3 py-1.5 bg-gray-700 rounded-lg text-xs">移除</button>
                 `;
             }
-            
+
             event.target.value = '';
         }
 
@@ -594,12 +546,11 @@
         }
 
         function processStoreData(rows) {
-            // Expected: 店铺名称, ABC级分类 (optional: 城市/区域)
             const headers = rows[0];
             const nameIdx = headers.findIndex(h => h && h.includes('店铺'));
             const abcIdx = headers.findIndex(h => h && h.includes('ABC'));
             const cityIdx = headers.findIndex(h => h && (h.includes('城市') || h.includes('区域')));
-            
+
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 if (!row[nameIdx]) continue;
@@ -609,7 +560,6 @@
                     city: cityIdx >= 0 ? String(row[cityIdx] || '').trim() : ''
                 });
             }
-            // Deduplicate
             const seen = new Set();
             DataStore.storeData = DataStore.storeData.filter(s => {
                 if (seen.has(s.name)) return false;
@@ -627,7 +577,7 @@
                 }
                 return -1;
             };
-            
+
             const ymIdx = findIdx(['年份月份', '年月', '月份']);
             const storeIdx = findIdx(['店铺名称', '店铺']);
             const netQtyIdx = findIdx(['净销量', '销量']);
@@ -638,7 +588,7 @@
             const beginIdx = findIdx(['期初']);
             const sellIdx = findIdx(['售罄率']);
             const ratioIdx = findIdx(['库销比']);
-            
+
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 if (!row[storeIdx]) continue;
@@ -667,7 +617,7 @@
                 }
                 return -1;
             };
-            
+
             const dateIdx = findIdx(['单据日期', '日期']);
             const storeIdx = findIdx(['店铺名称', '店铺']);
             const styleIdx = findIdx(['商品款号', '款号']);
@@ -677,8 +627,7 @@
             const qtyIdx = findIdx(['数量']);
             const amtIdx = findIdx(['金额']);
             const priceIdx = findIdx(['单价']);
-            
-            let count = 0;
+
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
                 if (!row[storeIdx] || !row[styleIdx]) continue;
@@ -694,22 +643,13 @@
                     price: parseFloat(row[priceIdx]) || 0,
                     sourceFile: filename
                 });
-                count++;
             }
-            return count;
         }
 
         function deleteUpload(type, id) {
             const el = document.getElementById(`upload-${id}`);
             if (el) el.remove();
-            
-            // Remove from uploads record
             DataStore.uploads[type] = DataStore.uploads[type].filter(u => u.id !== id);
-            
-            // Note: Actual data removal would require tracking which rows came from which file
-            // For simplicity, we rebuild from remaining uploads or clear all
-            // In production, you'd want to track source file per row
-            
             DataStore.save();
         }
 
@@ -726,7 +666,6 @@
             refreshAll();
         }
 
-        // ========== DIAGNOSIS LOGIC ==========
         function getStoreABC(name) {
             const store = DataStore.storeData.find(s => s.name === name);
             return store ? store.abc : 'B';
@@ -740,10 +679,8 @@
         }
 
         function getStatusLight(value, peerAvg, metric) {
-            // For sellRate: higher is better
-            // For stockRatio: lower is better (generally)
+            if (peerAvg === 0) return { color: 'green', label: '绿灯', class: 'light-green' };
             const diff = metric === 'stockRatio' ? (peerAvg - value) / peerAvg : (value - peerAvg) / peerAvg;
-            
             if (diff > 0.1) return { color: 'green', label: '绿灯', class: 'light-green' };
             if (diff > -0.2) return { color: 'yellow', label: '黄灯', class: 'light-yellow' };
             return { color: 'red', label: '红灯', class: 'light-red' };
@@ -754,14 +691,14 @@
             const storeFilter = document.getElementById('diag-store-filter').value;
             const abcFilter = document.getElementById('diag-abc-filter').value;
             const statusFilter = document.getElementById('diag-status-filter').value;
-            
+
             let data = DataStore.summaryData;
             if (timeFilter) data = data.filter(d => d.yearMonth === timeFilter);
             if (storeFilter) data = data.filter(d => d.storeName === storeFilter);
             if (abcFilter) data = data.filter(d => getStoreABC(d.storeName) === abcFilter);
-            
+
             const container = document.getElementById('diagnosis-cards');
-            
+
             if (data.length === 0) {
                 container.innerHTML = `
                     <div class="glass-card p-8 text-center text-gray-500 col-span-full">
@@ -770,10 +707,9 @@
                 `;
                 return;
             }
-            
-            // Group by store if showing all
+
             const stores = [...new Set(data.map(d => d.storeName))];
-            
+
             let html = '';
             stores.forEach(store => {
                 const storeData = data.filter(d => d.storeName === store);
@@ -781,39 +717,39 @@
                 const abc = getStoreABC(store);
                 const peerSell = getPeerAverage(latest.yearMonth, abc, 'sellRate');
                 const peerStock = getPeerAverage(latest.yearMonth, abc, 'stockRatio');
-                
+
                 const sellStatus = getStatusLight(latest.sellRate, peerSell, 'sellRate');
                 const stockStatus = getStatusLight(latest.stockRatio, peerStock, 'stockRatio');
-                
-                // Overall status (worst of the two)
+
                 let overallStatus = sellStatus;
                 if (stockStatus.color === 'red' || (stockStatus.color === 'yellow' && sellStatus.color === 'green')) {
                     overallStatus = stockStatus;
                 }
-                
+
                 if (statusFilter && overallStatus.color !== statusFilter) return;
-                
-                // Calculate MoM and YoY
+
                 const prevMonth = getPrevPeriod(latest.yearMonth, 1);
                 const prevYear = getPrevPeriod(latest.yearMonth, 12);
                 const prevMonthData = DataStore.summaryData.find(d => d.storeName === store && d.yearMonth === prevMonth);
                 const prevYearData = DataStore.summaryData.find(d => d.storeName === store && d.yearMonth === prevYear);
-                
+
                 const momSell = prevMonthData ? ((latest.sellRate - prevMonthData.sellRate) / prevMonthData.sellRate * 100).toFixed(1) : '--';
                 const yoySell = prevYearData ? ((latest.sellRate - prevYearData.sellRate) / prevYearData.sellRate * 100).toFixed(1) : '--';
-                
+
+                const abcColor = abc === 'A' ? 'purple' : abc === 'B' ? 'blue' : 'gray';
+
                 html += `
                     <div class="glass-card p-6 hover:scale-[1.02] transition-transform cursor-pointer" onclick="showReport('${store}', '${latest.yearMonth}')">
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h3 class="text-lg font-bold">${store}</h3>
-                                <span class="inline-block mt-1 px-2 py-0.5 bg-${abc === 'A' ? 'purple' : abc === 'B' ? 'blue' : 'gray'}-600/30 text-${abc === 'A' ? 'purple' : abc === 'B' ? 'blue' : 'gray'}-300 rounded text-xs">
+                                <span class="inline-block mt-1 px-2 py-0.5 bg-${abcColor}-600/30 text-${abcColor}-300 rounded text-xs">
                                     ${abc}级店铺
                                 </span>
                             </div>
                             <div class="w-4 h-4 rounded-full ${overallStatus.class}"></div>
                         </div>
-                        
+
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div class="bg-white/5 rounded-lg p-3">
                                 <p class="text-xs text-gray-400 mb-1">售罄率</p>
@@ -830,24 +766,23 @@
                                 <p class="text-xs text-gray-500 mt-1">同级平均 ${peerStock.toFixed(2)}</p>
                             </div>
                         </div>
-                        
+
                         <div class="flex gap-4 text-xs text-gray-400">
                             <span>环比: <span class="${momSell > 0 ? 'text-emerald-400' : 'text-red-400'}">${momSell}%</span></span>
                             <span>同比: <span class="${yoySell > 0 ? 'text-emerald-400' : 'text-red-400'}">${yoySell}%</span></span>
                         </div>
-                        
+
                         <div class="mt-4 pt-3 border-t border-white/5 text-xs text-gray-500">
                             ${latest.yearMonth} | 净销 ${latest.netQty}件 | ¥${latest.netAmount.toLocaleString()}
                         </div>
                     </div>
                 `;
             });
-            
+
             container.innerHTML = html || '<div class="glass-card p-8 text-center text-gray-500 col-span-full"><p>没有符合条件的数据</p></div>';
         }
 
         function getPrevPeriod(ym, monthsBack) {
-            // ym format: 2024-04 or 2024-04~06
             const match = ym.match(/(\d{4})-(\d{2})/);
             if (!match) return '';
             let year = parseInt(match[1]);
@@ -856,7 +791,6 @@
             return `${year}-${String(month).padStart(2, '0')}`;
         }
 
-        // ========== RETAIL ANALYSIS ==========
         let selectedStyle = null;
         let selectedColor = null;
 
@@ -865,23 +799,19 @@
             const end = document.getElementById('retail-end').value;
             const storeFilter = document.getElementById('retail-store-filter').value;
             const abcFilter = document.getElementById('retail-abc-filter').value;
-            
+
             let data = DataStore.retailData;
-            
-            // Date filter
+
             if (start) data = data.filter(d => d.date >= start);
             if (end) data = data.filter(d => d.date <= end);
-            
-            // Store filter
             if (storeFilter) data = data.filter(d => d.store === storeFilter);
             if (abcFilter) {
                 const abcStores = DataStore.storeData.filter(s => s.abc === abcFilter).map(s => s.name);
                 data = data.filter(d => abcStores.includes(d.store));
             }
-            
+
             document.getElementById('retail-count').textContent = data.length.toLocaleString();
-            
-            // Update rankings
+
             updateStyleRanking(data);
             updateColorRanking(data);
             updateSizeRanking(data);
@@ -896,7 +826,7 @@
                 if (!styleMap[d.styleNo]) styleMap[d.styleNo] = 0;
                 styleMap[d.styleNo] += d.qty;
             });
-            
+
             const sorted = Object.entries(styleMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
             const tbody = document.querySelector('#rank-style-table tbody');
             tbody.innerHTML = sorted.map((item, i) => `
@@ -911,14 +841,14 @@
         function updateColorRanking(data) {
             let filtered = data;
             if (selectedStyle) filtered = filtered.filter(d => d.styleNo === selectedStyle);
-            
+
             const colorMap = {};
             filtered.forEach(d => {
                 if (!d.color) return;
                 if (!colorMap[d.color]) colorMap[d.color] = 0;
                 colorMap[d.color] += d.qty;
             });
-            
+
             const sorted = Object.entries(colorMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
             const tbody = document.querySelector('#rank-color-table tbody');
             tbody.innerHTML = sorted.map((item, i) => `
@@ -928,7 +858,7 @@
                     <td class="text-right font-bold text-blue-400">${item[1]}</td>
                 </tr>
             `).join('');
-            
+
             document.getElementById('selected-style-label').textContent = selectedStyle ? `(${selectedStyle})` : '';
         }
 
@@ -936,14 +866,14 @@
             let filtered = data;
             if (selectedStyle) filtered = filtered.filter(d => d.styleNo === selectedStyle);
             if (selectedColor) filtered = filtered.filter(d => d.color === selectedColor);
-            
+
             const sizeMap = {};
             filtered.forEach(d => {
                 if (!d.size) return;
                 if (!sizeMap[d.size]) sizeMap[d.size] = 0;
                 sizeMap[d.size] += d.qty;
             });
-            
+
             const sorted = Object.entries(sizeMap).sort((a, b) => b[1] - a[1]).slice(0, 10);
             const tbody = document.querySelector('#rank-size-table tbody');
             tbody.innerHTML = sorted.map((item, i) => `
@@ -953,7 +883,7 @@
                     <td class="text-right font-bold text-purple-400">${item[1]}</td>
                 </tr>
             `).join('');
-            
+
             document.getElementById('selected-color-label').textContent = selectedColor ? `(${selectedColor})` : '';
         }
 
@@ -969,7 +899,6 @@
         }
 
         function updateSlowMovers(data) {
-            // Group by style+store, calculate sell-through
             const storeStyleMap = {};
             data.forEach(d => {
                 const key = `${d.store}_${d.styleNo}`;
@@ -977,7 +906,7 @@
                 storeStyleMap[key].qty += d.qty;
                 storeStyleMap[key].amount += d.amount;
             });
-            
+
             const sorted = Object.values(storeStyleMap).sort((a, b) => a.qty - b.qty).slice(0, 10);
             const tbody = document.querySelector('#slow-style-table tbody');
             tbody.innerHTML = sorted.map(item => `
@@ -992,20 +921,19 @@
         }
 
         function updateTransferSuggestions(data) {
-            // Find styles that sell well in some stores but not in others
             const storeStyleSales = {};
             data.forEach(d => {
                 if (!storeStyleSales[d.store]) storeStyleSales[d.store] = {};
                 if (!storeStyleSales[d.store][d.styleNo]) storeStyleSales[d.store][d.styleNo] = 0;
                 storeStyleSales[d.store][d.styleNo] += d.qty;
             });
-            
+
             const suggestions = [];
             const stores = Object.keys(storeStyleSales);
-            
+
             stores.forEach(fromStore => {
                 Object.entries(storeStyleSales[fromStore]).forEach(([style, qty]) => {
-                    if (qty <= 2) { // Low sales in fromStore
+                    if (qty <= 2) {
                         stores.forEach(toStore => {
                             if (toStore !== fromStore && storeStyleSales[toStore][style] > 10) {
                                 suggestions.push({
@@ -1020,13 +948,13 @@
                     }
                 });
             });
-            
+
             const container = document.getElementById('transfer-suggestions');
             if (suggestions.length === 0) {
                 container.innerHTML = '<p class="text-gray-500 text-center py-8">暂无需调拨建议</p>';
                 return;
             }
-            
+
             container.innerHTML = suggestions.slice(0, 20).map(s => `
                 <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg mb-2 text-sm">
                     <span class="text-red-400">${s.from}</span>
@@ -1055,7 +983,6 @@
             `).join('');
         }
 
-        // ========== REPORT GENERATION ==========
         function showReport(store, yearMonth) {
             const data = DataStore.summaryData.filter(d => d.storeName === store && d.yearMonth === yearMonth);
             if (data.length === 0) return;
@@ -1063,24 +990,24 @@
             const abc = getStoreABC(store);
             const peerSell = getPeerAverage(yearMonth, abc, 'sellRate');
             const peerStock = getPeerAverage(yearMonth, abc, 'stockRatio');
-            
+
             const sellStatus = getStatusLight(latest.sellRate, peerSell, 'sellRate');
             const stockStatus = getStatusLight(latest.stockRatio, peerStock, 'stockRatio');
-            
+
             const modal = document.getElementById('report-modal');
             const content = document.getElementById('report-content');
-            
+
             content.innerHTML = `
                 <div class="bg-white text-black p-8 rounded-xl">
                     <h1 class="text-2xl font-bold text-center mb-2">门店健康诊断报告</h1>
                     <p class="text-center text-gray-500 mb-8">反季月度/正季半月</p>
-                    
+
                     <div class="grid grid-cols-3 gap-4 mb-8 text-sm">
                         <div><strong>店铺名称：</strong>${store}</div>
                         <div><strong>诊断月份：</strong>${yearMonth}</div>
                         <div><strong>店铺级别：</strong>${abc}级</div>
                     </div>
-                    
+
                     <h2 class="text-lg font-bold mb-4 border-b-2 border-black pb-2">一、核心指标看板</h2>
                     <table class="w-full mb-8 text-sm border-collapse">
                         <thead>
@@ -1112,28 +1039,28 @@
                             </tr>
                         </tbody>
                     </table>
-                    
+
                     <h2 class="text-lg font-bold mb-4 border-b-2 border-black pb-2">二、商品深度分析</h2>
                     <p class="text-gray-500 text-sm mb-4">（基于零售明细数据自动生成）</p>
-                    
+
                     <h2 class="text-lg font-bold mb-4 border-b-2 border-black pb-2">三、一句话诊断</h2>
                     <div class="mb-4">
                         <p class="mb-2"><strong>核心问题：</strong>________________________________________</p>
                         <p class="mb-2"><strong>改进机会：</strong>________________________________________</p>
                         <p><strong>针对性措施：</strong>________________________________________</p>
                     </div>
-                    
+
                     <h2 class="text-lg font-bold mb-4 border-b-2 border-black pb-2">四、3条行动建议</h2>
                     <ol class="list-decimal list-inside space-y-2 text-sm">
                         <li><strong>陈列调整：</strong>________________________________________</li>
                         <li><strong>主推话术：</strong>________________________________________</li>
                         <li><strong>促销动作：</strong>________________________________________</li>
                     </ol>
-                    
+
                     <p class="mt-8 text-xs text-gray-500">备注：下月初复查执行效果。</p>
                 </div>
             `;
-            
+
             modal.classList.remove('hidden');
         }
 
@@ -1143,7 +1070,6 @@
                 alert('请先选择月份');
                 return;
             }
-            // Show first store report as example
             const stores = [...new Set(DataStore.summaryData.filter(d => d.yearMonth === timeFilter).map(d => d.storeName))];
             if (stores.length > 0) showReport(stores[0], timeFilter);
         }
@@ -1162,12 +1088,10 @@
                 alert('请先选择月份');
                 return;
             }
-            
+
             const stores = [...new Set(DataStore.summaryData.filter(d => d.yearMonth === timeFilter).map(d => d.storeName))];
-            
-            // Create a workbook with multiple sheets
             const wb = XLSX.utils.book_new();
-            
+
             stores.forEach(store => {
                 const data = DataStore.summaryData.filter(d => d.storeName === store && d.yearMonth === timeFilter);
                 if (data.length === 0) return;
@@ -1175,7 +1099,7 @@
                 const abc = getStoreABC(store);
                 const peerSell = getPeerAverage(timeFilter, abc, 'sellRate');
                 const peerStock = getPeerAverage(timeFilter, abc, 'stockRatio');
-                
+
                 const wsData = [
                     ['门店健康诊断报告'],
                     ['店铺名称', store],
@@ -1195,55 +1119,51 @@
                     ['2. 主推话术：'],
                     ['3. 促销动作：']
                 ];
-                
+
                 const ws = XLSX.utils.aoa_to_sheet(wsData);
                 XLSX.utils.book_append_sheet(wb, ws, store.substring(0, 31));
             });
-            
+
             XLSX.writeFile(wb, `诊断报告_${timeFilter}.xlsx`);
         }
 
-        // ========== UI HELPERS ==========
         function switchTab(tab) {
             ['diagnosis', 'retail', 'admin'].forEach(t => {
                 document.getElementById(`section-${t}`).classList.add('hidden');
                 document.getElementById(`nav-${t}`).classList.remove('tab-active');
                 document.getElementById(`nav-${t}`).classList.add('text-gray-400');
             });
-            
+
             document.getElementById(`section-${tab}`).classList.remove('hidden');
             document.getElementById(`nav-${tab}`).classList.add('tab-active');
             document.getElementById(`nav-${tab}`).classList.remove('text-gray-400');
-            
+
             if (tab === 'diagnosis') updateDiagnosis();
             if (tab === 'retail') updateRetailAnalysis();
         }
 
         function refreshAll() {
-            // Update filter options
             const timeSelect = document.getElementById('diag-time-filter');
             const times = [...new Set(DataStore.summaryData.map(d => d.yearMonth))].sort();
             timeSelect.innerHTML = '<option value="">请选择月份</option>' + 
                 times.map(t => `<option value="${t}">${t}</option>`).join('');
-            
+
             const storeSelect = document.getElementById('diag-store-filter');
             const stores = [...new Set(DataStore.storeData.map(s => s.name))].sort();
             storeSelect.innerHTML = '<option value="">全部店铺</option>' + 
                 stores.map(s => `<option value="${s}">${s}</option>`).join('');
-            
+
             const retailStoreSelect = document.getElementById('retail-store-filter');
             retailStoreSelect.innerHTML = '<option value="">全部店铺</option>' + 
                 stores.map(s => `<option value="${s}">${s}</option>`).join('');
-            
+
             updateDiagnosis();
         }
 
-        // ========== INIT ==========
         window.addEventListener('DOMContentLoaded', () => {
             DataStore.load();
             refreshAll();
-            
-            // Set default date range for retail
+
             const today = new Date();
             const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
             document.getElementById('retail-end').value = today.toISOString().split('T')[0];
